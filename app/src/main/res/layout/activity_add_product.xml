@@ -12,14 +12,17 @@
         android:layout_width="307dp"
         android:layout_height="56dp"
         android:layout_marginTop="56dp"
+        android:layout_marginBottom="64dp"
         android:text="Add a product :"
         app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.464"
+        app:layout_constraintHorizontal_bias="0.46"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="300dp"
         android:layout_height="358dp"
         android:layout_marginTop="64dp"
@@ -36,13 +39,12 @@
             android:layout_height="52dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:layout_marginBottom="20"
             android:background="@drawable/textview_border"
             android:ems="10"
             android:hint="info 1"
             android:inputType="textPersonName"
-            android:text="Name"
-            android:layout_marginBottom="20"
-            />
+            android:text="Name" />
 
         <EditText
             android:id="@+id/et_info2"
@@ -50,24 +52,25 @@
             android:layout_height="56dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:layout_marginBottom="20"
             android:background="@drawable/textview_border"
             android:ems="10"
             android:hint="info 1"
             android:inputType="textPersonName"
-            android:text="Name"
-            android:layout_marginBottom="20"/>
+            android:text="Name" />
+
         <EditText
             android:id="@+id/et_info3"
             android:layout_width="290dp"
             android:layout_height="52dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:layout_marginBottom="20"
             android:background="@drawable/textview_border"
             android:ems="10"
             android:hint="info 1"
             android:inputType="textPersonName"
-            android:text="Name"
-            android:layout_marginBottom="20"/>
+            android:text="Name" />
 
         <EditText
             android:id="@+id/et_info4"
@@ -75,12 +78,12 @@
             android:layout_height="52dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:layout_marginBottom="20"
             android:background="@drawable/textview_border"
             android:ems="10"
             android:hint="info 1"
             android:inputType="textPersonName"
-            android:text="Name"
-            android:layout_marginBottom="20"/>
+            android:text="Name" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
