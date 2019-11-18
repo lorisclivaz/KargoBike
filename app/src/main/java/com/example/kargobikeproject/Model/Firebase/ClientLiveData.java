@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 public class ClientLiveData extends LiveData<Client> {
-    private static final String TAG = "BikeLiveData";
+    private static final String TAG = "ClientLiveData";
 
     private final DatabaseReference reference;
     private final ClientLiveData.MyValueEventListener listener = new ClientLiveData.MyValueEventListener();
