@@ -7,7 +7,9 @@ import java.util.Map;
 
 public class BikeService {
 
+
     //Create variables about BikeService
+    private String idService;
     private String idRider;
     private String idBike;
     private int statusReport;
@@ -28,7 +30,16 @@ public class BikeService {
 
 
     //Getters and setters
+
     @Exclude
+    public String getIdService() {
+        return idService;
+    }
+
+    public void setIdService(String idService) {
+        this.idService = idService;
+    }
+
     public String getIdRider() {
         return idRider;
     }
