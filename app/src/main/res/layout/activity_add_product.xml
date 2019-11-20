@@ -20,6 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="300dp"
         android:layout_height="358dp"
         android:layout_marginTop="64dp"
@@ -36,13 +37,12 @@
             android:layout_height="52dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/textview_border"
             android:ems="10"
             android:hint="info 1"
             android:inputType="textPersonName"
-            android:text="Name"
-            android:layout_marginBottom="20dp"
-            />
+            android:text="Name" />
 
         <EditText
             android:id="@+id/et_info2"
@@ -50,24 +50,25 @@
             android:layout_height="56dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/textview_border"
             android:ems="10"
             android:hint="info 1"
             android:inputType="textPersonName"
-            android:text="Name"
-            android:layout_marginBottom="20dp"/>
+            android:text="Name" />
+
         <EditText
             android:id="@+id/et_info3"
             android:layout_width="290dp"
             android:layout_height="52dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/textview_border"
             android:ems="10"
             android:hint="info 1"
             android:inputType="textPersonName"
-            android:text="Name"
-            android:layout_marginBottom="20dp"/>
+            android:text="Name" />
 
         <EditText
             android:id="@+id/et_info4"
@@ -75,12 +76,34 @@
             android:layout_height="52dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/textview_border"
             android:ems="10"
             android:hint="info 1"
             android:inputType="textPersonName"
-            android:text="Name"
-            android:layout_marginBottom="20dp"/>
+            android:text="Name" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonLivraison"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginBottom="92dp"
+        android:text="Livraison"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/buttonMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginLeft="120dp"
+        android:layout_marginBottom="92dp"
+        android:text="Map"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonLivraison" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
