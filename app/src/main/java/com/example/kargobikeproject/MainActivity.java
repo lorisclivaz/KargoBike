@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
 Button buttonAddProduct;
 Button AddGpsCheckpoint;
 Button checkBike;
+Button transportOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +20,7 @@ Button checkBike;
         buttonAddProduct=findViewById(R.id.buttonAddProduct);
         AddGpsCheckpoint=findViewById(R.id.buttonGps);
         checkBike=findViewById(R.id.buttonCheckBike);
+        transportOrder=findViewById(R.id.TransportOrder);
 
 
         buttonAddProduct.setOnClickListener(new View.OnClickListener() {
@@ -39,6 +41,13 @@ Button checkBike;
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, CheckBikeActivity.class));
+            }
+        });
+
+        buttonAddProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, TransportOrderListActivity.class));
             }
         });
     }
