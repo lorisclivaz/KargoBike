@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">KargoBikeProject</string>
     <string name="title_activity_order_checkpoint">OrderCheckpointActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
