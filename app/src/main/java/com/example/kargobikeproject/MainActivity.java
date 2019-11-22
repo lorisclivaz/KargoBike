@@ -18,7 +18,7 @@ Button buttonAddProduct;
 Button AddGpsCheckpoint;
 Button checkBike;
 Button transportOrder;
-
+Button orderCheckPointHistory;
 ArrayList<Order> orders;
 
     @Override
@@ -29,6 +29,8 @@ ArrayList<Order> orders;
         AddGpsCheckpoint=findViewById(R.id.buttonGps);
         checkBike=findViewById(R.id.buttonCheckBike);
         transportOrder=findViewById(R.id.ButtonTransportOrder);
+        orderCheckPointHistory = findViewById((R.id.buttonOrderCheckPoint));
+
 
 
 
@@ -62,6 +64,13 @@ ArrayList<Order> orders;
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, ListOrdersActivity.class));
+            }
+        });
+
+        orderCheckPointHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, OrderCheckpointActivity.class));
             }
         });
     }
