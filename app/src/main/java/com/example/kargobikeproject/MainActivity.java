@@ -11,6 +11,8 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.kargobikeproject.Model.Entity.Order;
+
 public class MainActivity extends AppCompatActivity {
 Button buttonAddProduct;
 Button AddGpsCheckpoint;
@@ -32,6 +34,12 @@ ArrayList<Order> orders;
 
 
 
+        OrderCheckPoint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, OrderCheckpointActivity.class));
+            }
+        });
 
         buttonAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +69,6 @@ ArrayList<Order> orders;
                 startActivity(new Intent(MainActivity.this, ListOrdersActivity.class));
             }
         });
-
     }
 
 

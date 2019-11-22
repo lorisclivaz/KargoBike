@@ -9,20 +9,25 @@ public class CheckPoint {
 
     //Create variable about CheckPoint
     private String idCheckPoint;
-    private String idRoute;
     private String checkPointName;
+    private double latitude;
+    private double longtitude;
 
 
     //Constructor
     public CheckPoint(){
 
     }
-
+    public CheckPoint(String checkPointName, double latitude, double longtitude)
+    {
+        this.checkPointName = checkPointName;
+        this.latitude = latitude;
+        this.longtitude = longtitude;
+    }
     public CheckPoint(String checkPointName)
     {
         this.checkPointName = checkPointName;
     }
-
 
     @Exclude
 
@@ -34,14 +39,6 @@ public class CheckPoint {
         this.idCheckPoint = idCheckPoint;
     }
 
-    public String getIdRoute() {
-        return idRoute;
-    }
-
-    public void setIdRoute(String idRoute) {
-        this.idRoute = idRoute;
-    }
-
     public String getCheckPointName() {
         return checkPointName;
     }
@@ -50,12 +47,28 @@ public class CheckPoint {
         this.checkPointName = checkPointName;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongtitude() {
+        return longtitude;
+    }
+
+    public void setLongtitude(double longtitude) {
+        this.longtitude = longtitude;
+    }
 
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
         result.put("checkPointName", checkPointName);
-
+        result.put("latitude", latitude);
+        result.put("longitude", longtitude);
         return result;
     }
 }
