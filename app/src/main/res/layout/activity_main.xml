@@ -36,17 +36,17 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="156dp"
         android:text="CheckBike"
-        app:layout_constraintBottom_toTopOf="@+id/TransportOrder"
+        app:layout_constraintBottom_toTopOf="@+id/ButtonTransportOrder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/TransportOrder"
+        android:id="@+id/ButtonTransportOrder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="ButtonTransportOrder"
+        android:text="TransportOrder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
