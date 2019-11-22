@@ -1,47 +1,68 @@
 package com.example.kargobikeproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.kargobikeproject.Fragment.AddCheckPointDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class OrderCheckpointActivity extends AppCompatActivity {
+public class OrderCheckpointActivity extends AppCompatActivity implements AddCheckPointDialog.OnInputListener{
     ListView listCheckPoints;
+    Button addCheckPoint;
+    public String inputGot;
+    private ArrayList<String> checkPointList = new ArrayList<String>();
+    @Override
+    public void sendInput(String input) {
+        Log.d("hey", "sendInput: got the input: " + input);
+        inputGot = input;
+        updateList(inputGot);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_order_checkpoints);
-        listCheckPoints = (ListView) findViewById(R.id.listCheckpoints);
-        ArrayList<String> checkPointList = new ArrayList<String>();
-        checkPointList.add("Sierre");
-        checkPointList.add("Sion");
-        checkPointList.add("Brig");
-        checkPointList.add("Sierre1");
-        checkPointList.add("Sion1");
-        checkPointList.add("Brig1");
-        checkPointList.add("Sierre2");
-        checkPointList.add("Sion2");
-        checkPointList.add("Brig2");
-        checkPointList.add("Sierre3");
-        checkPointList.add("Sion3");
-        checkPointList.add("Brig3");
-        checkPointList.add("Sierre4");
-        checkPointList.add("Sion4");
-        checkPointList.add("Brig4");
-        checkPointList.add("Sierre5");
-        checkPointList.add("Sion5");
-        checkPointList.add("Brig5");
+        setUpCheckPointList();
+        setUpAddCheckPointButton();
 
+    }
+    private void setUpCheckPointList() {
+        listCheckPoints = (ListView) findViewById(R.id.listCheckpoints);
         ArrayAdapter checkPointAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, checkPointList);
         listCheckPoints.setAdapter(checkPointAdapter);
     }
+    private void setUpAddCheckPointButton () {
+        addCheckPoint = findViewById(R.id.buttonAddCheckpoint);
+        addCheckPoint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("hey", "onClick: opening dialog");
+                AddCheckPointDialog dialog = new AddCheckPointDialog();
+                dialog.show(getSupportFragmentManager(), "AddCheckPointDialog");
+            }
+        });
+    }
+    private void updateList(String newItem) {
+        checkPointList.add(newItem);
+        ArrayAdapter checkPointAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, checkPointList);
+        listCheckPoints.setAdapter(checkPointAdapter);
+
+    }
 }
+
+
+
+
+
