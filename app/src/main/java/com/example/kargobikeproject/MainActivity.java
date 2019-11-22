@@ -34,12 +34,7 @@ ArrayList<Order> orders;
 
 
 
-        OrderCheckPoint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, OrderCheckpointActivity.class));
-            }
-        });
+
 
         buttonAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
