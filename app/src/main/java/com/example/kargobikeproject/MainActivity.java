@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.kargobikeproject.Model.Entity.Order;
+
 public class MainActivity extends AppCompatActivity {
 Button buttonAddProduct;
 Button AddGpsCheckpoint;
 Button checkBike;
 Button transportOrder;
-
+Button OrderCheckPoint;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +23,14 @@ Button transportOrder;
         AddGpsCheckpoint=findViewById(R.id.buttonGps);
         checkBike=findViewById(R.id.buttonCheckBike);
         transportOrder=findViewById(R.id.TransportOrder);
+        OrderCheckPoint = findViewById(R.id.buttonOrderCheckPoint);
 
+        OrderCheckPoint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, OrderCheckpointActivity.class));
+            }
+        });
 
         buttonAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
