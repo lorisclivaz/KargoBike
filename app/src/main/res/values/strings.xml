@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">KargoBikeProject</string>
+    <string name="title_activity_order_checkpoint">OrderCheckpointActivity</string>
 </resources>
