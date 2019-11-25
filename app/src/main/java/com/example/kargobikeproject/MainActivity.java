@@ -28,6 +28,8 @@ Button AddGpsCheckpoint;
 Button checkBike;
 Button transportOrder;
 Button showCheckPointHistory;
+Button addOrder;
+
     //for google authentification
     static final int GOOGLE_SIGN = 123;
     FirebaseAuth mAuth;
@@ -45,6 +47,8 @@ Button showCheckPointHistory;
         checkBike=findViewById(R.id.buttonCheckBike);
         transportOrder=findViewById(R.id.TransportOrder);
         showCheckPointHistory = findViewById(R.id.buttonOrderCheckPoint);
+        addOrder = findViewById(R.id.buttonAddOrder);
+
         //for google authentification
         btn_login = findViewById(R.id.buttonLoginWithGoogle);
         btn_logout = findViewById(R.id.buttonLogout);
@@ -68,6 +72,13 @@ Button showCheckPointHistory;
 
         //end google authentification
 
+
+        addOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,AddOrderActivity.class));
+            }
+        });
 
         buttonAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,12 +106,12 @@ Button showCheckPointHistory;
                 startActivity(new Intent(MainActivity.this, OrderCheckpointActivity.class));
             }
         });
-       /* buttonAddProduct.setOnClickListener(new View.OnClickListener() {
+        transportOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, TransportOrderListActivity.class));
+                startActivity(new Intent(MainActivity.this, ListOrdersActivity.class));
             }
-        });*/
+        });
     }
 
     //for google authentification

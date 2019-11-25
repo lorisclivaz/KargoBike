@@ -9,8 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OrderCheckpointActivity"></activity>
-        <activity android:name=".ListOrdersActivity"></activity>
+        <activity android:name=".AddOrderActivity"></activity>
+        <activity android:name=".OrderCheckpointActivity" />
+        <activity android:name=".ListOrdersActivity" />
         <activity android:name=".CheckBikeActivity" />
         <activity android:name=".GpsCheckPointActivity" />
         <activity android:name=".AddProductActivity" />

@@ -85,4 +85,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonAddProduct" />
 
+    <Button
+        android:id="@+id/buttonAddOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AddOrder"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCheckBike"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonGps" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

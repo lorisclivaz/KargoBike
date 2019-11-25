@@ -18,7 +18,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class OrderCheckpointActivity extends AppCompatActivity implements AddCheckPointDialog.OnInputListener{
+public class    OrderCheckpointActivity extends AppCompatActivity implements AddCheckPointDialog.OnInputListener{
     ListView listCheckPoints;
     Button addCheckPoint;
     public String inputGot;
