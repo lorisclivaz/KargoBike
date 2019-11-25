@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KargoBikeProject</string>
+    <string name="app_name">KargoBike</string>
     <string name="title_activity_order_checkpoint">OrderCheckpointActivity</string>
 
     <!-- TODO: Remove or change this placeholder text -->
