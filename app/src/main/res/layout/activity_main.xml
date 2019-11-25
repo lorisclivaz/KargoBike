@@ -95,4 +95,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonGps" />
 
+    <Button
+        android:id="@+id/buttonModifyProfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:layout_marginBottom="27dp"
+        android:text="Modify profil"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCheckBike"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonGps" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

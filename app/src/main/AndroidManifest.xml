@@ -4,7 +4,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -13,6 +13,7 @@
         <activity android:name=".OrderCheckpointActivity" />
         <activity android:name=".ListOrdersActivity" />
         <activity android:name=".CheckBikeActivity" />
+        <activity android:name=".ModifyProfilActivity" />
         <activity android:name=".GpsCheckPointActivity" />
         <activity android:name=".AddProductActivity" />
         <activity android:name=".MainActivity">
