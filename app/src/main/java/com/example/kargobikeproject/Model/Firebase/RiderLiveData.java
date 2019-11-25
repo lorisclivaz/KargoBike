@@ -2,7 +2,7 @@ package com.example.kargobikeproject.Model.Firebase;
 
 import android.util.Log;
 
-import com.example.kargobikeproject.Model.Entity.Rider;
+import com.example.kargobikeproject.Model.Entity.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -11,7 +11,7 @@ import com.google.firebase.database.ValueEventListener;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-public class RiderLiveData extends LiveData<Rider> {
+public class RiderLiveData extends LiveData<User> {
     private static final String TAG = "RiderLiveData";
 
     private final DatabaseReference reference;
@@ -35,7 +35,7 @@ public class RiderLiveData extends LiveData<Rider> {
     private class MyValueEventListener implements ValueEventListener {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            Rider entity = dataSnapshot.getValue(Rider.class);
+            User entity = dataSnapshot.getValue(User.class);
             entity.setIdRider(dataSnapshot.getKey());
             setValue(entity);
         }

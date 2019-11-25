@@ -27,6 +27,7 @@ Button buttonAddProduct;
 Button AddGpsCheckpoint;
 Button checkBike;
 Button transportOrder;
+Button modifyProfil;
 Button showCheckPointHistory;
     //for google authentification
     static final int GOOGLE_SIGN = 123;
@@ -42,6 +43,7 @@ Button showCheckPointHistory;
         setContentView(R.layout.activity_main);
         buttonAddProduct=findViewById(R.id.buttonAddProduct);
         AddGpsCheckpoint=findViewById(R.id.buttonGps);
+        modifyProfil=findViewById(R.id.buttonModifyProfil);
         checkBike=findViewById(R.id.buttonCheckBike);
         transportOrder=findViewById(R.id.TransportOrder);
         showCheckPointHistory = findViewById(R.id.buttonOrderCheckPoint);
@@ -80,6 +82,13 @@ Button showCheckPointHistory;
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, GpsCheckPointActivity.class));
+            }
+        });
+
+        modifyProfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ModifyProfilActivity.class));
             }
         });
 

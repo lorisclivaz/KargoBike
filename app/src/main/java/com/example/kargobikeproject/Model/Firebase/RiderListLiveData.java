@@ -2,7 +2,7 @@ package com.example.kargobikeproject.Model.Firebase;
 
 import android.util.Log;
 
-import com.example.kargobikeproject.Model.Entity.Rider;
+import com.example.kargobikeproject.Model.Entity.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -14,7 +14,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-public class RiderListLiveData extends LiveData<List<Rider>> {
+public class RiderListLiveData extends LiveData<List<User>> {
     private static final String TAG = "RiderListLiveData";
 
     private final DatabaseReference reference;
@@ -47,10 +47,10 @@ public class RiderListLiveData extends LiveData<List<Rider>> {
         }
     }
 
-    private List<Rider> toShops(DataSnapshot snapshot) {
-        List<Rider> shops = new ArrayList<>();
+    private List<User> toShops(DataSnapshot snapshot) {
+        List<User> shops = new ArrayList<>();
         for (DataSnapshot childSnapshot : snapshot.getChildren()) {
-            Rider entity = childSnapshot.getValue(Rider.class);
+            User entity = childSnapshot.getValue(User.class);
             entity.setIdRider(childSnapshot.getKey());
             shops.add(entity);
         }
