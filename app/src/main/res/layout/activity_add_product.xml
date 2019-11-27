@@ -11,38 +11,25 @@
         android:id="@+id/tv_modifyProfil"
         android:layout_width="307dp"
         android:layout_height="56dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="116dp"
         android:text="Add a product :"
-        app:autoSizeTextType="uniform"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.464"
+        app:layout_constraintHorizontal_bias="0.471"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="300dp"
-        android:layout_height="358dp"
-        android:layout_marginTop="64dp"
+        android:layout_width="307dp"
+        android:layout_height="167dp"
+        android:layout_marginTop="284dp"
         android:orientation="vertical"
         android:padding="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.46"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_addProduct">
-
-        <EditText
-            android:id="@+id/et_info1"
-            android:layout_width="290dp"
-            android:layout_height="52dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/textview_border"
-            android:ems="10"
-            android:hint="info 1"
-            android:inputType="textPersonName"
-            android:text="Name" />
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/et_firstName"
@@ -58,52 +45,36 @@
             android:text="Name" />
 
         <EditText
-            android:id="@+id/et_lastName"
-            android:layout_width="290dp"
-            android:layout_height="52dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginBottom="20dp"
+            android:id="@+id/et_intStock"
+            android:layout_width="293dp"
+            android:layout_height="48dp"
             android:background="@drawable/textview_border"
             android:ems="10"
-            android:hint="info 1"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:text="number in stock"
+            android:inputType="number" />
 
-        <EditText
-            android:id="@+id/et_PhoneNumber"
-            android:layout_width="290dp"
-            android:layout_height="52dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/textview_border"
-            android:ems="10"
-            android:hint="info 1"
-            android:inputType="textPersonName"
-            android:text="Name" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/buttonSafe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginLeft="52dp"
-        android:layout_marginBottom="92dp"
-        android:text="Livraison"
+        android:id="@+id/button_AddProduct"
+        android:layout_width="129dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginBottom="152dp"
+        android:text="Add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/buttonReturn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginLeft="120dp"
-        android:layout_marginBottom="92dp"
-        android:text="Map"
+        android:id="@+id/button_Cancel"
+        android:layout_width="129dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
+        android:layout_marginBottom="156dp"
+        android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonLivraison" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
