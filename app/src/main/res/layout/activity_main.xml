@@ -42,12 +42,12 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonCheckBike" />
 
     <Button
-        android:id="@+id/buttonSubmit"
+        android:id="@+id/buttonAddOrder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="28dp"
         android:text="AddOrder"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonModifyProfil" />
@@ -137,5 +137,7 @@
         android:text="Authorize User"
         app:layout_constraintStart_toEndOf="@+id/buttonLogout"
         app:layout_constraintTop_toBottomOf="@+id/buttonLoginWithGoogle" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
