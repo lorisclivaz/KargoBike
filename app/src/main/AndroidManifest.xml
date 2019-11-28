@@ -13,7 +13,6 @@
         <activity android:name=".AddAuthorizedUser" />
         <activity android:name=".AddOrderActivity" />
         <activity android:name=".OrderCheckpointActivity" />
-        <activity android:name=".ListOrdersActivity" />
         <activity android:name=".CheckBikeActivity" />
         <activity android:name=".ModifyProfilActivity" />
         <activity android:name=".GpsCheckPointActivity" />

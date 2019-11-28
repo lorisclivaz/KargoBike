@@ -27,6 +27,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class MainActivity extends AppCompatActivity {
 Button buttonAddProduct;
+
 Button AddGpsCheckpoint;
 Button checkBike;
 Button transportOrder;
@@ -60,7 +61,7 @@ Button btn_authorizedUser;
         checkBike=findViewById(R.id.buttonCheckBike);
         transportOrder=findViewById(R.id.TransportOrder);
         showCheckPointHistory = findViewById(R.id.buttonOrderCheckPoint);
-        addOrder = findViewById(R.id.buttonSubmit);
+
         addOrder = findViewById(R.id.buttonAddOrder);
         manageTypes = findViewById(R.id.buttonManageType);
         btn_authorizedUser = findViewById(R.id.button_authorizeUser);
@@ -155,12 +156,7 @@ Button btn_authorizedUser;
                 startActivity(new Intent(MainActivity.this, OrderCheckpointActivity.class));
             }
         });
-        transportOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ListOrdersActivity.class));
-            }
-        });
+
         manageTypes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
