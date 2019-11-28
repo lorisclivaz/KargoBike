@@ -48,9 +48,8 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/textview_border"
             android:ems="10"
-            android:hint="info 1"
-            android:inputType="textPersonName"
-            android:text="Firstname" />
+            android:hint="Firstname"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/et_lastName"
@@ -61,9 +60,8 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/textview_border"
             android:ems="10"
-            android:hint="info 1"
-            android:inputType="textPersonName"
-            android:text="Lastname" />
+            android:hint="Lastname"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/et_PhoneNumber"
@@ -74,9 +72,8 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/textview_border"
             android:ems="10"
-            android:hint="info 1"
-            android:inputType="textPersonName"
-            android:text="Phone number" />
+            android:hint="Phone number"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/et_WorkingRegio"
@@ -87,9 +84,8 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/textview_border"
             android:ems="10"
-            android:hint="info 1"
-            android:inputType="textPersonName"
-            android:text="Working region" />
+            android:hint="Working region"
+            android:inputType="textPersonName" />
 
     </LinearLayout>
 
@@ -102,7 +98,8 @@
         android:layout_marginBottom="92dp"
         android:text="safe"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:onClick="saveUser"/>
 
     <Button
         android:id="@+id/buttonReturn"
