@@ -34,6 +34,7 @@ Button modifyProfil;
 Button showCheckPointHistory;
 Button addOrder;
 Button manageTypes;
+Button btn_authorizedUser;
 //Add status data
     /*
     private static final String TAG = "Order";
@@ -61,6 +62,7 @@ Button manageTypes;
         showCheckPointHistory = findViewById(R.id.buttonOrderCheckPoint);
         addOrder = findViewById(R.id.buttonAddOrder);
         manageTypes = findViewById(R.id.buttonManageType);
+        btn_authorizedUser = findViewById(R.id.button_authorizeUser);
 
         //Add status data
         /*
@@ -105,6 +107,12 @@ Button manageTypes;
 
         //end google authentification
 
+        btn_authorizedUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,AddAuthorizedUser.class));
+            }
+        });
 
         addOrder.setOnClickListener(new View.OnClickListener() {
             @Override

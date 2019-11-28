@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ListTypesActivity"></activity>
+        <activity android:name=".AddAuthorizedUser" />
         <activity android:name=".AddOrderActivity" />
         <activity android:name=".OrderCheckpointActivity" />
         <activity android:name=".ListOrdersActivity" />
