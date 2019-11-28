@@ -42,6 +42,17 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonCheckBike" />
 
     <Button
+        android:id="@+id/buttonAddOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="28dp"
+        android:text="AddOrder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonModifyProfil" />
+
+    <Button
         android:id="@+id/buttonModifyProfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -125,12 +136,6 @@
         app:layout_constraintStart_toEndOf="@+id/buttonLogout"
         app:layout_constraintTop_toBottomOf="@+id/buttonLoginWithGoogle" />
 
-    <Button
-        android:id="@+id/buttonAddOrder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="AddOrder"
-        tools:layout_editor_absoluteX="220dp"
-        tools:layout_editor_absoluteY="207dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
