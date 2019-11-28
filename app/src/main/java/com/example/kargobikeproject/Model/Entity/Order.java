@@ -9,13 +9,13 @@ public class Order {
 
     //Variables about order
     private String idOrder;
-    private String idClient;
-    private String idRider;
-    private String idRoute;
+    private String nameClient;
+    private String nameRider;
+    private String nameRoute;
     private String address;
     private String deliverStart;
     private String deliverEnd;
-    private int orderStatus;
+    private String orderStatus;
 
 
     //Constructor
@@ -23,8 +23,11 @@ public class Order {
 
     }
 
-    public Order(String address, String deliverStart, String deliverEnd, int orderStatus)
+    public Order(String nameClient, String nameRider, String nameRoute, String address, String deliverStart, String deliverEnd, String orderStatus)
     {
+        this.nameClient = nameClient;
+        this.nameRider = nameRider;
+        this.nameRoute = nameRoute;
         this.address = address;
         this.deliverStart = deliverStart;
         this.deliverEnd = deliverEnd;
@@ -33,7 +36,8 @@ public class Order {
 
 
     //Getters and setters
-    @Exclude
+
+@Exclude
     public String getIdOrder() {
         return idOrder;
     }
@@ -42,28 +46,28 @@ public class Order {
         this.idOrder = idOrder;
     }
 
-    public String getIdClient() {
-        return idClient;
+    public String getNameClient() {
+        return nameClient;
     }
 
-    public void setIdClient(String idClient) {
-        this.idClient = idClient;
+    public void setNameClient(String nameClient) {
+        this.nameClient = nameClient;
     }
 
-    public String getIdRider() {
-        return idRider;
+    public String getNameRider() {
+        return nameRider;
     }
 
-    public void setIdRider(String idRider) {
-        this.idRider = idRider;
+    public void setNameRider(String nameRider) {
+        this.nameRider = nameRider;
     }
 
-    public String getIdRoute() {
-        return idRoute;
+    public String getNameRoute() {
+        return nameRoute;
     }
 
-    public void setIdRoute(String idRoute) {
-        this.idRoute = idRoute;
+    public void setNameRoute(String nameRoute) {
+        this.nameRoute = nameRoute;
     }
 
     public String getAddress() {
@@ -90,18 +94,20 @@ public class Order {
         this.deliverEnd = deliverEnd;
     }
 
-    public int getOrderStatus() {
+    public String getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(int orderStatus) {
+    public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
     }
-
 
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
+        result.put("nameClient", nameClient);
+        result.put("nameRider", nameRider);
+        result.put("nameRoute", nameRoute);
         result.put("address", address);
         result.put("deliverStart", deliverStart);
         result.put("deliverEnd", deliverEnd);

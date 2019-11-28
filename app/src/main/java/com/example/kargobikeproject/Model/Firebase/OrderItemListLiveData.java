@@ -2,7 +2,7 @@ package com.example.kargobikeproject.Model.Firebase;
 
 import android.util.Log;
 
-import com.example.kargobikeproject.Model.Entity.OrderItem;
+import com.example.kargobikeproject.Model.Entity.Order;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -14,7 +14,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-public class OrderItemListLiveData extends LiveData<List<OrderItem>> {
+public class OrderItemListLiveData extends LiveData<List<Order>> {
     private static final String TAG = "OrderItemListLiveData";
 
     private final DatabaseReference reference;
@@ -38,7 +38,7 @@ public class OrderItemListLiveData extends LiveData<List<OrderItem>> {
     private class MyValueEventListener implements ValueEventListener {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            setValue(toShops(dataSnapshot));
+           // setValue(toShops(dataSnapshot));
         }
 
         @Override
@@ -47,6 +47,7 @@ public class OrderItemListLiveData extends LiveData<List<OrderItem>> {
         }
     }
 
+    /*
     private List<OrderItem> toShops(DataSnapshot snapshot) {
         List<OrderItem> shops = new ArrayList<>();
         for (DataSnapshot childSnapshot : snapshot.getChildren()) {
@@ -55,5 +56,5 @@ public class OrderItemListLiveData extends LiveData<List<OrderItem>> {
             shops.add(entity);
         }
         return shops;
-    }
+    }*/
 }

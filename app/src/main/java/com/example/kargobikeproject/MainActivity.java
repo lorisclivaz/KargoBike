@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.kargobikeproject.Model.Entity.Status;
+import com.example.kargobikeproject.Model.Repository.StatusRepository;
+import com.example.kargobikeproject.Utils.OnAsyncEventListener;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -30,6 +33,14 @@ Button transportOrder;
 Button modifyProfil;
 Button showCheckPointHistory;
 Button addOrder;
+Button manageTypes;
+Button btn_authorizedUser;
+//Add status data
+    /*
+    private static final String TAG = "Order";
+    Status status;
+    StatusRepository statusRepository;
+*/
 
     //for google authentification
     static final int GOOGLE_SIGN = 123;
@@ -49,7 +60,30 @@ Button addOrder;
         checkBike=findViewById(R.id.buttonCheckBike);
         transportOrder=findViewById(R.id.TransportOrder);
         showCheckPointHistory = findViewById(R.id.buttonOrderCheckPoint);
+        addOrder = findViewById(R.id.buttonSubmit);
         addOrder = findViewById(R.id.buttonAddOrder);
+        manageTypes = findViewById(R.id.buttonManageType);
+        btn_authorizedUser = findViewById(R.id.button_authorizeUser);
+
+        //Add status data
+        /*
+        statusRepository = new StatusRepository();
+        status = new Status("unChecked", "inProgress", "checked");
+        statusRepository.insert(status, new OnAsyncEventListener() {
+            @Override
+            public void onSuccess() {
+                Log.d(TAG, "status added : success");
+
+                onBackPressed();
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+
+                Log.d(TAG, "status added : success");
+            }
+        });
+                */
 
         //for google authentification
         btn_login = findViewById(R.id.buttonLoginWithGoogle);
@@ -74,6 +108,12 @@ Button addOrder;
 
         //end google authentification
 
+        btn_authorizedUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,AddAuthorizedUser.class));
+            }
+        });
 
         addOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +159,12 @@ Button addOrder;
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, ListOrdersActivity.class));
+            }
+        });
+        manageTypes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ListTypesActivity.class));
             }
         });
     }
