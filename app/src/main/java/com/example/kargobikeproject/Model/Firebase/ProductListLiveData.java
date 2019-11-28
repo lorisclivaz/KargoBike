@@ -2,6 +2,9 @@ package com.example.kargobikeproject.Model.Firebase;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+
 import com.example.kargobikeproject.Model.Entity.Product;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -10,9 +13,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 
 public class ProductListLiveData extends LiveData<List<Product>> {
     private static final String TAG = "ProductListLiveData";
@@ -51,7 +51,7 @@ public class ProductListLiveData extends LiveData<List<Product>> {
         List<Product> shops = new ArrayList<>();
         for (DataSnapshot childSnapshot : snapshot.getChildren()) {
             Product entity = childSnapshot.getValue(Product.class);
-            entity.setIdProduct(childSnapshot.getKey());
+            entity.setId(childSnapshot.getKey());
             shops.add(entity);
         }
         return shops;

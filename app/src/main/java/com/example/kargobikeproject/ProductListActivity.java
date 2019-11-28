@@ -57,7 +57,7 @@ public class ProductListActivity extends AppCompatActivity {
                     Intent.FLAG_ACTIVITY_NO_ANIMATION |
                             Intent.FLAG_ACTIVITY_NO_HISTORY
             );
-            intent.putExtra("IdProduct", products.get(position).getIdProduct());
+            intent.putExtra("IdProduct", products.get(position).getId());
             startActivity(intent);
         }
 
