@@ -1,8 +1,5 @@
 package com.example.kargobikeproject;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,9 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.kargobikeproject.Model.Entity.Status;
-import com.example.kargobikeproject.Model.Repository.StatusRepository;
-import com.example.kargobikeproject.Utils.OnAsyncEventListener;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -115,6 +112,13 @@ Button btn_authorizedUser;
             }
         });
 
+        transportOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,ListOrderActivity.class));
+            }
+        });
+
         addOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,12 +159,7 @@ Button btn_authorizedUser;
                 startActivity(new Intent(MainActivity.this, OrderCheckpointActivity.class));
             }
         });
-        transportOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ListOrdersActivity.class));
-            }
-        });
+
         manageTypes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
