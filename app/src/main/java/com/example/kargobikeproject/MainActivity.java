@@ -59,6 +59,7 @@ Button manageTypes;
         checkBike=findViewById(R.id.buttonCheckBike);
         transportOrder=findViewById(R.id.TransportOrder);
         showCheckPointHistory = findViewById(R.id.buttonOrderCheckPoint);
+        addOrder = findViewById(R.id.buttonSubmit);
         addOrder = findViewById(R.id.buttonAddOrder);
         manageTypes = findViewById(R.id.buttonManageType);
 
