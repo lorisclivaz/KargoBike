@@ -8,16 +8,19 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-public class RiderLiveData extends LiveData<User> {
-    private static final String TAG = "RiderLiveData";
+public class UserListLiveData extends LiveData<List<User>> {
+    private static final String TAG = "RiderListLiveData";
 
     private final DatabaseReference reference;
-    private final RiderLiveData.MyValueEventListener listener = new RiderLiveData.MyValueEventListener();
+    private final MyValueEventListener listener = new MyValueEventListener();
 
-    public RiderLiveData(DatabaseReference ref) {
+    public UserListLiveData(DatabaseReference ref) {
         reference = ref;
     }
 
@@ -35,9 +38,7 @@ public class RiderLiveData extends LiveData<User> {
     private class MyValueEventListener implements ValueEventListener {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            User entity = dataSnapshot.getValue(User.class);
-            entity.setIdRider(dataSnapshot.getKey());
-            setValue(entity);
+            setValue(toShops(dataSnapshot));
         }
 
         @Override
@@ -45,6 +46,14 @@ public class RiderLiveData extends LiveData<User> {
             Log.e(TAG, "Can't listen to query " + reference, databaseError.toException());
         }
     }
+
+    private List<User> toShops(DataSnapshot snapshot) {
+        List<User> shops = new ArrayList<>();
+        for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+            User entity = childSnapshot.getValue(User.class);
+            entity.setIdUser(childSnapshot.getKey());
+            shops.add(entity);
+        }
+        return shops;
+    }
 }
-
-
