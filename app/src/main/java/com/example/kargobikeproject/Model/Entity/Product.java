@@ -24,9 +24,6 @@ public class Product {
         this.price = price;
     }
 
-    //Getters and setters
-    @Exclude
-
 
     public String getName() {
         return name;
