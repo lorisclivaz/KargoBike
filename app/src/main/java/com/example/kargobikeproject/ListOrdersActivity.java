@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class ListOrdersActivity extends AppCompatActivity {
 
-    ArrayList<Order> orders;
+   // ArrayList<Order> orders;
     private ListView maListeV;
     private OrderAdapter orderAdapter;
     private Button delete;
@@ -30,6 +30,7 @@ public class ListOrdersActivity extends AppCompatActivity {
         delete = (Button) maListeV.findViewById(R.id.DeleteButtonOrder);
 
 
+        /*
         orderAdapter = new OrderAdapter(getApplicationContext(), 0);
         orders = new ArrayList<>();
 
@@ -49,7 +50,7 @@ public class ListOrdersActivity extends AppCompatActivity {
 
         maListeV.setAdapter(orderAdapter);
         orderAdapter.addAll(orders );
-
+*/
 
 
     }

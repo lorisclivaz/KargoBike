@@ -1,19 +1,19 @@
 package com.example.kargobikeproject.Model.Repository;
 
-import com.example.kargobikeproject.Model.Entity.Order;
+import com.example.kargobikeproject.Model.Entity.Client;
+import com.example.kargobikeproject.Model.Entity.Product;
 import com.example.kargobikeproject.Utils.OnAsyncEventListener;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class OrderRepository {
-
+public class ClientRepository {
 
     // Firebase Database paths must not contain '.', '#', '$', '[', or ']'
-    public void insert(final Order order, final OnAsyncEventListener callback) {
-        String id = FirebaseDatabase.getInstance().getReference("orders").push().getKey();
+    public void insert(final Client client, final OnAsyncEventListener callback) {
+        String id = FirebaseDatabase.getInstance().getReference("clients").push().getKey();
         FirebaseDatabase.getInstance()
-                .getReference("order")
+                .getReference("client")
                 .child(id)
-                .setValue(order, (databaseError, databaseReference) -> {
+                .setValue(client, (databaseError, databaseReference) -> {
                     if (databaseError != null) {
                         callback.onFailure(databaseError.toException());
                     } else {
