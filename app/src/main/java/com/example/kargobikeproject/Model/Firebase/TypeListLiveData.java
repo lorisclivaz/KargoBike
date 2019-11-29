@@ -2,7 +2,10 @@ package com.example.kargobikeproject.Model.Firebase;
 
 import android.util.Log;
 
-import com.example.kargobikeproject.Model.Entity.User;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+
+import com.example.kargobikeproject.Model.Entity.Type;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -11,16 +14,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-
-public class RiderListLiveData extends LiveData<List<User>> {
-    private static final String TAG = "RiderListLiveData";
+public class TypeListLiveData extends LiveData<List<Type>> {
+    private static final String TAG = "TypeListLiveData";
 
     private final DatabaseReference reference;
-    private final MyValueEventListener listener = new MyValueEventListener();
+    private final TypeListLiveData.MyValueEventListener listener = new TypeListLiveData.MyValueEventListener();
 
-    public RiderListLiveData(DatabaseReference ref) {
+    public TypeListLiveData(DatabaseReference ref) {
         reference = ref;
     }
 
@@ -47,11 +47,11 @@ public class RiderListLiveData extends LiveData<List<User>> {
         }
     }
 
-    private List<User> toShops(DataSnapshot snapshot) {
-        List<User> shops = new ArrayList<>();
+    private List<Type> toShops(DataSnapshot snapshot) {
+        List<Type> shops = new ArrayList<>();
         for (DataSnapshot childSnapshot : snapshot.getChildren()) {
-            User entity = childSnapshot.getValue(User.class);
-            entity.setIdRider(childSnapshot.getKey());
+            Type entity = childSnapshot.getValue(Type.class);
+            entity.setIdType(childSnapshot.getKey());
             shops.add(entity);
         }
         return shops;

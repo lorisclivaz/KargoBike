@@ -2,6 +2,7 @@ package com.example.kargobikeproject;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +11,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+
 import com.example.kargobikeproject.Model.Entity.Status;
+import com.example.kargobikeproject.Model.Entity.User;
 import com.example.kargobikeproject.Model.Repository.StatusRepository;
-import com.example.kargobikeproject.Utils.OnAsyncEventListener;
+import com.example.kargobikeproject.ViewModels.UserListViewModel;
+import com.example.kargobikeproject.ViewModels.UserViewModel;
+import com.example.kargobikeproject.util.OnAsyncEventListener;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -60,7 +68,7 @@ Button btn_authorizedUser;
         checkBike=findViewById(R.id.buttonCheckBike);
         transportOrder=findViewById(R.id.TransportOrder);
         showCheckPointHistory = findViewById(R.id.buttonOrderCheckPoint);
-        addOrder = findViewById(R.id.buttonSubmit);
+
         addOrder = findViewById(R.id.buttonAddOrder);
         manageTypes = findViewById(R.id.buttonManageType);
         btn_authorizedUser = findViewById(R.id.button_authorizeUser);
@@ -115,6 +123,13 @@ Button btn_authorizedUser;
             }
         });
 
+        transportOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,ListOrderActivity.class));
+            }
+        });
+
         addOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,12 +170,7 @@ Button btn_authorizedUser;
                 startActivity(new Intent(MainActivity.this, OrderCheckpointActivity.class));
             }
         });
-        transportOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ListOrdersActivity.class));
-            }
-        });
+
         manageTypes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -205,6 +215,48 @@ Button btn_authorizedUser;
                 Log.d("TAG","Singin Success");
 
                 FirebaseUser user = mAuth.getCurrentUser();
+                //start of user creation test
+                //get all Users
+                UserListViewModel allUsersViewModel;
+                UserListViewModel.Factory factory = new UserListViewModel.Factory(getApplication());
+                allUsersViewModel = ViewModelProviders.of(this, factory).get(UserListViewModel.class);
+                allUsersViewModel.getUsers().observe(this, userEntitys -> {
+                    if (userEntitys != null) {
+                        int userHaveAccess =0;
+                        //check if the User exist
+                        Boolean userExist = false;
+                        for(User listUser : userEntitys){
+                            if (listUser.getMail().equals(user.getEmail())){
+                                userExist=true;
+                                userHaveAccess=listUser.getAccess();
+                                break;
+                            }
+                        }
+                        //Create the user if he does not exist
+                        if (!userExist){
+                            //create the user
+                            User userNew = new User (user.getUid(),"","",user.getEmail(),"","",0);
+                            //create connection to model view
+                            UserViewModel.Factory factoryUser = new UserViewModel.Factory(getApplication(),user.getUid());
+                            UserViewModel viewModel = ViewModelProviders.of(this, factoryUser).get(UserViewModel.class);
+                            viewModel.createUser(userNew, new OnAsyncEventListener() {
+                                @Override
+                                public void onSuccess() {
+                                    Log.d("ModifyProfilActivity", "createUser: success");
+                                }
+                                @Override
+                                public void onFailure(Exception e) {
+                                    Log.d("ModifyProfilActivity", "createUser: failure", e);
+                                }
+                            });
+                        }/*
+                        if(userHaveAccess==0){
+                            startActivity(new Intent(MainActivity.this, NoAccessActivity.class));
+                        }*/
+
+                    }
+                });
+                //end of user creation test
                 updateUI(user);
             }
             else
@@ -222,7 +274,6 @@ Button btn_authorizedUser;
         {
             String email = user.getEmail();
             String uid = user.getUid();
-
 
             Toast.makeText(this, "email : "+email+" uid : "+uid, Toast.LENGTH_SHORT).show();
             btn_login.setVisibility(View.INVISIBLE);
@@ -243,11 +294,4 @@ Button btn_authorizedUser;
         });
     }
     //end google authentification
-
-
-
-
-
-
-
 }

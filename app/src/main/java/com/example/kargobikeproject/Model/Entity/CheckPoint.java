@@ -2,6 +2,7 @@ package com.example.kargobikeproject.Model.Entity;
 
 import com.google.firebase.database.Exclude;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,21 +13,32 @@ public class CheckPoint {
     private String checkPointName;
     private double latitude;
     private double longtitude;
+    private String idType;
+    private String idOrder;
+    private String nameRider;
+    private String timeStamp;
 
 
     //Constructor
     public CheckPoint(){
 
     }
-    public CheckPoint(String checkPointName, double latitude, double longtitude)
+    public CheckPoint(String checkPointName, double latitude, double longtitude, String idType, String nameRider, String timeStamp)
     {
         this.checkPointName = checkPointName;
         this.latitude = latitude;
         this.longtitude = longtitude;
+        this.idType = idType;
+        this.nameRider = nameRider;
+        this.timeStamp =timeStamp;
     }
-    public CheckPoint(String checkPointName)
+    public CheckPoint(String idCheckPoint,String idOrder,String checkPointName, String nameRider, String timeStamp)
     {
+        this.idCheckPoint = idCheckPoint;
+        this.idOrder = idOrder;
         this.checkPointName = checkPointName;
+        this.nameRider = nameRider;
+        this.timeStamp = timeStamp;
     }
 
     @Exclude
@@ -63,12 +75,46 @@ public class CheckPoint {
         this.longtitude = longtitude;
     }
 
+    public String getIdType() {
+        return idType;
+    }
+
+    public void setIdType(String idType) {
+        this.idType = idType;
+    }
+
+    public String getNameRider() {
+        return nameRider;
+    }
+
+    public void setNameRider(String nameRider) {
+        this.nameRider = nameRider;
+    }
+
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public String getIdOrder() {
+        return idOrder;
+    }
+
+    public void setIdOrder(String idOrder) {
+        this.idOrder = idOrder;
+    }
+
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
         result.put("checkPointName", checkPointName);
         result.put("latitude", latitude);
         result.put("longitude", longtitude);
+        result.put("nameRider", nameRider);
+        result.put("timeStamp", timeStamp);
         return result;
     }
 }

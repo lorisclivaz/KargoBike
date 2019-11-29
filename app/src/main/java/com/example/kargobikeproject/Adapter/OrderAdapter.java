@@ -1,59 +1,85 @@
 package com.example.kargobikeproject.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kargobikeproject.Model.Entity.Order;
+import com.example.kargobikeproject.OrderCheckpointActivity;
 import com.example.kargobikeproject.R;
 
+import java.util.ArrayList;
 
-public class OrderAdapter extends ArrayAdapter<Order> {
+public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder> {
 
-
-    public OrderAdapter(@NonNull Context context, int resource) {
-        super(context, resource);
+    ArrayList<Order> orders;
+    Context mContext;
+    public OrderAdapter(ArrayList<Order> orders)
+    {
+        this.orders = orders;
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View v;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_order,parent,false);
 
-        LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        v = layoutInflater.inflate(R.layout.order_item, null);
+        return new MyViewHolder(view);
+    }
 
-        Order currentOrder = getItem(position);
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int position) {
 
-        TextView idOrder = v.findViewById(R.id.IdOrder);
-        TextView idClient = v.findViewById(R.id.IdClient);
-        TextView idRider = v.findViewById(R.id.IdRider);
-        TextView idRoute = v.findViewById(R.id.IdRoute);
-        TextView address = v.findViewById(R.id.Address);
-        TextView deliverStart = v.findViewById(R.id.DeliverStart);
-        TextView deliverEnd = v.findViewById(R.id.deliverEnd);
-        TextView orderStatus = v.findViewById(R.id.OrderStatus);
+        myViewHolder.nameClient.setText(orders.get(position).getNameClient());
+        myViewHolder.nameRoute.setText(orders.get(position).getNameRoute());
+        myViewHolder.nameRider.setText(orders.get(position).getNameRider());
+        myViewHolder.address.setText(orders.get(position).getAddress());
+        myViewHolder.startDate.setText(orders.get(position).getDeliverStart());
+        myViewHolder.endDate.setText(orders.get(position).getDeliverEnd());
+        myViewHolder.status.setText(orders.get(position).getOrderStatus());
+        myViewHolder.checkpointButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v ) {
+                //if you need position, just use recycleViewHolder.getAdapterPosition();
+                Intent intent = new Intent(v.getContext(), OrderCheckpointActivity.class);
+                intent.putExtra("ORDER_ID", orders.get(position).getNameClient());
+                v.getContext().startActivity(intent);
+                Log.d("hey", "this order has name" + orders.get(position).getNameClient() );
+            }
+        });
 
-        /*
-        idOrder.setText(String.valueOf(currentOrder.getIdOrder()));
-        idRider.setText(String.valueOf(currentOrder.getIdRider()));
-        idClient.setText(String.valueOf(currentOrder.getIdClient()));
-        idRoute.setText(String.valueOf(currentOrder.getIdRoute()));
-        */
+    }
 
-        address.setText(currentOrder.getAddress());
-        deliverStart.setText(currentOrder.getDeliverStart());
-        deliverEnd.setText(currentOrder.getDeliverEnd());
-        orderStatus.setText(String.valueOf(currentOrder.getOrderStatus()));
+    @Override
+    public int getItemCount() {
+        return orders.size();
+    }
 
+    class MyViewHolder extends RecyclerView.ViewHolder
+    {
+        Button checkpointButton;
+        TextView nameClient, nameRoute, nameRider, address, startDate, endDate, status;
 
-        return v;
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            nameClient = itemView.findViewById(R.id.nameClient);
+            nameRoute = itemView.findViewById(R.id.nameRoute);
+            nameRider = itemView.findViewById(R.id.nameRider);
+            address = itemView.findViewById(R.id.Address);
+            startDate = itemView.findViewById(R.id.startDate);
+            endDate = itemView.findViewById(R.id.endDate);
+            status = itemView.findViewById(R.id.status);
+            checkpointButton = itemView.findViewById(R.id.buttonViewCheckPoint);
+        }
     }
 }

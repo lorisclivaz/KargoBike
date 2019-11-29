@@ -15,10 +15,12 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class    OrderCheckpointActivity extends AppCompatActivity implements AddCheckPointDialog.OnInputListener{
+    TextView textOrderCheckPointHistory;
     ListView listCheckPoints;
     Button addCheckPoint;
     public String inputGot;
@@ -34,6 +36,8 @@ public class    OrderCheckpointActivity extends AppCompatActivity implements Add
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_order_checkpoints);
+        textOrderCheckPointHistory = findViewById(R.id.textOrderCheckPointHistory);
+        textOrderCheckPointHistory.setText(getIntent().getStringExtra("ORDER_ID"));
         setUpCheckPointList();
         setUpAddCheckPointButton();
 
