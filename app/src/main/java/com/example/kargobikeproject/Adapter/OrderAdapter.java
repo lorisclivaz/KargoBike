@@ -1,14 +1,19 @@
 package com.example.kargobikeproject.Adapter;
 
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kargobikeproject.Model.Entity.Order;
+import com.example.kargobikeproject.OrderCheckpointActivity;
 import com.example.kargobikeproject.R;
 
 import java.util.ArrayList;
@@ -16,7 +21,7 @@ import java.util.ArrayList;
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder> {
 
     ArrayList<Order> orders;
-
+    Context mContext;
     public OrderAdapter(ArrayList<Order> orders)
     {
         this.orders = orders;
@@ -41,7 +46,16 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
         myViewHolder.startDate.setText(orders.get(position).getDeliverStart());
         myViewHolder.endDate.setText(orders.get(position).getDeliverEnd());
         myViewHolder.status.setText(orders.get(position).getOrderStatus());
-
+        myViewHolder.checkpointButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v ) {
+                //if you need position, just use recycleViewHolder.getAdapterPosition();
+                Intent intent = new Intent(v.getContext(), OrderCheckpointActivity.class);
+                intent.putExtra("ORDER_ID", orders.get(position).getNameClient());
+                v.getContext().startActivity(intent);
+                Log.d("hey", "this order has name" + orders.get(position).getNameClient() );
+            }
+        });
 
     }
 
@@ -52,7 +66,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
     class MyViewHolder extends RecyclerView.ViewHolder
     {
-
+        Button checkpointButton;
         TextView nameClient, nameRoute, nameRider, address, startDate, endDate, status;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -65,7 +79,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
             startDate = itemView.findViewById(R.id.startDate);
             endDate = itemView.findViewById(R.id.endDate);
             status = itemView.findViewById(R.id.status);
-
+            checkpointButton = itemView.findViewById(R.id.buttonViewCheckPoint);
         }
     }
 }

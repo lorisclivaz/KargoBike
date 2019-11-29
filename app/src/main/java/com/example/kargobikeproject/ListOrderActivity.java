@@ -1,6 +1,8 @@
 package com.example.kargobikeproject;
 
 import android.os.Bundle;
+import android.widget.Button;
+
 import androidx.appcompat.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -23,6 +25,7 @@ public class ListOrderActivity extends AppCompatActivity {
     ArrayList<Order> orders;
     RecyclerView recyclerView;
     SearchView searchView;
+    Button buttonViewCheckPoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

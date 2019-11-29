@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -32,6 +34,7 @@ public class ListTypesActivity extends AppCompatActivity {
     ArrayList<Type> types;
     TypeRepository typeRepository;
     Button buttonAddType;
+    EditText addTypeInput;
     RecyclerView typeListView;
 
 
@@ -41,6 +44,7 @@ public class ListTypesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_types);
         buttonAddType = findViewById(R.id.buttonAddType);
+        addTypeInput = findViewById(R.id.addTypeInput);
         typeListView = findViewById(R.id.listTypes);
         typeRepository = new TypeRepository();
 
@@ -49,24 +53,46 @@ public class ListTypesActivity extends AppCompatActivity {
         buttonAddType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Type newType = new Type("sampleCheckPointType");
+                String inputGot = addTypeInput.getText().toString();
+                if(!inputGot.isEmpty() && !checkTypeExists(inputGot, types)) {
+                    Type newType = new Type(inputGot);
+                    typeRepository.insert(newType, new OnAsyncEventListener() {
+                        @Override
+                        public void onSuccess() {
+                            Log.d(TAG, "type added");
+                            Toast.makeText(ListTypesActivity.this, "new type added",
+                                    Toast.LENGTH_SHORT).show();
+                            addTypeInput.getText().clear();
+                            addTypeInput.onEditorAction(EditorInfo.IME_ACTION_DONE);
 
-                typeRepository.insert(newType, new OnAsyncEventListener() {
-                    @Override
-                    public void onSuccess() {
-                        Log.d(TAG, "type added");
-                        Toast.makeText(ListTypesActivity.this, "new type added",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void onFailure(Exception e) {
-                        Log.d(TAG, "type was not added", e);
-                        Toast.makeText(ListTypesActivity.this, "new type was not added",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        }
+                        @Override
+                        public void onFailure(Exception e) {
+                            Log.d(TAG, "type was not added", e);
+                            Toast.makeText(ListTypesActivity.this, "new type was not added",
+                                    Toast.LENGTH_SHORT).show();
+                            addTypeInput.getText().clear();
+                            addTypeInput.onEditorAction(EditorInfo.IME_ACTION_DONE);
+                        }
+                    });
+                }
+                else {
+                    Toast.makeText(ListTypesActivity.this, "type already exists",
+                            Toast.LENGTH_SHORT).show();
+                    addTypeInput.getText().clear();
+                    addTypeInput.onEditorAction(EditorInfo.IME_ACTION_DONE);
+                }
             }
         });
+    }
+    private boolean checkTypeExists(String newType, ArrayList<Type> types) {
+        boolean result = false;
+        for (Type n : types) {
+            if(newType.toLowerCase().equals(n.getName().toLowerCase())) {
+                result = true;
+            }
+        }
+        return result;
     }
     @Override
     protected void onStart() {

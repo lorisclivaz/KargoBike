@@ -242,11 +242,4 @@ Button btn_authorizedUser;
         });
     }
     //end google authentification
-
-
-
-
-
-
-
 }
