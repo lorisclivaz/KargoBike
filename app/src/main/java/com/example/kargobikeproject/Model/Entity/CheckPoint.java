@@ -13,7 +13,7 @@ public class CheckPoint {
     private String checkPointName;
     private double latitude;
     private double longtitude;
-    private String idType;
+    private String typeName;
     private String idOrder;
     private String nameRider;
     private String timeStamp;
@@ -23,21 +23,22 @@ public class CheckPoint {
     public CheckPoint(){
 
     }
-    public CheckPoint(String checkPointName, double latitude, double longtitude, String idType, String nameRider, String timeStamp)
+    public CheckPoint(String checkPointName, double latitude, double longtitude, String typeName, String nameRider, String timeStamp)
     {
         this.checkPointName = checkPointName;
         this.latitude = latitude;
         this.longtitude = longtitude;
-        this.idType = idType;
+        this.typeName = typeName;
         this.nameRider = nameRider;
         this.timeStamp =timeStamp;
     }
-    public CheckPoint(String idOrder,String checkPointName, String nameRider, String timeStamp)
+    public CheckPoint(String idOrder,String checkPointName, String nameRider, String timeStamp, String typeName)
     {
         this.idOrder = idOrder;
         this.checkPointName = checkPointName;
         this.nameRider = nameRider;
         this.timeStamp = timeStamp;
+        this.typeName = typeName;
     }
 
     @Exclude
@@ -74,12 +75,12 @@ public class CheckPoint {
         this.longtitude = longtitude;
     }
 
-    public String getIdType() {
-        return idType;
+    public String getTypeName() {
+        return typeName;
     }
 
-    public void setIdType(String idType) {
-        this.idType = idType;
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
     public String getNameRider() {
