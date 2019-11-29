@@ -1,6 +1,7 @@
 package com.example.kargobikeproject;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import androidx.appcompat.widget.SearchView;
@@ -55,8 +56,10 @@ public class ListOrderActivity extends AppCompatActivity {
 
                         for (DataSnapshot ds: dataSnapshot.getChildren())
                         {
-
-                            orders.add(ds.getValue(Order.class));
+                            Order o = new Order();
+                            o = ds.getValue(Order.class);
+                            o.setIdOrder(ds.getKey());
+                            orders.add(o);
                         }
 
                         OrderAdapter adapterClass = new OrderAdapter(orders);

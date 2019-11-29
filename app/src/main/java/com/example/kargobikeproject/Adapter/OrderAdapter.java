@@ -38,7 +38,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int position) {
-
         myViewHolder.nameClient.setText(orders.get(position).getNameClient());
         myViewHolder.nameRoute.setText(orders.get(position).getNameRoute());
         myViewHolder.nameRider.setText(orders.get(position).getNameRider());
@@ -51,9 +50,9 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
             public void onClick(View v ) {
                 //if you need position, just use recycleViewHolder.getAdapterPosition();
                 Intent intent = new Intent(v.getContext(), OrderCheckpointActivity.class);
-                intent.putExtra("ORDER_ID", orders.get(position).getNameClient());
+                intent.putExtra("ORDER_CLIENT", orders.get(position).getNameClient());
+                intent.putExtra("ORDER_ID", orders.get(position).getIdOrder());
                 v.getContext().startActivity(intent);
-                Log.d("hey", "this order has name" + orders.get(position).getNameClient() );
             }
         });
 
