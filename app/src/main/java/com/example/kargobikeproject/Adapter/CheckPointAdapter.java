@@ -35,7 +35,7 @@ public class CheckPointAdapter extends RecyclerView.Adapter<CheckPointAdapter.My
 
         myViewHolder.checkPointName.setText(checkPoints.get(position).getCheckPointName());
         myViewHolder.nameRider.setText(checkPoints.get(position).getNameRider());
-        myViewHolder.nameRider.setText(checkPoints.get(position).getTimeStamp());
+        myViewHolder.timeStamp.setText(checkPoints.get(position).getTimeStamp());
 
     }
 
