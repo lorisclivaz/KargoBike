@@ -30,11 +30,9 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class MainActivity extends AppCompatActivity {
 Button buttonAddProduct;
-Button AddGpsCheckpoint;
 Button checkBike;
 Button transportOrder;
 Button modifyProfil;
-Button showCheckPointHistory;
 Button addOrder;
 Button manageTypes;
 Button btn_authorizedUser;
@@ -59,11 +57,9 @@ Button button_DisplayProductList;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         buttonAddProduct=findViewById(R.id.buttonAddProduct);
-        AddGpsCheckpoint=findViewById(R.id.buttonGps);
         modifyProfil=findViewById(R.id.buttonModifyProfil);
         checkBike=findViewById(R.id.buttonCheckBike);
         transportOrder=findViewById(R.id.TransportOrder);
-        showCheckPointHistory = findViewById(R.id.buttonOrderCheckPoint);
         button_DisplayProductList= findViewById(R.id.button_DisplayProductList);
         addOrder = findViewById(R.id.buttonAddOrder);
         manageTypes = findViewById(R.id.buttonManageType);
@@ -139,13 +135,6 @@ Button button_DisplayProductList;
                 startActivity(new Intent(MainActivity.this, AddProductActivity.class));
             }
         });
-
-        AddGpsCheckpoint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, GpsCheckPointActivity.class));
-            }
-        });
         button_DisplayProductList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,12 +152,6 @@ Button button_DisplayProductList;
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, CheckBikeActivity.class));
-            }
-        });
-        showCheckPointHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, OrderCheckpointActivity.class));
             }
         });
 

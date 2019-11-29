@@ -19,7 +19,6 @@
         <activity android:name=".OrderCheckpointActivity" />
         <activity android:name=".CheckBikeActivity" />
         <activity android:name=".ModifyProfilActivity" />
-        <activity android:name=".GpsCheckPointActivity" />
         <activity android:name=".NoAccessActivity" />
         <activity android:name=".AddProductActivity" />
         <activity android:name=".MainActivity">
