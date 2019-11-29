@@ -21,27 +21,28 @@ public class ModifyProfilActivity extends AppCompatActivity {
     EditText et_description;
     EditText et_price;
     private static final String TAG = "Product";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        productRepository=new ProductRepository();
+        productRepository = new ProductRepository();
         setContentView(R.layout.activity_modify_profil);
-        button_AddProduct=findViewById(R.id.button_AddProduct);
-        et_ProductName=findViewById(R.id.et_ProductName);
-        et_description=findViewById(R.id.et_description);
-        et_price=findViewById(R.id.et_price);
+        button_AddProduct = findViewById(R.id.button_AddProduct);
+        et_ProductName = findViewById(R.id.et_ProductName);
+        et_description = findViewById(R.id.et_description);
+        et_price = findViewById(R.id.et_price);
         //add a product to the database
         button_AddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Product newProduct = new Product(et_ProductName.getText().toString(),et_description.getText().toString(),Double.valueOf(et_price.getText().toString()));
+                Product newProduct = new Product(et_ProductName.getText().toString(), et_description.getText().toString(), Double.valueOf(et_price.getText().toString()));
 
                 productRepository.insert(newProduct, new OnAsyncEventListener() {
                     @Override
                     public void onSuccess() {
                         Log.d(TAG, "product added : success");
-                        startActivity(new Intent(ModifyProfilActivity.this,MainActivity.class));
+                        startActivity(new Intent(ModifyProfilActivity.this, MainActivity.class));
 
                         onBackPressed();
                     }
@@ -54,4 +55,5 @@ public class ModifyProfilActivity extends AppCompatActivity {
             }
         });
 
+    }
 }

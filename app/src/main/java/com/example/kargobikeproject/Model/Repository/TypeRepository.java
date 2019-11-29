@@ -21,5 +21,9 @@ public class TypeRepository {
                     }
                 });
     }
-   // public ArrayList<Type> getAllTypes()
+    public ArrayList<Type> getAllTypes(final OnAsyncEventListener callback) {
+        ArrayList<Type> result = null;
+
+        return result;
+    }
 }
