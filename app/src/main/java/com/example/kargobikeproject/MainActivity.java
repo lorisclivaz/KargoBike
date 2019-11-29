@@ -38,6 +38,7 @@ Button showCheckPointHistory;
 Button addOrder;
 Button manageTypes;
 Button btn_authorizedUser;
+Button button_DisplayProductList;
 //Add status data
     /*
     private static final String TAG = "Order";
@@ -63,7 +64,7 @@ Button btn_authorizedUser;
         checkBike=findViewById(R.id.buttonCheckBike);
         transportOrder=findViewById(R.id.TransportOrder);
         showCheckPointHistory = findViewById(R.id.buttonOrderCheckPoint);
-
+        button_DisplayProductList= findViewById(R.id.button_DisplayProductList);
         addOrder = findViewById(R.id.buttonAddOrder);
         manageTypes = findViewById(R.id.buttonManageType);
         btn_authorizedUser = findViewById(R.id.button_authorizeUser);
@@ -145,7 +146,12 @@ Button btn_authorizedUser;
                 startActivity(new Intent(MainActivity.this, GpsCheckPointActivity.class));
             }
         });
-
+        button_DisplayProductList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ProductListActivity.class));
+            }
+        });
         modifyProfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
