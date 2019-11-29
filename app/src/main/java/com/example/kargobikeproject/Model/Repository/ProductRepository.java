@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.kargobikeproject.Model.Entity.Product;
 import com.example.kargobikeproject.Model.Firebase.ProductListLiveData;
+import com.example.kargobikeproject.Model.Firebase.ProductLiveData;
 import com.example.kargobikeproject.Utils.OnAsyncEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -45,10 +46,18 @@ public class ProductRepository {
                 .getReference("products");
         return new ProductListLiveData(reference);
     }
+
+    public LiveData<Product> getProduct(final String name) {
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("products")
+                .child(name);
+        return new ProductLiveData(reference);
+    }
+
     public void update(final Product product, final OnAsyncEventListener callback) {
         FirebaseDatabase.getInstance()
                 .getReference("products")
-                .child(product.getIdProduct())
+                .child(product.getId())
                 .updateChildren(product.toMap(), (databaseError, databaseReference) -> {
                     if (databaseError != null) {
                         callback.onFailure(databaseError.toException());
@@ -61,7 +70,7 @@ public class ProductRepository {
     public void delete(final Product product, OnAsyncEventListener callback) {
         FirebaseDatabase.getInstance()
                 .getReference("products")
-                .child(product.getIdProduct())
+                .child(product.getId())
                 .removeValue((databaseError, databaseReference) -> {
                     if (databaseError != null) {
                         callback.onFailure(databaseError.toException());

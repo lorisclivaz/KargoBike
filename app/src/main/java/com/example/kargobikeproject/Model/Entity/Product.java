@@ -8,7 +8,7 @@ import java.util.Map;
 public class Product {
 
     //Variables about Product
-    private String idProduct;
+    private String id;
     private String name;
     private String description;
     private double price;
@@ -48,15 +48,23 @@ public class Product {
     public void setPrice(double price) {
         this.price = price;
     }
-
-    public String getIdProduct() {
-        return idProduct;
+    @Exclude
+    public String getId() {
+        return id;
     }
 
-    public void setIdProduct(String idProduct) {
-        this.idProduct = idProduct;
+    public void setId(String id) {
+        this.id = id;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof Product)) return false;
+        Product o = (Product) obj;
+        return o.getName().equals(this.name);
+    }
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();

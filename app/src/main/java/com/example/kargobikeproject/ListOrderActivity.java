@@ -123,6 +123,17 @@ public class ListOrderActivity extends AppCompatActivity {
         }
 
         adapterClass = new OrderAdapter(list);
+        adapterClass.setOnItemClickListener(new OrderAdapter.onItemCLickListener() {
+            @Override
+            public void onItemClick(int position) {
+
+                Intent intent;
+                intent = new Intent(ListOrderActivity.this, ModifyAndDeleteOrderActivity.class);
+                startActivity(intent);
+
+                Log.d("TAG", orders.get(position).getNameClient());
+            }
+        });
         recyclerView.setAdapter(adapterClass);
     }
 }
