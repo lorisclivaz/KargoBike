@@ -14,8 +14,8 @@ import android.widget.Toast;
 import com.example.kargobikeproject.Model.Entity.User;
 import com.example.kargobikeproject.Model.Repository.OrderRepository;
 import com.example.kargobikeproject.Model.Repository.UserRepository;
-import com.example.kargobikeproject.ViewModels.UserViewModel;
-import com.example.kargobikeproject.util.OnAsyncEventListener;
+import com.example.kargobikeproject.Utils.OnAsyncEventListener;
+import com.example.kargobikeproject.ViewModel.UserViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -113,8 +113,7 @@ public class AddAuthorizedUser extends AppCompatActivity {
                 viewModel.updateUser(userSelected, new OnAsyncEventListener() {
                     @Override
                     public void onSuccess() {
-
-                        //startActivity(new Intent(AddAuthorizedUser.this, AddAuthorizedUser.class));
+                        
                         Log.d("ICCCIIIIII","Modification ok");
                     }
 
