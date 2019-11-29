@@ -79,7 +79,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
         return orders.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder
+  public   class MyViewHolder extends RecyclerView.ViewHolder
     {
         Button checkpointButton;
         TextView nameClient, nameRoute, nameRider, address, startDate, endDate, status;
@@ -103,6 +103,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
                     if(listener != null)
                     {
                         int position = getAdapterPosition();
+
 
                         if(position != RecyclerView.NO_POSITION)
                         {

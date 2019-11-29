@@ -9,7 +9,7 @@ public class OrderRepository {
 
     // Firebase Database paths must not contain '.', '#', '$', '[', or ']'
     public void insert(final Order order, final OnAsyncEventListener callback) {
-        String id = FirebaseDatabase.getInstance().getReference("orders").push().getKey();
+        String id = FirebaseDatabase.getInstance().getReference("order").push().getKey();
         FirebaseDatabase.getInstance()
                 .getReference("order")
                 .child(id)
@@ -27,7 +27,7 @@ public class OrderRepository {
     public void delete(final Order order, OnAsyncEventListener callback) {
         FirebaseDatabase.getInstance()
                 .getReference("order")
-                .child(order.getIdOrder())
+                .child(order.getNameClient())
                 .removeValue((databaseError, databaseReference) -> {
                     if (databaseError != null) {
                         callback.onFailure(databaseError.toException());

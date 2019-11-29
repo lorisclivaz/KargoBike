@@ -1,16 +1,16 @@
 package com.example.kargobikeproject;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.kargobikeproject.Model.Entity.Order;
 import com.example.kargobikeproject.Model.Repository.OrderRepository;
 import com.example.kargobikeproject.Utils.OnAsyncEventListener;
@@ -52,12 +52,12 @@ public class AddOrderActivity extends AppCompatActivity {
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("status");
 
         //Find in the layout
-        nameClient = findViewById(R.id.textInputNameClient);
-        address = findViewById(R.id.textInputEditAddress);
-        deliverStart = findViewById(R.id.textInputEditDeliverStart);
-        deliverEnd = findViewById(R.id.textInputEditDeliverEnd);
-        route = findViewById(R.id.textInputEditRoute);
-        nameRider = findViewById(R.id.textInputNameRider);
+        nameClient = findViewById(R.id.NameClient);
+        address = findViewById(R.id.Address);
+        deliverStart = findViewById(R.id.DeliverStart);
+        deliverEnd = findViewById(R.id.DeliverEnd);
+        route = findViewById(R.id.nameRoute);
+        nameRider = findViewById(R.id.NameRider);
         submit = findViewById(R.id.buttonSubmit);
 
         //Spinner Status
