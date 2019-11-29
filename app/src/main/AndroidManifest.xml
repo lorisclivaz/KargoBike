@@ -14,7 +14,6 @@
         <activity android:name=".ProductDetailActivity"></activity>
         <activity android:name=".ProductListActivity" />
         <activity android:name=".AddOrderActivity" />
-        <activity android:name=".ListTypesActivity"></activity>
         <activity android:name=".AddAuthorizedUser" />
         <activity android:name=".OrderCheckpointActivity" />
         <activity android:name=".CheckBikeActivity" />
