@@ -22,6 +22,21 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
     ArrayList<Order> orders;
     Context mContext;
+    Button modify;
+    private onItemCLickListener mListener;
+
+    public interface onItemCLickListener
+    {
+        void onItemClick(int position);
+
+    }
+
+    public void setOnItemClickListener(onItemCLickListener listener)
+    {
+
+        mListener = listener;
+    }
+
     public OrderAdapter(ArrayList<Order> orders)
     {
         this.orders = orders;
@@ -33,7 +48,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_order,parent,false);
 
-        return new MyViewHolder(view);
+        return new MyViewHolder(view, mListener);
     }
 
     @Override
@@ -58,6 +73,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
     }
 
+
+
     @Override
     public int getItemCount() {
         return orders.size();
@@ -68,7 +85,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
         Button checkpointButton;
         TextView nameClient, nameRoute, nameRider, address, startDate, endDate, status;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, onItemCLickListener listener) {
             super(itemView);
 
             nameClient = itemView.findViewById(R.id.nameClient);
@@ -79,6 +96,24 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
             endDate = itemView.findViewById(R.id.endDate);
             status = itemView.findViewById(R.id.status);
             checkpointButton = itemView.findViewById(R.id.buttonViewCheckPoint);
+            modify = itemView.findViewById(R.id.ModifyOrder);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if(listener != null)
+                    {
+                        int position = getAdapterPosition();
+
+                        if(position != RecyclerView.NO_POSITION)
+                        {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+
+
         }
     }
 }
