@@ -22,7 +22,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
     ArrayList<Order> orders;
     Context mContext;
-    Button modify;
+
     private onItemCLickListener mListener;
 
     public interface onItemCLickListener
@@ -96,7 +96,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
             endDate = itemView.findViewById(R.id.endDate);
             status = itemView.findViewById(R.id.status);
             checkpointButton = itemView.findViewById(R.id.buttonViewCheckPoint);
-            modify = itemView.findViewById(R.id.ModifyOrder);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
