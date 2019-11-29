@@ -32,9 +32,8 @@ public class CheckPoint {
         this.nameRider = nameRider;
         this.timeStamp =timeStamp;
     }
-    public CheckPoint(String idCheckPoint,String idOrder,String checkPointName, String nameRider, String timeStamp)
+    public CheckPoint(String idOrder,String checkPointName, String nameRider, String timeStamp)
     {
-        this.idCheckPoint = idCheckPoint;
         this.idOrder = idOrder;
         this.checkPointName = checkPointName;
         this.nameRider = nameRider;

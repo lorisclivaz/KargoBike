@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ListOrderActivity"></activity>
+        <activity android:name=".ModifyAndDeleteOrderActivity"></activity>
+        <activity android:name=".ListOrderActivity" />
         <activity android:name=".ListTypesActivity" />
-        <activity android:name=".ProductDetailActivity"></activity>
+        <activity android:name=".ProductDetailActivity" />
         <activity android:name=".ProductListActivity" />
         <activity android:name=".AddOrderActivity" />
         <activity android:name=".AddAuthorizedUser" />

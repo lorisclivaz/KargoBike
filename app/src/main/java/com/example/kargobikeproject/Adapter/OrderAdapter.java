@@ -2,7 +2,6 @@ package com.example.kargobikeproject.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +21,20 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
     ArrayList<Order> orders;
     Context mContext;
+    private onItemCLickListener mListener;
+
+    public interface onItemCLickListener
+    {
+        void onItemClick(int position);
+
+    }
+
+    public void setOnItemClickListener(onItemCLickListener listener)
+    {
+
+        mListener = listener;
+    }
+
     public OrderAdapter(ArrayList<Order> orders)
     {
         this.orders = orders;
@@ -33,12 +46,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_order,parent,false);
 
-        return new MyViewHolder(view);
+        return new MyViewHolder(view, mListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int position) {
-
         myViewHolder.nameClient.setText(orders.get(position).getNameClient());
         myViewHolder.nameRoute.setText(orders.get(position).getNameRoute());
         myViewHolder.nameRider.setText(orders.get(position).getNameRider());
@@ -51,13 +63,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
             public void onClick(View v ) {
                 //if you need position, just use recycleViewHolder.getAdapterPosition();
                 Intent intent = new Intent(v.getContext(), OrderCheckpointActivity.class);
-                intent.putExtra("ORDER_ID", orders.get(position).getNameClient());
+                intent.putExtra("ORDER_CLIENT", orders.get(position).getNameClient());
+                intent.putExtra("ORDER_ID", orders.get(position).getIdOrder());
                 v.getContext().startActivity(intent);
-                Log.d("hey", "this order has name" + orders.get(position).getNameClient() );
             }
         });
 
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -69,7 +83,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
         Button checkpointButton;
         TextView nameClient, nameRoute, nameRider, address, startDate, endDate, status;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, onItemCLickListener listener) {
             super(itemView);
 
             nameClient = itemView.findViewById(R.id.nameClient);
@@ -80,6 +94,23 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
             endDate = itemView.findViewById(R.id.endDate);
             status = itemView.findViewById(R.id.status);
             checkpointButton = itemView.findViewById(R.id.buttonViewCheckPoint);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if(listener != null)
+                    {
+                        int position = getAdapterPosition();
+
+                        if(position != RecyclerView.NO_POSITION)
+                        {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+
+
         }
     }
 }
