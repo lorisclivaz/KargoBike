@@ -81,10 +81,11 @@ public class AddAuthorizedUser extends AppCompatActivity {
                         UserViewModel.Factory factory = new UserViewModel.Factory(getApplication(),"0");
                         viewModel = ViewModelProviders.of(AddAuthorizedUser.this, factory).get(UserViewModel.class);
 
-                        if (u.getAccess() == 0)
+                        if (u.getAccess() == 0){
                             switchState=false;
-                        else
+                        }  else{
                             switchState=true;
+                        }
 
                         switchAuth.setChecked(switchState);
                         Log.d("ICCCIIIIII","switch = "+switchState +" user = "+userSelected.getMail());

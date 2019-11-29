@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,27 +16,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-            <Button
-                android:id="@+id/buttonCheckBike"
+            <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="CheckBike" />
-
-            <Button
-                android:id="@+id/buttonManageType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="Manage Checkpoint type" />
-
-            <Button
-                android:id="@+id/buttonModifyProfil"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="Modify profil" />
+                app:srcCompat="@mipmap/app_icon_foreground" />
 
             <Button
                 android:id="@+id/buttonLoginWithGoogle"
@@ -43,27 +28,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="Login With Google" />
-
-            <Button
-                android:id="@+id/button_authorizeUser"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="Authorize User" />
-
-            <Button
-                android:id="@+id/buttonLogout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="Logout" />
-
-            <Button
-                android:id="@+id/buttonAddOrder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="AddOrder" />
 
             <Button
                 android:id="@+id/TransportOrder"
@@ -80,13 +44,48 @@
                 android:text="Products" />
 
             <Button
+                android:id="@+id/buttonModifyProfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Modify profil" />
+
+            <Button
+                android:id="@+id/buttonLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Logout" />
+
+            <TextView
+                android:id="@+id/tv_onlyDispatcher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Only dispatcher:" />
+
+            <Button
+                android:id="@+id/button_authorizeUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Authorize User" />
+
+            <Button
+                android:id="@+id/buttonManageType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Manage Checkpoint type" />
+
+            <Button
                 android:id="@+id/buttonAddProduct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Add Product" />
+                android:drawableLeft="@drawable/ic_plus"
+                android:text="Add a product" />
+
         </LinearLayout>
     </ScrollView>
-
-
 </LinearLayout>

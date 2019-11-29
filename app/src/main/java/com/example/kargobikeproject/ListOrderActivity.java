@@ -3,7 +3,10 @@ package com.example.kargobikeproject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,39 +39,33 @@ public class ListOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_order);
 
-    ref = FirebaseDatabase.getInstance().getReference().child("order");
-    recyclerView = findViewById(R.id.recyclerViewOrder);
-    searchView = (SearchView) findViewById(R.id.SearchBar);
-
-
+        ref = FirebaseDatabase.getInstance().getReference().child("order");
+        recyclerView = findViewById(R.id.recyclerViewOrder);
+        searchView = (SearchView) findViewById(R.id.SearchBar);
 
 
     }
 
     @Override
-    protected void onStart()
-    {
+    protected void onStart() {
         super.onStart();
 
-        if(ref!=null)
-        {
+        if (ref != null) {
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    if(dataSnapshot.exists())
-                    {
+                    if (dataSnapshot.exists()) {
                         orders = new ArrayList<>();
 
-                        for (DataSnapshot ds: dataSnapshot.getChildren())
-                        {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
                             Order o = new Order();
                             o = ds.getValue(Order.class);
                             o.setIdOrder(ds.getKey());
                             orders.add(o);
                         }
 
-                         adapterClass = new OrderAdapter(orders);
+                        adapterClass = new OrderAdapter(orders);
                         adapterClass.setOnItemClickListener(new OrderAdapter.onItemCLickListener() {
                             @Override
                             public void onItemClick(int position) {
@@ -92,8 +89,7 @@ public class ListOrderActivity extends AppCompatActivity {
             });
         }
 
-        if (searchView != null)
-        {
+        if (searchView != null) {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
@@ -110,14 +106,11 @@ public class ListOrderActivity extends AppCompatActivity {
         }
     }
 
-    private void search(String str)
-    {
+    private void search(String str) {
         ArrayList<Order> list = new ArrayList<>();
 
-        for (Order object : orders)
-        {
-            if (object.getNameClient().toLowerCase().contains(str.toLowerCase()))
-            {
+        for (Order object : orders) {
+            if (object.getNameClient().toLowerCase().contains(str.toLowerCase())) {
                 list.add(object);
             }
         }
@@ -136,4 +129,26 @@ public class ListOrderActivity extends AppCompatActivity {
         });
         recyclerView.setAdapter(adapterClass);
     }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(0, 1, Menu.NONE, "add Order")
+                .setIcon(R.drawable.ic_plus)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (item.getItemId() == 1) {
+            Toast.makeText(ListOrderActivity.this, "Add Order", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(ListOrderActivity.this, AddOrderActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }

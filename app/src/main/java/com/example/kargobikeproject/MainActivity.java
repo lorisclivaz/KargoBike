@@ -33,7 +33,6 @@ Button buttonAddProduct;
 Button checkBike;
 Button transportOrder;
 Button modifyProfil;
-Button addOrder;
 Button manageTypes;
 Button btn_authorizedUser;
 Button button_DisplayProductList;
@@ -58,10 +57,9 @@ Button button_DisplayProductList;
         setContentView(R.layout.activity_main);
         buttonAddProduct=findViewById(R.id.buttonAddProduct);
         modifyProfil=findViewById(R.id.buttonModifyProfil);
-        checkBike=findViewById(R.id.buttonCheckBike);
+        //checkBike=findViewById(R.id.buttonCheckBike);
         transportOrder=findViewById(R.id.TransportOrder);
         button_DisplayProductList= findViewById(R.id.button_DisplayProductList);
-        addOrder = findViewById(R.id.buttonAddOrder);
         manageTypes = findViewById(R.id.buttonManageType);
         btn_authorizedUser = findViewById(R.id.button_authorizeUser);
 
@@ -122,13 +120,6 @@ Button button_DisplayProductList;
             }
         });
 
-        addOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,AddOrderActivity.class));
-            }
-        });
-
         buttonAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,12 +139,12 @@ Button button_DisplayProductList;
             }
         });
 
-        checkBike.setOnClickListener(new View.OnClickListener() {
+        /*checkBike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, CheckBikeActivity.class));
             }
-        });
+        });*/
 
         manageTypes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -263,13 +254,13 @@ Button button_DisplayProductList;
             String uid = user.getUid();
 
             Toast.makeText(this, "email : "+email+" uid : "+uid, Toast.LENGTH_SHORT).show();
-            btn_login.setVisibility(View.INVISIBLE);
+            btn_login.setVisibility(View.GONE);
             btn_logout.setVisibility(View.VISIBLE);
         }
         else
         {
             btn_login.setVisibility(View.VISIBLE);
-            btn_logout.setVisibility(View.INVISIBLE);
+            btn_logout.setVisibility(View.GONE);
         }
     }
 

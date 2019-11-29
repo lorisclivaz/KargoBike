@@ -35,7 +35,7 @@
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_action_add"
-        app:backgroundTint="#FFC107"
+        app:backgroundTint="#D53C49"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
