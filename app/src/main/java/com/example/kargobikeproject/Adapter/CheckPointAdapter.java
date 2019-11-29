@@ -36,6 +36,7 @@ public class CheckPointAdapter extends RecyclerView.Adapter<CheckPointAdapter.My
         myViewHolder.checkPointName.setText(checkPoints.get(position).getCheckPointName());
         myViewHolder.nameRider.setText(checkPoints.get(position).getNameRider());
         myViewHolder.timeStamp.setText(checkPoints.get(position).getTimeStamp());
+        myViewHolder.type.setText(checkPoints.get(position).getTypeName());
 
     }
 
@@ -46,13 +47,14 @@ public class CheckPointAdapter extends RecyclerView.Adapter<CheckPointAdapter.My
 
     class MyViewHolder extends RecyclerView.ViewHolder
     {
-        TextView checkPointName, nameRider, timeStamp;
+        TextView checkPointName, nameRider, timeStamp, type;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             checkPointName = itemView.findViewById(R.id.checkpoint_name);
             nameRider = itemView.findViewById(R.id.checkpoint_rider);
             timeStamp = itemView.findViewById(R.id.checkpoint_timeStamp);
+            type = itemView.findViewById(R.id.checkpoint_type);
 
         }
     }
