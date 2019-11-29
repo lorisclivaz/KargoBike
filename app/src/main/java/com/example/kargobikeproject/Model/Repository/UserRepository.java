@@ -3,7 +3,7 @@ package com.example.kargobikeproject.Model.Repository;
 import com.example.kargobikeproject.Model.Entity.User;
 import com.example.kargobikeproject.Model.Firebase.UserListLiveData;
 import com.example.kargobikeproject.Model.Firebase.UserLiveData;
-import com.example.kargobikeproject.util.OnAsyncEventListener;
+import com.example.kargobikeproject.Utils.OnAsyncEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;

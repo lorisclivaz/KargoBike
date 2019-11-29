@@ -1,11 +1,10 @@
-package com.example.kargobikeproject.ViewModels;
+package com.example.kargobikeproject.ViewModel;
 
 import android.app.Application;
 
 import com.example.kargobikeproject.Model.Entity.User;
 import com.example.kargobikeproject.Model.Repository.UserRepository;
-import com.example.kargobikeproject.util.OnAsyncEventListener;
-import com.example.kargobikeproject.BaseApp;
+import com.example.kargobikeproject.Utils.OnAsyncEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;

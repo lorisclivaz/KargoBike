@@ -1,14 +1,18 @@
 package com.example.kargobikeproject;
 
+import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.widget.SearchView;
+import android.util.Log;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kargobikeproject.Adapter.OrderAdapter;
 import com.example.kargobikeproject.Model.Entity.Order;
+import com.example.kargobikeproject.Model.Repository.OrderRepository;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +27,9 @@ public class ListOrderActivity extends AppCompatActivity {
     ArrayList<Order> orders;
     RecyclerView recyclerView;
     SearchView searchView;
+    OrderAdapter adapterClass;
+    Button buttonViewCheckPoint;
+    OrderRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +39,9 @@ public class ListOrderActivity extends AppCompatActivity {
     ref = FirebaseDatabase.getInstance().getReference().child("order");
     recyclerView = findViewById(R.id.recyclerViewOrder);
     searchView = (SearchView) findViewById(R.id.SearchBar);
+
+
+
 
     }
 
@@ -52,11 +62,24 @@ public class ListOrderActivity extends AppCompatActivity {
 
                         for (DataSnapshot ds: dataSnapshot.getChildren())
                         {
-
-                            orders.add(ds.getValue(Order.class));
+                            Order o = new Order();
+                            o = ds.getValue(Order.class);
+                            o.setIdOrder(ds.getKey());
+                            orders.add(o);
                         }
 
-                        OrderAdapter adapterClass = new OrderAdapter(orders);
+                         adapterClass = new OrderAdapter(orders);
+                        adapterClass.setOnItemClickListener(new OrderAdapter.onItemCLickListener() {
+                            @Override
+                            public void onItemClick(int position) {
+
+                                Intent intent;
+                                intent = new Intent(ListOrderActivity.this, ModifyAndDeleteOrderActivity.class);
+                                startActivity(intent);
+
+                                Log.d("TAG", orders.get(position).getNameClient());
+                            }
+                        });
                         recyclerView.setAdapter(adapterClass);
 
                     }
@@ -89,17 +112,28 @@ public class ListOrderActivity extends AppCompatActivity {
 
     private void search(String str)
     {
-        ArrayList<Order> orders = new ArrayList<>();
+        ArrayList<Order> list = new ArrayList<>();
 
         for (Order object : orders)
         {
             if (object.getNameClient().toLowerCase().contains(str.toLowerCase()))
             {
-                orders.add(object);
+                list.add(object);
             }
         }
 
-        OrderAdapter orderAdapter = new OrderAdapter(orders);
-        recyclerView.setAdapter(orderAdapter);
+        adapterClass = new OrderAdapter(list);
+        adapterClass.setOnItemClickListener(new OrderAdapter.onItemCLickListener() {
+            @Override
+            public void onItemClick(int position) {
+
+                Intent intent;
+                intent = new Intent(ListOrderActivity.this, ModifyAndDeleteOrderActivity.class);
+                startActivity(intent);
+
+                Log.d("TAG", orders.get(position).getNameClient());
+            }
+        });
+        recyclerView.setAdapter(adapterClass);
     }
 }

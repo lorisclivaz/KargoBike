@@ -12,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.kargobikeproject.Model.Entity.User;
-import com.example.kargobikeproject.ViewModels.UserViewModel;
-import com.example.kargobikeproject.util.OnAsyncEventListener;
+import com.example.kargobikeproject.ViewModel.UserViewModel;
+import com.example.kargobikeproject.Utils.OnAsyncEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
@@ -58,8 +58,8 @@ public class ModifyProfilActivity extends AppCompatActivity {
 
         context = getApplicationContext();
 
+        //return button to the MainActivity
         returnButton = findViewById(R.id.buttonReturn);
-
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,11 +69,13 @@ public class ModifyProfilActivity extends AppCompatActivity {
     }
 
     public void saveUser(View view) {
+        //Get the field values
         user.setFirstName(String.valueOf(et_firstName.getText()));
         user.setLastName(String.valueOf(et_lastName.getText()));
         user.setPhoneNumber(String.valueOf(et_PhoneNumber.getText()));
         user.setRegionWorking(String.valueOf(et_WorkingRegio.getText()));
 
+        //update the data
         viewModel.updateUser(user, new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
