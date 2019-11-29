@@ -26,11 +26,13 @@ import java.util.ArrayList;
 
 public class ListOrderActivity extends AppCompatActivity {
 
+     static final String Extra_ClientName = "NameClient";
     DatabaseReference ref;
     ArrayList<Order> orders;
     RecyclerView recyclerView;
     SearchView searchView;
     OrderAdapter adapterClass;
+    Order clickOrder;
     Button buttonViewCheckPoint;
     OrderRepository repository;
 
@@ -70,8 +72,15 @@ public class ListOrderActivity extends AppCompatActivity {
                             @Override
                             public void onItemClick(int position) {
 
-                                Intent intent;
-                                intent = new Intent(ListOrderActivity.this, ModifyAndDeleteOrderActivity.class);
+                                Intent intent = new Intent(ListOrderActivity.this, ModifyAndDeleteOrderActivity.class);
+                                intent.putExtra("Name_Client", orders.get(position).getNameClient());
+                                intent.putExtra("Name_Rider", orders.get(position).getNameRider());
+                                intent.putExtra("Name_Route", orders.get(position).getNameRoute());
+                                intent.putExtra("address", orders.get(position).getAddress());
+                                intent.putExtra("deliverStart", orders.get(position).getDeliverStart());
+                                intent.putExtra("deliverEnd", orders.get(position).getDeliverEnd());
+                                intent.putExtra("status", orders.get(position).getOrderStatus());
+
                                 startActivity(intent);
 
                                 Log.d("TAG", orders.get(position).getNameClient());
@@ -122,6 +131,18 @@ public class ListOrderActivity extends AppCompatActivity {
 
                 Intent intent;
                 intent = new Intent(ListOrderActivity.this, ModifyAndDeleteOrderActivity.class);
+                 clickOrder = orders.get(position);
+
+                intent.putExtra("Name_Client", orders.get(position).getNameClient());
+                intent.putExtra("Name_Rider", orders.get(position).getNameRider());
+                intent.putExtra("Name_Route", orders.get(position).getNameRoute());
+                intent.putExtra("address", orders.get(position).getAddress());
+                intent.putExtra("deliverStart", orders.get(position).getDeliverStart());
+                intent.putExtra("deliverEnd", orders.get(position).getDeliverEnd());
+                intent.putExtra("status", orders.get(position).getOrderStatus());
+
+
+
                 startActivity(intent);
 
                 Log.d("TAG", orders.get(position).getNameClient());
