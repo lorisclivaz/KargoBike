@@ -11,16 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
-
-import com.example.kargobikeproject.Model.Entity.Status;
 import com.example.kargobikeproject.Model.Entity.User;
-import com.example.kargobikeproject.Model.Repository.StatusRepository;
-import com.example.kargobikeproject.ViewModels.UserListViewModel;
-import com.example.kargobikeproject.ViewModels.UserViewModel;
-import com.example.kargobikeproject.util.OnAsyncEventListener;
+import com.example.kargobikeproject.Utils.OnAsyncEventListener;
+import com.example.kargobikeproject.ViewModel.UserListViewModel;
+import com.example.kargobikeproject.ViewModel.UserViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -223,6 +218,7 @@ Button btn_authorizedUser;
                 allUsersViewModel.getUsers().observe(this, userEntitys -> {
                     if (userEntitys != null) {
                         int userHaveAccess =0;
+
                         //check if the User exist
                         Boolean userExist = false;
                         for(User listUser : userEntitys){
@@ -232,6 +228,7 @@ Button btn_authorizedUser;
                                 break;
                             }
                         }
+
                         //Create the user if he does not exist
                         if (!userExist){
                             //create the user
@@ -250,6 +247,7 @@ Button btn_authorizedUser;
                                 }
                             });
                         }/*
+                        // when the user has no access, he will redirected to the noaccessactivity and can't go back
                         if(userHaveAccess==0){
                             startActivity(new Intent(MainActivity.this, NoAccessActivity.class));
                         }*/

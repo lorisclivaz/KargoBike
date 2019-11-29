@@ -1,4 +1,4 @@
-package com.example.kargobikeproject.ViewModels;
+package com.example.kargobikeproject.ViewModel;
 
 import android.app.Application;
 
