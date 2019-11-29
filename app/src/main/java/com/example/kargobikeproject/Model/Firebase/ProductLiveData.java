@@ -2,14 +2,14 @@ package com.example.kargobikeproject.Model.Firebase;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+
 import com.example.kargobikeproject.Model.Entity.Product;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 
 public class ProductLiveData extends LiveData<Product> {
     private static final String TAG = "ProductLiveData";
@@ -35,8 +35,10 @@ public class ProductLiveData extends LiveData<Product> {
     private class MyValueEventListener implements ValueEventListener {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            Product entity = dataSnapshot.getValue(Product.class);
-            entity.setIdProduct(dataSnapshot.getKey());
+            Product entity = (Product) dataSnapshot.getValue(Product.class);
+            System.out.println("dataSnapshot "+dataSnapshot);
+            System.out.println(dataSnapshot.getKey());
+            entity.setId(dataSnapshot.getKey());
             setValue(entity);
         }
 

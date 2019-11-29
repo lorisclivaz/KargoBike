@@ -20,21 +20,21 @@ public class ProductListViewModel extends AndroidViewModel {
     private ProductRepository repository;
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
-    private final MediatorLiveData<List<Product>> observableBeverages;
+    private final MediatorLiveData<List<Product>> observableProducts;
 
     public ProductListViewModel(@NonNull Application application, ProductRepository beverageRepository) {
         super(application);
 
         repository = beverageRepository;
 
-        observableBeverages = new MediatorLiveData<>();
+        observableProducts = new MediatorLiveData<>();
         // set by default null, until we get data from the database.
-        observableBeverages.setValue(null);
+        observableProducts.setValue(null);
 
-        LiveData<List<Product>> beverages = repository.getAllProducts();
+        LiveData<List<Product>> products = repository.getAllProducts();
 
         // observe the changes of the entities from the database and forward them
-        observableBeverages.addSource(beverages, observableBeverages::setValue);
+        observableProducts.addSource(products, observableProducts::setValue);
     }
 
     /**
@@ -63,7 +63,7 @@ public class ProductListViewModel extends AndroidViewModel {
      * Expose the LiveData ClientEntities query so the UI can observe it.
      */
     public LiveData<List<Product>> getBeverages() {
-        return observableBeverages;
+        return observableProducts;
     }
 
     public void deleteBeverage(Product beverage) {
