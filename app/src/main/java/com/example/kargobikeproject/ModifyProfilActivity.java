@@ -1,59 +1,118 @@
 package com.example.kargobikeproject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import com.example.kargobikeproject.Model.Entity.User;
+import com.example.kargobikeproject.ViewModels.UserViewModel;
+import com.example.kargobikeproject.util.OnAsyncEventListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.kargobikeproject.Model.Entity.Product;
-import com.example.kargobikeproject.Model.Repository.ProductRepository;
-import com.example.kargobikeproject.Utils.OnAsyncEventListener;
+import androidx.lifecycle.ViewModelProviders;
 
 public class ModifyProfilActivity extends AppCompatActivity {
 
-    Button button_AddProduct;
-    ProductRepository productRepository;
-    EditText et_ProductName;
-    EditText et_description;
-    EditText et_price;
-    private static final String TAG = "Product";
+    private User user;
+    private UserViewModel viewModel;
+    private TextView tv_mail;
+    private EditText et_firstName, et_lastName, et_PhoneNumber, et_WorkingRegio;
+    private String userId;
+    private Context context;
+    private FirebaseUser firebaseUser;
+
+    Button returnButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        productRepository = new ProductRepository();
         setContentView(R.layout.activity_modify_profil);
-        button_AddProduct = findViewById(R.id.button_AddProduct);
-        et_ProductName = findViewById(R.id.et_ProductName);
-        et_description = findViewById(R.id.et_description);
-        et_price = findViewById(R.id.et_price);
-        //add a product to the database
-        button_AddProduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Product newProduct = new Product(et_ProductName.getText().toString(), et_description.getText().toString(), Double.valueOf(et_price.getText().toString()));
 
-                productRepository.insert(newProduct, new OnAsyncEventListener() {
-                    @Override
-                    public void onSuccess() {
-                        Log.d(TAG, "product added : success");
-                        startActivity(new Intent(ModifyProfilActivity.this, MainActivity.class));
+        //get current user
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        firebaseUser = mAuth.getCurrentUser();
 
-                        onBackPressed();
-                    }
+        userId = firebaseUser.getUid();
+        initiateView();
 
-                    @Override
-                    public void onFailure(Exception e) {
-                        Log.d(TAG, "product added: failure", e);
-                    }
-                });
+        //create connection to model view
+        UserViewModel.Factory factory = new UserViewModel.Factory(getApplication(),userId);
+        viewModel = ViewModelProviders.of(this, factory).get(UserViewModel.class);
+        // get the user
+        viewModel.getUser().observe(this, userEntity -> {
+            if (userEntity != null) {
+                //safe the existing user
+                user = userEntity;
+                updateContent();
+                setTitle("Edit " + user.getMail());
             }
         });
 
+        context = getApplicationContext();
+
+        returnButton = findViewById(R.id.buttonReturn);
+
+        returnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ModifyProfilActivity.this, MainActivity.class));
+            }
+        });
     }
+
+    public void saveUser(View view) {
+        user.setFirstName(String.valueOf(et_firstName.getText()));
+        user.setLastName(String.valueOf(et_lastName.getText()));
+        user.setPhoneNumber(String.valueOf(et_PhoneNumber.getText()));
+        user.setRegionWorking(String.valueOf(et_WorkingRegio.getText()));
+
+        viewModel.updateUser(user, new OnAsyncEventListener() {
+            @Override
+            public void onSuccess() {
+                startActivity(new Intent(ModifyProfilActivity.this, MainActivity.class));
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                //Toast.makeText(ModifyProfilActivity.this, "Cannot save changes", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void initiateView() {
+        tv_mail = findViewById(R.id.tv_mail);
+        et_firstName = findViewById(R.id.et_firstName);
+        et_lastName = findViewById(R.id.et_lastName);
+        et_PhoneNumber = findViewById(R.id.et_PhoneNumber);
+        et_WorkingRegio = findViewById(R.id.et_WorkingRegio);
+    }
+
+    private void updateContent() {
+        if (user != null) {
+            tv_mail.setText(user.getMail());
+            et_firstName.setText(user.getFirstName());
+            et_lastName.setText(user.getLastName());
+            String phone = String.valueOf(user.getPhoneNumber()) == null ? "" : String.valueOf(user.getPhoneNumber());
+            et_PhoneNumber.setText(phone);
+            String workRegion = String.valueOf(user.getRegionWorking()) == null ? "" : String.valueOf(user.getRegionWorking());
+            et_WorkingRegio.setText(workRegion);
+
+
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            // Create a storage reference from our app
+            StorageReference storageRef = storage.getReference();
+            // Create a reference with an initial file path and name
+            StorageReference pathReference = storageRef.child("users/"+user.getIdUser());
+        }
+    }
+
 }

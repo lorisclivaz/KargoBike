@@ -8,13 +8,13 @@ import java.util.Map;
 public class User {
 
     //Variables about User
-    private String idRider;
+    private String idUser;
     private String firstName;
     private String lastName;
     private String mail;
     private String regionWorking;
     private String phoneNumber;
-    private Boolean access;
+    private int access;
 
 
     //Constructor
@@ -23,26 +23,27 @@ public class User {
 
     }
 
-    public User(String idRider, String firstName, String lastName, String mail, String regionWorking, String phoneNumber)
+    public User(String idUser, String firstName, String lastName, String mail, String regionWorking, String phoneNumber, int access)
     {
-        this.idRider =idRider;
+        this.idUser =idUser;
         this.firstName = firstName;
         this.lastName = lastName;
         this.mail = mail;
         this.regionWorking = regionWorking;
         this.phoneNumber = phoneNumber;
+        this.access = access;
     }
 
 
     //Getters and setters
     @Exclude
 
-    public String getIdRider() {
-        return idRider;
+    public String getIdUser() {
+        return idUser;
     }
 
-    public void setIdRider(String idRider) {
-        this.idRider = idRider;
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
     }
 
     public String getFirstName() {
@@ -85,11 +86,11 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public Boolean getAccess() {
+    public int getAccess() {
         return access;
     }
 
-    public void setAccess(Boolean access) {
+    public void setAccess(int access) {
         this.access = access;
     }
 
