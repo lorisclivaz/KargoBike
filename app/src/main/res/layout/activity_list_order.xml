@@ -19,9 +19,15 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewOrder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
+        android:layout_height="547dp"
+        android:layout_margin="20dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <Button
+        android:id="@+id/buttonAddOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="AddOrder" />
 
 
 </LinearLayout>

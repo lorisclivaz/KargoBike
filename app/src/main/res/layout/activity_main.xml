@@ -19,7 +19,7 @@
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="58dp"
                 app:srcCompat="@mipmap/app_icon_foreground" />
 
             <Button
@@ -30,46 +30,12 @@
                 android:text="Login With Google" />
 
             <Button
-                android:id="@+id/TransportOrder"
+                android:id="@+id/buttonAddProduct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Transport orders" />
-
-            <Button
-                android:id="@+id/button_DisplayProductList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="Products" />
-
-            <Button
-                android:id="@+id/buttonModifyProfil"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="Modify profil" />
-
-            <Button
-                android:id="@+id/buttonLogout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="Logout" />
-
-            <TextView
-                android:id="@+id/tv_onlyDispatcher"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="Only dispatcher:" />
-
-            <Button
-                android:id="@+id/button_authorizeUser"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="Authorize User" />
+                android:drawableLeft="@drawable/ic_plus"
+                android:text="Add a product" />
 
             <Button
                 android:id="@+id/buttonManageType"
@@ -79,12 +45,46 @@
                 android:text="Manage Checkpoint type" />
 
             <Button
-                android:id="@+id/buttonAddProduct"
+                android:id="@+id/button_authorizeUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:drawableLeft="@drawable/ic_plus"
-                android:text="Add a product" />
+                android:text="Authorize User" />
+
+            <Button
+                android:id="@+id/buttonLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Logout" />
+
+            <Button
+                android:id="@+id/buttonModifyProfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Modify profil" />
+
+            <Button
+                android:id="@+id/button_DisplayProductList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Products" />
+
+            <Button
+                android:id="@+id/TransportOrder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Transport orders" />
+
+            <TextView
+                android:id="@+id/tv_onlyDispatcher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Only dispatcher:" />
 
         </LinearLayout>
     </ScrollView>

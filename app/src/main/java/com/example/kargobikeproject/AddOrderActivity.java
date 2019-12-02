@@ -44,12 +44,17 @@ public class AddOrderActivity extends AppCompatActivity {
     Button submit;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_order);
         orderRepository = new OrderRepository();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("status");
+
+
+
+
 
         //Find in the layout
         nameClient = findViewById(R.id.NameClient);
@@ -86,7 +91,7 @@ public class AddOrderActivity extends AppCompatActivity {
 
                         startActivity(new Intent(AddOrderActivity.this,MainActivity.class));
 
-                        onBackPressed();
+
 
                     }
 
@@ -126,4 +131,6 @@ public class AddOrderActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.orders.OrderFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/orderFragment">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/SearchBar"
@@ -18,8 +19,14 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewOrder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="374dp"
         android:layout_margin="5dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <Button
+        android:id="@+id/buttonAddOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="AddOrder" />
 
 </LinearLayout>
