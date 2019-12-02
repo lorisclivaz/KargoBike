@@ -18,9 +18,21 @@ public class Order {
     private String orderStatus;
 
 
-    //Constructor
-    public Order(){
+    public Order()
+    {
 
+    }
+
+    public Order(String idOrder, String nameClient, String nameRider, String nameRoute, String address, String deliverStart, String deliverEnd, String orderStatus)
+    {
+        this.idOrder = idOrder;
+        this.nameClient = nameClient;
+        this.nameRider = nameRider;
+        this.nameRoute = nameRoute;
+        this.address = address;
+        this.deliverStart = deliverStart;
+        this.deliverEnd = deliverEnd;
+        this.orderStatus = orderStatus;
     }
 
     public Order(String nameClient, String nameRider, String nameRoute, String address, String deliverStart, String deliverEnd, String orderStatus)

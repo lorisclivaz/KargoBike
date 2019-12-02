@@ -2,7 +2,6 @@ package com.example.kargobikeproject;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -27,6 +26,8 @@ import java.util.ArrayList;
 public class ListOrderActivity extends AppCompatActivity {
 
      static final String Extra_ClientName = "NameClient";
+
+     static String idOrder;
     DatabaseReference ref;
     ArrayList<Order> orders;
     RecyclerView recyclerView;
@@ -61,10 +62,10 @@ public class ListOrderActivity extends AppCompatActivity {
                         orders = new ArrayList<>();
 
                         for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            Order o = new Order();
-                            o = ds.getValue(Order.class);
-                            o.setIdOrder(ds.getKey());
-                            orders.add(o);
+                            Order f = new Order();
+                            f = ds.getValue(Order.class);
+                            f.setIdOrder(ds.getKey());
+                            orders.add(f);
                         }
 
                         adapterClass = new OrderAdapter(orders);
@@ -73,6 +74,8 @@ public class ListOrderActivity extends AppCompatActivity {
                             public void onItemClick(int position) {
 
                                 Intent intent = new Intent(ListOrderActivity.this, ModifyAndDeleteOrderActivity.class);
+
+                                intent.putExtra("idOrder", orders.get(position).getIdOrder());
                                 intent.putExtra("Name_Client", orders.get(position).getNameClient());
                                 intent.putExtra("Name_Rider", orders.get(position).getNameRider());
                                 intent.putExtra("Name_Route", orders.get(position).getNameRoute());
@@ -83,7 +86,6 @@ public class ListOrderActivity extends AppCompatActivity {
 
                                 startActivity(intent);
 
-                                Log.d("TAG", orders.get(position).getNameClient());
                             }
                         });
                         recyclerView.setAdapter(adapterClass);
@@ -133,6 +135,7 @@ public class ListOrderActivity extends AppCompatActivity {
                 intent = new Intent(ListOrderActivity.this, ModifyAndDeleteOrderActivity.class);
                  clickOrder = orders.get(position);
 
+                 intent.putExtra("ORDER_ID", orders.get(position).getIdOrder());
                 intent.putExtra("Name_Client", orders.get(position).getNameClient());
                 intent.putExtra("Name_Rider", orders.get(position).getNameRider());
                 intent.putExtra("Name_Route", orders.get(position).getNameRoute());
@@ -145,7 +148,7 @@ public class ListOrderActivity extends AppCompatActivity {
 
                 startActivity(intent);
 
-                Log.d("TAG", orders.get(position).getNameClient());
+
             }
         });
         recyclerView.setAdapter(adapterClass);
@@ -164,12 +167,15 @@ public class ListOrderActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (item.getItemId() == 1) {
             Toast.makeText(ListOrderActivity.this, "Add Order", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(ListOrderActivity.this, AddOrderActivity.class);
-            startActivity(intent);
+  //          Intent intent = new Intent(ListOrderActivity.this, AddOrderActivity.class);
+     //       startActivity(intent);
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
 }

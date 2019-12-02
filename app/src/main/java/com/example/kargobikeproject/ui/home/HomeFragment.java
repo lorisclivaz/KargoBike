@@ -1,24 +1,21 @@
 package com.example.kargobikeproject.ui.home;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.kargobikeproject.R;
 
-import static androidx.lifecycle.ViewModelProviders.*;
+import static androidx.lifecycle.ViewModelProviders.of;
 
 public class HomeFragment extends Fragment {
 
-    private HomeViewModel mViewModel;
+    private com.example.kargobikeproject.ui.home.HomeViewModel mViewModel;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -27,13 +24,13 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.home_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = of(this).get(HomeViewModel.class);
+        mViewModel = of(this).get(com.example.kargobikeproject.ui.home.HomeViewModel.class);
         // TODO: Use the ViewModel
     }
 

@@ -11,6 +11,7 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.kargobikeproject.Adapter.OrderAdapter;
 import com.example.kargobikeproject.Model.Entity.Order;
 import com.example.kargobikeproject.Model.Repository.OrderRepository;
 import com.example.kargobikeproject.Utils.OnAsyncEventListener;
@@ -30,9 +31,11 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
     Spinner status;
     ArrayList<String> spinnerDataList;
     ArrayAdapter<String> adapter;
-    ListOrderActivity ordermethode;
+    ListOrderActivity idOrdermethode;
     Order order;
+    OrderAdapter orderAdapter;
     OrderRepository orderRepository;
+    String idorder;
 
     String clientGetname, riderGetName, routeGetName, adressGet, deliverStartGet, deliverEndGet, statusGet;
 
@@ -48,6 +51,8 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_and_delete_order);
 
+
+        idOrdermethode = new ListOrderActivity();
         orderRepository = new OrderRepository();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("order");
 
@@ -76,6 +81,10 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
         deliverEndGet =  getIntent().getStringExtra("deliverEnd");
         statusGet =  getIntent().getStringExtra("status");
 
+        idorder = getIntent().getStringExtra("IdOrder");
+
+
+
         nameClient.setText(clientGetname);
         nameRider.setText(riderGetName);
         nameRoute.setText(routeGetName);
@@ -89,6 +98,38 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
         //Button
         deleteOrder = findViewById(R.id.buttonDeleteOrder);
         modifyOrder = findViewById(R.id.buttonModifyOrder);
+
+
+        modifyOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                order = new Order(idorder, nameClient.getText().toString(),nameRider.getText().toString(),
+                        nameRoute.getText().toString(),
+                        address.getText().toString(),deliverStart.getText().toString()
+                        ,deliverEnd.getText().toString()
+                        ,status.getSelectedItem().toString());
+
+                orderRepository.update(order, new OnAsyncEventListener() {
+                    @Override
+                    public void onSuccess() {
+
+                        startActivity(new Intent(ModifyAndDeleteOrderActivity.this, ListOrderActivity.class));
+
+                        onBackPressed();
+
+                        Log.d("DB", "Order added : success");
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+
+                        Log.d("DB", "product added : failure");
+                    }
+                });
+
+
+            }
+        });
 
 
 

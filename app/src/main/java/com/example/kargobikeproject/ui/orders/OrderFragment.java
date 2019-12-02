@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 public class OrderFragment extends Fragment {
 
-    private OrderViewModel mViewModel;
+    private com.example.kargobikeproject.ui.orders.OrderViewModel mViewModel;
 
     public static OrderFragment newInstance() {
         return new OrderFragment();
@@ -80,6 +80,8 @@ public class OrderFragment extends Fragment {
                             public void onItemClick(int position) {
 
                                 Intent intent = new Intent(getActivity(), ModifyAndDeleteOrderActivity.class);
+                                intent.putExtra("IdOrder", orders.get(position).getIdOrder());
+
                                 intent.putExtra("Name_Client", orders.get(position).getNameClient());
                                 intent.putExtra("Name_Rider", orders.get(position).getNameRider());
                                 intent.putExtra("Name_Route", orders.get(position).getNameRoute());
@@ -141,6 +143,7 @@ public class OrderFragment extends Fragment {
                 intent = new Intent(getActivity(), ModifyAndDeleteOrderActivity.class);
                 clickOrder = orders.get(position);
 
+                intent.putExtra("IdOrder", orders.get(position).getIdOrder());
                 intent.putExtra("Name_Client", orders.get(position).getNameClient());
                 intent.putExtra("Name_Rider", orders.get(position).getNameRider());
                 intent.putExtra("Name_Route", orders.get(position).getNameRoute());
@@ -153,7 +156,7 @@ public class OrderFragment extends Fragment {
 
                 startActivity(intent);
 
-                Log.d("TAG", orders.get(position).getNameClient());
+
             }
         });
         recyclerView.setAdapter(adapterClass);

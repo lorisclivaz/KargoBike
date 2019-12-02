@@ -66,6 +66,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
                 Intent intent = new Intent(v.getContext(), OrderCheckpointActivity.class);
                 intent.putExtra("ORDER_CLIENT", orders.get(position).getNameClient());
                 intent.putExtra("ORDER_ID", orders.get(position).getIdOrder());
+
+
                 v.getContext().startActivity(intent);
             }
         });
@@ -100,6 +102,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
                 @Override
                 public void onClick(View v) {
 
+
                     if(listener != null)
                     {
                         int position = getAdapterPosition();
@@ -108,6 +111,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
                         if(position != RecyclerView.NO_POSITION)
                         {
                             listener.onItemClick(position);
+
+
+
+
                         }
                     }
                 }
@@ -116,4 +123,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
         }
     }
+
+
 }

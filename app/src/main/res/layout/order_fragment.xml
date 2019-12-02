@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.orders.OrderFragment">
+    tools:context=".ui.orders.OrderFragment"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/SearchBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:padding="10dp"
         android:layout_margin="5dp"
-        app:queryHint="Search"/>
+        android:padding="10dp"
+        app:queryHint="Search" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewOrder"
@@ -21,4 +22,4 @@
         android:layout_margin="5dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-</FrameLayout>
+</LinearLayout>
