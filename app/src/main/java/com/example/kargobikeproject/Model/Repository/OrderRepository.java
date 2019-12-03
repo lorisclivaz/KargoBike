@@ -28,7 +28,7 @@ public class OrderRepository {
         String id = FirebaseDatabase.getInstance().getReference("order").getKey();
         FirebaseDatabase.getInstance()
                 .getReference("order")
-                .child(order.getNameClient())
+                .child(order.getIdOrder())
                 .removeValue((databaseError, databaseReference) -> {
                     if (databaseError != null) {
                         callback.onFailure(databaseError.toException());

@@ -66,7 +66,7 @@ public class AddOrderActivity extends AppCompatActivity {
         submit = findViewById(R.id.buttonSubmit);
 
         //Spinner Status
-        status = (Spinner)findViewById(R.id.spinnerStatus);
+        status = (Spinner)findViewById(R.id.spinnerStatusModify);
         spinnerDataList = new ArrayList<>();
         adapter = new ArrayAdapter<String>(AddOrderActivity.this,android.R.layout.simple_spinner_dropdown_item, spinnerDataList);
 

@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:hint="NameClient"
-        app:layout_constraintBottom_toTopOf="@+id/spinnerStatus"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerStatusModify"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
@@ -77,7 +77,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <Spinner
-        android:id="@+id/spinnerStatus"
+        android:id="@+id/spinnerStatusModify"
         android:layout_width="272dp"
         android:layout_height="30dp"
         android:layout_marginBottom="28dp"
