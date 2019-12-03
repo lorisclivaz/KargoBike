@@ -1,12 +1,17 @@
 package com.example.kargobikeproject;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class AddOrderActivity extends AppCompatActivity {
@@ -39,8 +45,9 @@ public class AddOrderActivity extends AppCompatActivity {
     TextInputEditText nameRider;
     TextInputEditText route;
     TextInputEditText address;
-    TextInputEditText deliverStart;
-    TextInputEditText deliverEnd;
+    TextView deliverStart, deliverEnd;
+    private DatePickerDialog.OnDateSetListener dateListener;
+
     Button submit;
 
 
@@ -59,11 +66,71 @@ public class AddOrderActivity extends AppCompatActivity {
         //Find in the layout
         nameClient = findViewById(R.id.NameClient);
         address = findViewById(R.id.Address);
-        deliverStart = findViewById(R.id.DeliverStart);
-        deliverEnd = findViewById(R.id.DeliverEnd);
+        deliverStart = findViewById(R.id.deliverStart);
+        deliverEnd = findViewById(R.id.deliverEnd);
         route = findViewById(R.id.nameRoute);
         nameRider = findViewById(R.id.NameRider);
         submit = findViewById(R.id.buttonSubmit);
+
+
+        //StartDate calendar
+        deliverStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("salut","deliver start " );
+
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(
+                        AddOrderActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth, dateListener,
+                        year, month,day
+                );
+
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        dateListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                deliverStart.setText(dayOfMonth+"."+(month+1)+"."+year);
+            }
+        };
+
+
+        //EndDate calendar
+        deliverEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.d("salut","deliver end" );
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(
+                        AddOrderActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth, dateListener,
+                        year, month,day
+                );
+
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        dateListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                deliverEnd.setText(dayOfMonth+"."+(month+1)+"."+year);
+            }
+        };
 
         //Spinner Status
         status = (Spinner)findViewById(R.id.spinnerStatusModify);
