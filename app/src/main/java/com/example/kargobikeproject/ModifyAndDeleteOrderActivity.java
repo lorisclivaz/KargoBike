@@ -1,6 +1,7 @@
 package com.example.kargobikeproject;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -37,7 +38,6 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
     private  Spinner statusModify;
     private ArrayList<String> spinnerDataList;
     private  ArrayAdapter<String> adapter;
-    private  ListOrderActivity idOrdermethode;
     private Order order;
     private  OrderAdapter orderAdapter;
     private OrderRepository orderRepository;
@@ -55,7 +55,6 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_modify_and_delete_order);
 
         //Database function
-        idOrdermethode = new ListOrderActivity();
         orderRepository = new OrderRepository();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("order");
         statusReference = FirebaseDatabase.getInstance().getReference("status");
@@ -76,33 +75,6 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
         statusModify.setAdapter(adapter);
         retrieveData();
 
-        //StartDate calendar
-        deliverStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Calendar cal = Calendar.getInstance();
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
-
-                DatePickerDialog dialog = new DatePickerDialog(
-                        ModifyAndDeleteOrderActivity.this,
-                        android.R.style.Theme_Holo_Light_Dialog_MinWidth, dateListener,
-                        year, month,day
-                );
-
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-            }
-        });
-
-        dateListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                deliverStart.setText(dayOfMonth+"."+(month+1)+"."+year);
-            }
-        };
 
         //EndDate calendar
         deliverEnd.setOnClickListener(new View.OnClickListener() {
@@ -172,6 +144,7 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
                 orderRepository.update(order, new OnAsyncEventListener() {
                     @Override
                     public void onSuccess() {
+                        startActivity(new Intent(ModifyAndDeleteOrderActivity.this,MenuFragementActivity.class));
 
 
                         onBackPressed();
@@ -204,6 +177,8 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
                 orderRepository.delete(order, new OnAsyncEventListener() {
                     @Override
                     public void onSuccess() {
+
+                        startActivity(new Intent(ModifyAndDeleteOrderActivity.this,MenuFragementActivity.class));
 
 
                         onBackPressed();

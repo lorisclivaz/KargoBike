@@ -20,7 +20,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ModifyAndDeleteOrderActivity" />
-        <activity android:name=".ListOrderActivity" />
         <activity android:name=".ListTypesActivity" />
         <activity android:name=".ProductDetailActivity" />
         <activity android:name=".ProductListActivity" />
