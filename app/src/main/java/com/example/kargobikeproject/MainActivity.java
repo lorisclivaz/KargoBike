@@ -4,7 +4,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,10 +30,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.Calendar;
+
 
 public class MainActivity extends AppCompatActivity {
 Button buttonAddProduct;
-Button checkBike;
 Button transportOrder;
 Button modifyProfil;
 Button manageTypes;
@@ -57,7 +61,6 @@ Button button_DisplayProductList;
         setContentView(R.layout.activity_main);
         buttonAddProduct=findViewById(R.id.buttonAddProduct);
         modifyProfil=findViewById(R.id.buttonModifyProfil);
-        //checkBike=findViewById(R.id.buttonCheckBike);
         transportOrder=findViewById(R.id.TransportOrder);
         button_DisplayProductList= findViewById(R.id.button_DisplayProductList);
         manageTypes = findViewById(R.id.buttonManageType);
@@ -82,6 +85,9 @@ Button button_DisplayProductList;
             }
         });
                 */
+
+        //Check the Bike if it is the first time this day to login
+        checkBike();
 
         //for google authentification
         btn_login = findViewById(R.id.buttonLoginWithGoogle);
@@ -139,13 +145,6 @@ Button button_DisplayProductList;
             }
         });
 
-        /*checkBike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, CheckBikeActivity.class));
-            }
-        });*/
-
         manageTypes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,6 +157,52 @@ Button button_DisplayProductList;
     void SingInGoogle(){
         Intent singIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(singIntent,GOOGLE_SIGN);
+    }
+
+    private void checkBike(){
+        //Check bike alert every day
+        Calendar calendar = Calendar.getInstance();
+        //get current day
+        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+        SharedPreferences settings = getSharedPreferences("prefs",0);
+        //get last day safed or default 0
+        int lastDay = settings.getInt("day",0);
+
+        // when the last day is not today, set today and show alert
+        if (lastDay != currentDay){
+            //alert to check the bike
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(false)
+                    .setTitle("Confirmation")
+                    .setMessage("When you click \"checked\", you confirme that you check your bike " +
+                    "and the bike is ready for use and nothing is defective. \n Login first.")
+                    .setPositiveButton("Confirm",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            if (user == null){
+                                builder.show();
+                            } else {
+                                SharedPreferences.Editor editor = settings.edit();
+                                editor.putInt("day",currentDay);
+                                editor.commit();
+                                // add line in db with user and date
+
+                            }
+                        }
+                    })
+                    .setNegativeButton("Login",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            SingInGoogle();
+                            builder.show();
+                        }
+                    });
+            builder.show();
+        }
+
     }
 
     @Override
