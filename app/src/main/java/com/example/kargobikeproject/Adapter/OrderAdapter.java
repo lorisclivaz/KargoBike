@@ -53,8 +53,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int position) {
         myViewHolder.nameClient.setText(orders.get(position).getNameClient());
-        myViewHolder.nameRoute.setText(orders.get(position).getNameRoute());
-        myViewHolder.nameRider.setText(orders.get(position).getNameRider());
+      //  myViewHolder.nameRoute.setText(orders.get(position).getNameRoute());
+       // myViewHolder.nameRider.setText(orders.get(position).getNameRider());
         myViewHolder.address.setText(orders.get(position).getAddress());
         myViewHolder.startDate.setText(orders.get(position).getDeliverStart());
         myViewHolder.endDate.setText(orders.get(position).getDeliverEnd());
@@ -66,6 +66,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
                 Intent intent = new Intent(v.getContext(), OrderCheckpointActivity.class);
                 intent.putExtra("ORDER_CLIENT", orders.get(position).getNameClient());
                 intent.putExtra("ORDER_ID", orders.get(position).getIdOrder());
+
+
                 v.getContext().startActivity(intent);
             }
         });
@@ -88,8 +90,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
             super(itemView);
 
             nameClient = itemView.findViewById(R.id.nameClient);
-            nameRoute = itemView.findViewById(R.id.nameRoute);
-            nameRider = itemView.findViewById(R.id.nameRider);
+         //   nameRoute = itemView.findViewById(R.id.nameRoute);
+          //  nameRider = itemView.findViewById(R.id.nameRider);
             address = itemView.findViewById(R.id.Address);
             startDate = itemView.findViewById(R.id.startDate);
             endDate = itemView.findViewById(R.id.endDate);
@@ -100,6 +102,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
                 @Override
                 public void onClick(View v) {
 
+
                     if(listener != null)
                     {
                         int position = getAdapterPosition();
@@ -108,6 +111,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
                         if(position != RecyclerView.NO_POSITION)
                         {
                             listener.onItemClick(position);
+
+
+
+
                         }
                     }
                 }
@@ -116,4 +123,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
         }
     }
+
+
 }

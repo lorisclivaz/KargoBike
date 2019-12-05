@@ -13,9 +13,13 @@
             android:name=".MenuFragementActivity"
             android:label="@string/title_activity_fragement"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ModifyAndDeleteOrderActivity" />
-        <activity android:name=".ListOrderActivity" />
         <activity android:name=".ListTypesActivity" />
         <activity android:name=".ProductDetailActivity" />
         <activity android:name=".ProductListActivity" />

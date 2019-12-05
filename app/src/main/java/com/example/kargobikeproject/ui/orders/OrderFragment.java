@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 public class OrderFragment extends Fragment {
 
-    private OrderViewModel mViewModel;
+    private com.example.kargobikeproject.ui.orders.OrderViewModel mViewModel;
 
     public static OrderFragment newInstance() {
         return new OrderFragment();
@@ -45,6 +45,7 @@ public class OrderFragment extends Fragment {
     SearchView searchView;
     OrderAdapter adapterClass;
     Order clickOrder;
+    Button addOrder;
     Button buttonViewCheckPoint;
     OrderRepository repository;
     @Override
@@ -58,6 +59,7 @@ public class OrderFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         ref = FirebaseDatabase.getInstance().getReference().child("order");
         recyclerView = getView().findViewById(R.id.recyclerViewOrder);
+        addOrder = getView().findViewById(R.id.buttonAddOrder);
         searchView = (SearchView) getView().findViewById(R.id.SearchBar);
         if (ref != null) {
             ref.addValueEventListener(new ValueEventListener() {
@@ -80,6 +82,8 @@ public class OrderFragment extends Fragment {
                             public void onItemClick(int position) {
 
                                 Intent intent = new Intent(getActivity(), ModifyAndDeleteOrderActivity.class);
+                                intent.putExtra("IdOrder", orders.get(position).getIdOrder());
+
                                 intent.putExtra("Name_Client", orders.get(position).getNameClient());
                                 intent.putExtra("Name_Rider", orders.get(position).getNameRider());
                                 intent.putExtra("Name_Route", orders.get(position).getNameRoute());
@@ -105,59 +109,17 @@ public class OrderFragment extends Fragment {
             });
         }
 
-        if (searchView != null) {
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-
-                    search(newText);
-                    return true;
-                }
-            });
-        }
-    }
-
-
-    private void search(String str) {
-        ArrayList<Order> list = new ArrayList<>();
-
-        for (Order object : orders) {
-            if (object.getNameClient().toLowerCase().contains(str.toLowerCase())) {
-                list.add(object);
-            }
-        }
-
-        adapterClass = new OrderAdapter(list);
-        adapterClass.setOnItemClickListener(new OrderAdapter.onItemCLickListener() {
+        addOrder.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(int position) {
-
-                Intent intent;
-                intent = new Intent(getActivity(), ModifyAndDeleteOrderActivity.class);
-                clickOrder = orders.get(position);
-
-                intent.putExtra("Name_Client", orders.get(position).getNameClient());
-                intent.putExtra("Name_Rider", orders.get(position).getNameRider());
-                intent.putExtra("Name_Route", orders.get(position).getNameRoute());
-                intent.putExtra("address", orders.get(position).getAddress());
-                intent.putExtra("deliverStart", orders.get(position).getDeliverStart());
-                intent.putExtra("deliverEnd", orders.get(position).getDeliverEnd());
-                intent.putExtra("status", orders.get(position).getOrderStatus());
-
-
-
-                startActivity(intent);
-
-                Log.d("TAG", orders.get(position).getNameClient());
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), AddOrderActivity.class));
             }
         });
-        recyclerView.setAdapter(adapterClass);
+
+
     }
+
+
 
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, 1, Menu.NONE, "add Order")

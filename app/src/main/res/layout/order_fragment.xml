@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/orderFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/common_google_signin_btn_text_dark_default"
+    android:orientation="vertical"
     tools:context=".ui.orders.OrderFragment">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/SearchBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:padding="10dp"
         android:layout_margin="5dp"
-        app:queryHint="Search"/>
+        android:background="@color/app_icon_background"
+        android:padding="10dp"
+        app:queryHint="Search" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewOrder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="461dp"
         android:layout_margin="5dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_marginBottom="10dp"
+        />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/buttonAddOrder"
+        android:layout_width="388dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@color/colorPrimary"
+        android:text="AddOrder" />
+
+</LinearLayout>

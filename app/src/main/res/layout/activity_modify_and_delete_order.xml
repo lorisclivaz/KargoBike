@@ -19,30 +19,42 @@
         app:layout_constraintVertical_bias="0.39" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/DeliverEnd"
+        android:id="@+id/NameRider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="116dp"
-        android:hint="DeliverEnd"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:hint="NameRider"
+        app:layout_constraintBottom_toTopOf="@+id/NameClient"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintVertical_bias="0.743" />
+
+    <TextView
+        android:id="@+id/deliverEnd"
+        android:layout_width="400dp"
+        android:layout_height="46dp"
+        android:layout_marginBottom="44dp"
+        android:text="EndDate"
+        app:layout_constraintBottom_toTopOf="@+id/buttonModifyOrder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.textfield.TextInputEditText
+    <TextView
         android:id="@+id/DeliverStart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:hint="DeleiverStart"
-        app:layout_constraintBottom_toTopOf="@+id/DeliverEnd"
+        android:layout_width="400dp"
+        android:layout_height="46dp"
+        android:layout_marginBottom="24dp"
+        android:text="StartDate"
+        app:layout_constraintBottom_toTopOf="@+id/deliverEnd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/Address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="44dp"
         android:hint="Address"
         app:layout_constraintBottom_toTopOf="@+id/DeliverStart"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -51,7 +63,7 @@
         android:id="@+id/nameRoute"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="44dp"
         android:hint="Route"
         app:layout_constraintBottom_toTopOf="@+id/Address"
         app:layout_constraintStart_toStartOf="parent" />
@@ -60,26 +72,16 @@
         android:id="@+id/NameClient"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="20dp"
         android:hint="NameClient"
-        app:layout_constraintBottom_toTopOf="@+id/spinnerStatus"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerStatusModify"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/NameRider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="NameRider"
-        app:layout_constraintBottom_toTopOf="@+id/NameClient"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="1.0" />
-
     <Spinner
-        android:id="@+id/spinnerStatus"
+        android:id="@+id/spinnerStatusModify"
         android:layout_width="272dp"
         android:layout_height="30dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="40dp"
         app:layout_constraintBottom_toTopOf="@+id/nameRoute"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -94,9 +96,7 @@
         android:layout_marginBottom="32dp"
         android:text="Delete"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DeliverEnd"
-        app:layout_constraintVertical_bias="0.972" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/buttonModifyOrder"
@@ -107,8 +107,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.541"
-        app:layout_constraintStart_toEndOf="@+id/buttonDeleteOrder"
-        app:layout_constraintTop_toBottomOf="@+id/DeliverEnd"
-        app:layout_constraintVertical_bias="0.972" />
+        app:layout_constraintStart_toEndOf="@+id/buttonDeleteOrder" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

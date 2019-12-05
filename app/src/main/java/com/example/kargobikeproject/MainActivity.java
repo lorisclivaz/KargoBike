@@ -14,11 +14,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.kargobikeproject.Model.Entity.User;
 import com.example.kargobikeproject.Utils.OnAsyncEventListener;
 import com.example.kargobikeproject.ViewModel.UserListViewModel;
 import com.example.kargobikeproject.ViewModel.UserViewModel;
+import com.example.kargobikeproject.ui.orders.OrderFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -122,7 +126,7 @@ Button button_DisplayProductList;
         transportOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,ListOrderActivity.class));
+                startActivity(new Intent(MainActivity.this, OrderFragment.class));
             }
         });
 

@@ -1,16 +1,22 @@
 package com.example.kargobikeproject;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.kargobikeproject.Adapter.OrderAdapter;
 import com.example.kargobikeproject.Model.Entity.Order;
 import com.example.kargobikeproject.Model.Repository.OrderRepository;
 import com.example.kargobikeproject.Utils.OnAsyncEventListener;
@@ -22,25 +28,25 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
 
-
-    TextInputEditText nameClient, nameRider, nameRoute, address, deliverStart, deliverEnd;
-    Spinner status;
-    ArrayList<String> spinnerDataList;
-    ArrayAdapter<String> adapter;
-    ListOrderActivity ordermethode;
-    Order order;
-    OrderRepository orderRepository;
-
-    String clientGetname, riderGetName, routeGetName, adressGet, deliverStartGet, deliverEndGet, statusGet;
-
-
-    private DatabaseReference mDatabaseReference;
-    ValueEventListener listener;
-
-    Button deleteOrder, modifyOrder;
+    //Variables about ModifyAndDeleteOrderActivity
+    private TextInputEditText nameClient, nameRider, nameRoute, address;
+    private  TextView deliverStart, deliverEnd;
+    private  Spinner statusModify;
+    private ArrayList<String> spinnerDataList;
+    private  ArrayAdapter<String> adapter;
+    private Order order;
+    private  OrderAdapter orderAdapter;
+    private OrderRepository orderRepository;
+    private String idorder;
+    private DatePickerDialog.OnDateSetListener dateListener;
+    private String clientGetname, riderGetName, routeGetName, adressGet, deliverStartGet, deliverEndGet, statusGet;
+    private DatabaseReference mDatabaseReference,statusReference;
+    private ValueEventListener listener;
+    private  Button deleteOrder, modifyOrder;
 
 
     @Override
@@ -48,24 +54,55 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_and_delete_order);
 
+        //Database function
         orderRepository = new OrderRepository();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("order");
+        statusReference = FirebaseDatabase.getInstance().getReference("status");
 
-
+        //Get the id about the layout
         nameClient = findViewById(R.id.NameClient);
         nameRider =  findViewById(R.id.NameRider);
         nameRoute = findViewById(R.id.nameRoute);
         address = findViewById(R.id.Address);
         deliverStart = findViewById(R.id.DeliverStart);
-        deliverEnd = findViewById(R.id.DeliverEnd);
+        deliverEnd = findViewById(R.id.deliverEnd);
 
         //Spinner Status
-        status = (Spinner)findViewById(R.id.spinnerStatus);
+        statusModify = (Spinner)findViewById(R.id.spinnerStatusModify);
         spinnerDataList = new ArrayList<>();
         adapter = new ArrayAdapter<String>(ModifyAndDeleteOrderActivity.this,android.R.layout.simple_spinner_dropdown_item, spinnerDataList);
 
-        status.setAdapter(adapter);
+        statusModify.setAdapter(adapter);
         retrieveData();
+
+
+        //EndDate calendar
+        deliverEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(
+                        ModifyAndDeleteOrderActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth, dateListener,
+                        year, month,day
+                );
+
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        dateListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                deliverEnd.setText(dayOfMonth+"."+(month+1)+"."+year);
+            }
+        };
 
 
         clientGetname =  getIntent().getStringExtra("Name_Client");
@@ -76,14 +113,18 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
         deliverEndGet =  getIntent().getStringExtra("deliverEnd");
         statusGet =  getIntent().getStringExtra("status");
 
+        idorder = getIntent().getStringExtra("IdOrder");
+
+
+
         nameClient.setText(clientGetname);
         nameRider.setText(riderGetName);
         nameRoute.setText(routeGetName);
         address.setText(adressGet);
         deliverStart.setText(deliverStartGet);
         deliverEnd.setText(deliverEndGet);
+        setSpinText(statusModify, statusGet);
 
-        setSpinText(status, statusGet);
 
 
         //Button
@@ -91,21 +132,54 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
         modifyOrder = findViewById(R.id.buttonModifyOrder);
 
 
+        modifyOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                order = new Order(idorder, nameClient.getText().toString(),nameRider.getText().toString(),
+                        nameRoute.getText().toString(),
+                        address.getText().toString(),deliverStart.getText().toString()
+                        ,deliverEnd.getText().toString()
+                        ,statusModify.getSelectedItem().toString());
+
+                orderRepository.update(order, new OnAsyncEventListener() {
+                    @Override
+                    public void onSuccess() {
+                        startActivity(new Intent(ModifyAndDeleteOrderActivity.this,MenuFragementActivity.class));
+
+
+                        onBackPressed();
+
+                        Log.d("DB", "Order added : success");
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+
+                        Log.d("DB", "product added : failure");
+                    }
+                });
+
+
+            }
+        });
+
+
 
         deleteOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                order = new Order( nameClient.getText().toString(),nameRider.getText().toString(),
+                order = new Order( idorder,nameClient.getText().toString(),nameRider.getText().toString(),
                         nameRoute.getText().toString(),
                         address.getText().toString(),deliverStart.getText().toString()
                         ,deliverEnd.getText().toString()
-                        ,status.getSelectedItem().toString());
+                        ,statusModify.getSelectedItem().toString());
 
                 orderRepository.delete(order, new OnAsyncEventListener() {
                     @Override
                     public void onSuccess() {
 
-                        startActivity(new Intent(ModifyAndDeleteOrderActivity.this, ListOrderActivity.class));
+                        startActivity(new Intent(ModifyAndDeleteOrderActivity.this,MenuFragementActivity.class));
+
 
                         onBackPressed();
 
@@ -129,7 +203,7 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
 
     public void retrieveData()
     {
-        listener = mDatabaseReference.addValueEventListener(new ValueEventListener() {
+        listener = statusReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
