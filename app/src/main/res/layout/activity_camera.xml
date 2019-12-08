@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+   >
+    <TextView
+        android:id="@+id/textViewCamera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Take picture"
+        android:textSize="30sp" />
+    <LinearLayout
+        android:id="@+id/buttonLayoutCamera"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="3"
+        android:orientation="horizontal"
+        android:background="@android:color/white">
+
+        <Button
+            android:id="@+id/cancelButtonCamera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cancel" />
+
+        <Button
+            android:id="@+id/openButtonCamera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Open Camera" />
+        <Button
+            android:id="@+id/saveButtonCamera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Save" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/canvasLayoutCamera"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_menu_camera"
+        android:orientation="vertical" />
+</LinearLayout>

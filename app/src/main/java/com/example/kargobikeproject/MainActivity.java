@@ -44,6 +44,7 @@ Button modifyProfil;
 Button manageTypes;
 Button btn_authorizedUser;
 Button button_DisplayProductList;
+Button getSignature, takePicture;
 //Add status data
     /*
     private static final String TAG = "Order";
@@ -69,6 +70,8 @@ Button button_DisplayProductList;
         button_DisplayProductList= findViewById(R.id.button_DisplayProductList);
         manageTypes = findViewById(R.id.buttonManageType);
         btn_authorizedUser = findViewById(R.id.button_authorizeUser);
+        getSignature = findViewById(R.id.signatureButton);
+        takePicture = findViewById(R.id.takePictureButton);
 
         //Add status data
         /*
@@ -153,6 +156,18 @@ Button button_DisplayProductList;
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, ListTypesActivity.class));
+            }
+        });
+        getSignature.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, SignatureActivity.class));
+            }
+        });
+        takePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CameraActivity.class));
             }
         });
     }

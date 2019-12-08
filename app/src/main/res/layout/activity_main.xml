@@ -79,6 +79,20 @@
                 android:layout_margin="10dp"
                 android:text="Transport orders" />
 
+            <Button
+                android:id="@+id/signatureButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Add Signature" />
+
+            <Button
+                android:id="@+id/takePictureButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Take Picture" />
+
             <TextView
                 android:id="@+id/tv_onlyDispatcher"
                 android:layout_width="match_parent"
