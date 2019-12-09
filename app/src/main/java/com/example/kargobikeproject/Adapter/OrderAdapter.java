@@ -55,7 +55,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
         myViewHolder.nameClient.setText(orders.get(position).getNameClient());
       //  myViewHolder.nameRoute.setText(orders.get(position).getNameRoute());
        // myViewHolder.nameRider.setText(orders.get(position).getNameRider());
-        myViewHolder.address.setText(orders.get(position).getAddress());
+       // myViewHolder.address.setText(orders.get(position).getAddress());
         myViewHolder.startDate.setText(orders.get(position).getDeliverStart());
         myViewHolder.endDate.setText(orders.get(position).getDeliverEnd());
         myViewHolder.status.setText(orders.get(position).getOrderStatus());
@@ -92,7 +92,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
             nameClient = itemView.findViewById(R.id.nameClient);
          //   nameRoute = itemView.findViewById(R.id.nameRoute);
           //  nameRider = itemView.findViewById(R.id.nameRider);
-            address = itemView.findViewById(R.id.Address);
+           // address = itemView.findViewById(R.id.Address);
             startDate = itemView.findViewById(R.id.startDate);
             endDate = itemView.findViewById(R.id.endDate);
             status = itemView.findViewById(R.id.status);

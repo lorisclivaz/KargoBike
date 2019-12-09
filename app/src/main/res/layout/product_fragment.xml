@@ -7,7 +7,7 @@
     tools:context=".ProductListActivity">
 
     <androidx.appcompat.widget.SearchView
-        android:id="@+id/SearchBar"
+        android:id="@+id/SearchBarUser"
         android:layout_width="388dp"
         android:layout_height="39dp"
         android:layout_margin="5dp"
