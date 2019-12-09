@@ -12,15 +12,18 @@
             android:id="@+id/nav_orders"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/menu_order" />
-
+        <item
+            android:id="@+id/nav_logout"
+            android:title="Logout"
+            />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="SuperUser">
         <menu>
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
-                android:title="@string/menu_share" />
+                android:title="@string/menu_riders" />
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"

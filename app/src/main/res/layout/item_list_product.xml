@@ -21,11 +21,14 @@
 
     <TextView
         android:id="@+id/tv_productDescription"
-        android:layout_width="269dp"
-        android:layout_height="69dp"
+        android:layout_width="231dp"
+        android:layout_height="68dp"
         android:inputType="textMultiLine"
         android:text="dfgdfgdfgdfgdfgdfgdfg"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/tv_productName"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
