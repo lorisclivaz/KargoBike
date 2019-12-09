@@ -21,7 +21,7 @@
     <item android:title="SuperUser">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_user"
                 android:icon="@drawable/ic_menu_share"
                 android:title="@string/menu_riders" />
             <item
