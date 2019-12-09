@@ -18,8 +18,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.kargobikeproject.Model.Entity.BikeService;
 import com.example.kargobikeproject.Model.Entity.User;
 import com.example.kargobikeproject.Utils.OnAsyncEventListener;
+import com.example.kargobikeproject.ViewModel.BikeServiceViewModel;
 import com.example.kargobikeproject.ViewModel.UserListViewModel;
 import com.example.kargobikeproject.ViewModel.UserViewModel;
 import com.example.kargobikeproject.ui.orders.OrderFragment;
@@ -34,7 +36,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -179,6 +183,9 @@ Button getSignature, takePicture;
     }
 
     private void checkBike(){
+        //Repository for the BikeService
+        BikeServiceViewModel.Factory factory = new BikeServiceViewModel.Factory(getApplication(),"0");
+        BikeServiceViewModel viewModelService = ViewModelProviders.of(this, factory).get(BikeServiceViewModel.class);
         //Check bike alert every day
         Calendar calendar = Calendar.getInstance();
         //get current day
@@ -203,10 +210,25 @@ Button getSignature, takePicture;
                             if (user == null){
                                 builder.show();
                             } else {
-                                SharedPreferences.Editor editor = settings.edit();
-                                editor.putInt("day",currentDay);
-                                editor.commit();
                                 // add line in db with user and date
+                                Date date = new Date();
+                                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                                String thisDay = formatter.format(date);
+                                BikeService service = new BikeService(thisDay,user.getUid());
+                                viewModelService.createBikeService(service, new OnAsyncEventListener() {
+                                    @Override
+                                    public void onSuccess() {
+                                        Log.d("MainActivityBikeCheck", "createService: success");
+                                        //the user have checked the bike for that day
+                                        SharedPreferences.Editor editor = settings.edit();
+                                        editor.putInt("day",currentDay);
+                                        editor.commit();
+                                    }
+                                    @Override
+                                    public void onFailure(Exception e) {
+                                        Log.d("MainActivityBikeCheck", "createService: failure", e);
+                                    }
+                                });
 
                             }
                         }

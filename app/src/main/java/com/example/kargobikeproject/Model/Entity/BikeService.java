@@ -12,8 +12,6 @@ public class BikeService {
     //Create variables about BikeService
     private String idService;
     private String idRider;
-    private String idBike;
-    private int statusReport;
     private String createdAt;
 
     //Constructor
@@ -21,11 +19,10 @@ public class BikeService {
 
     }
 
-    public BikeService( int statusReport, String createdAt)
+    public BikeService(String createdAt, String idRider)
     {
-
-        this.statusReport = statusReport;
         this.createdAt = createdAt;
+        this.idRider = idRider;
     }
 
 
@@ -49,22 +46,6 @@ public class BikeService {
         this.idRider = idRider;
     }
 
-    public String getIdBike() {
-        return idBike;
-    }
-
-    public void setIdBike(String idBike) {
-        this.idBike = idBike;
-    }
-
-    public int getStatusReport() {
-        return statusReport;
-    }
-
-    public void setStatusReport(int statusReport) {
-        this.statusReport = statusReport;
-    }
-
     public String getCreatedAt() {
         return createdAt;
     }
@@ -76,9 +57,8 @@ public class BikeService {
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
-        result.put("statusReport", statusReport);
         result.put("createdAt", createdAt);
-
+        result.put("idRider", idRider);
         return result;
     }
 

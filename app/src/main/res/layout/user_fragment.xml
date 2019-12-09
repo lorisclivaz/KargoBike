@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.user.UserFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/userFragment"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@color/common_google_signin_btn_text_dark_default"
+android:orientation="vertical"
+tools:context=".ui.orders.UserFragment">
 
-    <TextView
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/SearchBarUser"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="?attr/actionBarSize"
+        android:layout_margin="5dp"
+        android:background="@color/common_google_signin_btn_text_dark_default"
+        android:padding="10dp"
+        app:queryHint="Search" />
 
-</FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewUser"
+        android:layout_width="match_parent"
+        android:layout_height="628dp"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="10dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+</LinearLayout>
