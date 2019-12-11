@@ -14,13 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.kargobikeproject.LoginActivity;
-import com.example.kargobikeproject.MenuFragementActivity;
-import com.example.kargobikeproject.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.group3.kargobikeproject.LoginActivity;
+import com.group3.kargobikeproject.R;
 
 public class LogoutFragment extends Fragment {
 
