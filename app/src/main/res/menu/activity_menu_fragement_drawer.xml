@@ -15,9 +15,9 @@
         <item
             android:id="@+id/nav_logout"
             android:title="Logout"
+            android:drawable="@android:color/holo_orange_light"
             />
-    </group>
-
+é    </group>
     <item android:title="SuperUser">
         <menu>
             <item
