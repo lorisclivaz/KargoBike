@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_margin="5dp"
-        android:background="@color/app_icon_background"
+        android:background="@color/common_google_signin_btn_text_dark_default"
         android:padding="10dp"
         app:queryHint="Search" />
 

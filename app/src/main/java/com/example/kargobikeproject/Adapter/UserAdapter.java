@@ -53,6 +53,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder>{
 
         myViewHolder.firstName.setText(users.get(position).getFirstName());
         myViewHolder.lastName.setText(users.get(position).getLastName());
+        myViewHolder.userEmail.setText(users.get(position).getMail());
 
 
 
@@ -67,7 +68,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder>{
 
     public   class MyViewHolder extends RecyclerView.ViewHolder
     {
-        TextView firstName, lastName;
+        TextView firstName, lastName, userEmail;
 
         public MyViewHolder(@NonNull View itemView, UserAdapter.onItemCLickListener listener) {
             super(itemView);
@@ -75,6 +76,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder>{
 
             firstName = itemView.findViewById(R.id.UserFirstName);
             lastName = itemView.findViewById(R.id.UserLastName);
+            userEmail = itemView.findViewById(R.id.UserEmail);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
