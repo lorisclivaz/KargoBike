@@ -1,4 +1,4 @@
-package com.example.kargobikeproject;
+package com.group3.kargobikeproject;
 
 import android.content.Context;
 
