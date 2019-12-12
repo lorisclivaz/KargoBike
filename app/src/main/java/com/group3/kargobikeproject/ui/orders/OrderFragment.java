@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class OrderFragment extends Fragment {
     static final String Extra_ClientName = "NameClient";
     DatabaseReference ref;
     ArrayList<Order> orders;
+    ArrayAdapter listAdapter;
     RecyclerView recyclerView;
     SearchView searchView;
     OrderAdapter adapterClass;
@@ -108,6 +110,9 @@ public class OrderFragment extends Fragment {
             });
         }
 
+
+
+
         addOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,4 +145,6 @@ public class OrderFragment extends Fragment {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

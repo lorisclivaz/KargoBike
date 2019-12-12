@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,7 +32,8 @@ import java.util.Calendar;
 public class MenuFragementActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     Button btn_login,btn_logout;
-
+    TextView tv_userEmail ;
+    String extraEmail;
     private AppBarConfiguration mAppBarConfiguration;
     private Button buttonLogout;
     @Override
@@ -40,7 +42,8 @@ public class MenuFragementActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu_fragement);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        extraEmail =getIntent().getStringExtra("email_Client");
+      //  tv_userEmail.setText("test");
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
@@ -63,6 +66,8 @@ public class MenuFragementActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_fragement, menu);
+        tv_userEmail=findViewById(R.id.textView_email);
+        tv_userEmail.setText(extraEmail);
         return true;
     }
 
