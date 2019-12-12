@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,10 +25,17 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -38,21 +47,17 @@ import java.util.Locale;
 public class SignatureActivity extends AppCompatActivity {
 
     Button mClear, mGetSign, mCancel;
-    File file;
     LinearLayout mContent;
     View view;
     signature mSignature;
     Bitmap bitmap;
-
-    // Creating Separate Directory for saving Generated Images
-    String DIRECTORY = Environment.getExternalStorageDirectory().getPath() + "/UserSignature/";
-    String pic_name = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-    String StoredPath = DIRECTORY + pic_name + ".png";
+    String idOrderThis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signature);
+        idOrderThis = getIntent().getStringExtra("ORDER_ID");
 
         mContent = (LinearLayout) findViewById(R.id.canvasLayout);
         mSignature = new signature(getApplicationContext(), null);
@@ -67,12 +72,6 @@ public class SignatureActivity extends AppCompatActivity {
         mGetSign.setOnClickListener(onButtonClick);
         mClear.setOnClickListener(onButtonClick);
         mCancel.setOnClickListener(onButtonClick);
-
-        // Method to create Directory, if the Directory doesn't exists
-        file = new File(DIRECTORY);
-        if (!file.exists()) {
-            file.mkdir();
-        }
     }
 
     Button.OnClickListener onButtonClick = new Button.OnClickListener() {
@@ -80,65 +79,25 @@ public class SignatureActivity extends AppCompatActivity {
         public void onClick(View v) {
             // TODO Auto-generated method stub
             if (v == mClear) {
-                Log.v("log_tag", "Panel Cleared");
                 mSignature.clear();
                 mGetSign.setEnabled(false);
             } else if (v == mGetSign) {
-                Log.v("log_tag", "Panel Saved");
                 if (Build.VERSION.SDK_INT >= 23) {
-                    isStoragePermissionGranted();
-                    Log.v("log_tag", "Panel Inside");
                     view.setDrawingCacheEnabled(true);
                     mSignature.saveAndUpload(view);
-                    Toast.makeText(getApplicationContext(), "Successfully Saved", Toast.LENGTH_SHORT).show();
-                    // Calling the same class
                     recreate();
                 } else {
-                    Log.v("log_tag", "Panel Inside");
                     view.setDrawingCacheEnabled(true);
                     mSignature.saveAndUpload(view);
-                    Toast.makeText(getApplicationContext(), "Successfully Saved", Toast.LENGTH_SHORT).show();
-                    // Calling the same class
                     recreate();
                 }
             } else if(v == mCancel){
-                Log.v("log_tag", "Panel Canceled");
-                // Calling the BillDetailsActivity
                 Intent intent = new Intent(SignatureActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         }
     };
 
-
-    public boolean isStoragePermissionGranted() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (getApplicationContext().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                return true;
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                return false;
-            }
-        } else {
-            return true;
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-
-            view.setDrawingCacheEnabled(true);
-            mSignature.saveAndUpload(view);
-            // Calling the same class
-            recreate();
-        }
-        else
-        {
-            Toast.makeText(this, "The app was not allowed to write to your storage. Hence, it cannot function properly. Please consider granting it this permission", Toast.LENGTH_LONG).show();
-        }
-    }
 
     public class signature extends View {
 
@@ -159,37 +118,9 @@ public class SignatureActivity extends AppCompatActivity {
             paint.setStrokeJoin(Paint.Join.ROUND);
             paint.setStrokeWidth(STROKE_WIDTH);
         }
-///Save to local folder
-        public void save(View v, String StoredPath) {
-            Log.v("log_tag", "Width: " + v.getWidth());
-            Log.v("log_tag", "Height: " + v.getHeight());
-            if (bitmap == null) {
-                bitmap = Bitmap.createBitmap(mContent.getWidth(), mContent.getHeight(), Bitmap.Config.RGB_565);
-            }
-            Canvas canvas = new Canvas(bitmap);
-            try {
-                // Output the file
-                FileOutputStream mFileOutStream = new FileOutputStream(StoredPath);
-                v.draw(canvas);
-
-                // Convert the output file to Image such as .png
-                bitmap.compress(Bitmap.CompressFormat.PNG, 90, mFileOutStream);
-                Intent intent = new Intent(SignatureActivity.this, MainActivity.class);
-                intent.putExtra("imagePath", StoredPath);
-                startActivity(intent);
-                finish();
-                mFileOutStream.flush();
-                mFileOutStream.close();
-
-            } catch (Exception e) {
-                Log.v("log_tag", e.toString());
-            }
-        }
 
         //Save to Firebase as Base64 string, resize image 10 times smaller
         public void saveAndUpload(View v) {
-            Log.v("log_tag", "Width: " + v.getWidth());
-            Log.v("log_tag", "Height: " + v.getHeight());
             if (bitmap == null) {
                 bitmap = Bitmap.createBitmap(mContent.getWidth(), mContent.getHeight(), Bitmap.Config.RGB_565);
             }
@@ -198,22 +129,33 @@ public class SignatureActivity extends AppCompatActivity {
                 // Output the file
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                 v.draw(canvas);
-                Bitmap smallBitmap = resize(bitmap,mContent.getWidth()/10,mContent.getHeight()/10);
-                smallBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-                String imageString =  Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+                String pic_date = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                byte[] data = outputStream.toByteArray();
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference storageRef = storage.getReferenceFromUrl("gs://kargobikegroup3.appspot.com");
+                StorageReference pathReference = storageRef.child("camera/"+idOrderThis);
 
-                String id = FirebaseDatabase.getInstance().getReference("signature").push().getKey();
-                FirebaseDatabase.getInstance()
-                        .getReference("signature")
-                        .child(id)
-                        .setValue(imageString, (databaseError, databaseReference) -> {
-                            if (databaseError != null) {
-                                Toast.makeText(SignatureActivity.this, "Upload Failed", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(SignatureActivity.this, "Upload OK", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                Log.v("log_tag", imageString + "hey");
+                UploadTask uploadTask = pathReference.putBytes(data);
+                uploadTask.addOnFailureListener(SignatureActivity.this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(SignatureActivity.this, "Upload Error: " +
+                                e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }).addOnSuccessListener(SignatureActivity.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        //Uri url = taskSnapshot.getDownloadUrl();
+                        Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
+                        while(!uri.isComplete());
+                        Uri url = uri.getResult();
+                        Log.v("image url", url.toString());
+                        Toast.makeText(SignatureActivity.this, "Upload Success", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
                 Intent intent = new Intent(SignatureActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();

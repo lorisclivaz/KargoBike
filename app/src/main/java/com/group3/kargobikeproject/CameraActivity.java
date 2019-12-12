@@ -1,10 +1,13 @@
 package com.group3.kargobikeproject;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -13,18 +16,30 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class CameraActivity extends AppCompatActivity {
     Button cancelButtonCamera, saveButtonCamera,openCameraButton;
     LinearLayout mContent;
     Bitmap tempBitmap;
+    String idOrderThis;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+        idOrderThis = getIntent().getStringExtra("ORDER_ID");
+
         cancelButtonCamera = findViewById(R.id.cancelButtonCamera);
         saveButtonCamera = findViewById(R.id.saveButtonCamera);
         saveButtonCamera.setEnabled(false);
@@ -62,20 +77,28 @@ public class CameraActivity extends AppCompatActivity {
             // Output the file
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             imageToUpload.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-            String imageString =  Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
 
-            String id = FirebaseDatabase.getInstance().getReference("image").push().getKey();
-            FirebaseDatabase.getInstance()
-                    .getReference("image")
-                    .child(id)
-                    .setValue(imageString, (databaseError, databaseReference) -> {
-                        if (databaseError != null) {
-                            Toast.makeText(CameraActivity.this, "Upload Failed", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(CameraActivity.this, "Upload OK", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-            Log.v("log_tag", imageString + "heyCamera");
+            byte[] data = outputStream.toByteArray();
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://kargobikegroup3.appspot.com");
+            StorageReference pathReference = storageRef.child("camera/"+idOrderThis);
+
+            UploadTask uploadTask = pathReference.putBytes(data);
+            uploadTask.addOnFailureListener(CameraActivity.this, new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(CameraActivity.this, "Upload Error: " +
+                            e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }).addOnSuccessListener(CameraActivity.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
+                   // while(!uri.isComplete());
+                    Uri url = uri.getResult();
+                    Log.v("image url", url.toString());
+                }
+            });
             Intent intent = new Intent(CameraActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
@@ -87,5 +110,4 @@ public class CameraActivity extends AppCompatActivity {
         }
 
     }
-
 }
