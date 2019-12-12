@@ -16,6 +16,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.kargobikeproject.Model.Entity.Order;
 import com.example.kargobikeproject.Model.Repository.OrderRepository;
 import com.example.kargobikeproject.Utils.OnAsyncEventListener;
@@ -26,10 +30,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class AddOrderActivity extends AppCompatActivity {
@@ -54,6 +63,15 @@ public class AddOrderActivity extends AppCompatActivity {
     private Calendar calendar;
     private SimpleDateFormat dateFormat;
     private String date;
+
+    //For Notifcation after addOrder
+    final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
+    final private String serverKey = "key=" + "AAAAdVDA-h8:APA91bHscyYtZBcHwNsYNroNz_HdevrFu2LxXJYz04kRlW3mSZPhIxF12kv-nPhoP1rPuud-XPhtT-G9T5mchVfyJtKR6IuWaXq7YW0wPSbt6cv-1pNIF1MN315m8l-4JcZ8p0sp0uSJ";
+    final private String contentType = "application/json";
+
+    String NOTIFICATION_TITLE;
+    String NOTIFICATION_MESSAGE;
+    String TOPIC;
 
 
 
@@ -142,6 +160,26 @@ public class AddOrderActivity extends AppCompatActivity {
                     public void onSuccess() {
                         Log.d(TAG, "Order added : success");
 
+                        //For Notifcation after addOrder
+                        TOPIC = "/topics/all"; //topic must match with what the receiver subscribed to
+                        NOTIFICATION_TITLE = "Titre de la notif";
+                        NOTIFICATION_MESSAGE = "Message blabla";
+
+                        JSONObject notification = new JSONObject();
+                        JSONObject notifcationBody = new JSONObject();
+
+                        try {
+                            notifcationBody.put("title", NOTIFICATION_TITLE);
+                            notifcationBody.put("message", NOTIFICATION_MESSAGE);
+
+                            notification.put("to", TOPIC);
+                            notification.put("data", notifcationBody);
+                        } catch (JSONException e) {
+                            Log.e(TAG, "onCreate: " + e.getMessage() );
+                        }
+                        sendNotification(notification);
+
+
                         startActivity(new Intent(AddOrderActivity.this,MenuFragementActivity.class));
 
 
@@ -184,6 +222,34 @@ public class AddOrderActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    //For Notifcation after addOrder
+    private void sendNotification(JSONObject notification) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i(TAG, "onResponse: " + response.toString());
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Toast.makeText(AddOrderActivity.this, "Request error", Toast.LENGTH_LONG).show();
+                        Log.i(TAG, "onErrorResponse: Didn't work");
+                    }
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", serverKey);
+                params.put("Content-Type", contentType);
+                return params;
+            }
+        };
+        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
     }
 
 
