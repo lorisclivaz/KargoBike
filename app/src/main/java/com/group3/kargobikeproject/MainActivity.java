@@ -189,7 +189,7 @@ Button getSignature, takePicture;
         SharedPreferences settings = getSharedPreferences("prefs",0);
         //get last day safed or default 0
         int lastDay = settings.getInt("day",0);
-
+/*
         // when the last day is not today, set today and show alert
         if (lastDay != currentDay){
             //alert to check the bike
@@ -239,7 +239,7 @@ Button getSignature, takePicture;
                     });
             builder.show();
         }
-
+*/
     }
 
     @Override
