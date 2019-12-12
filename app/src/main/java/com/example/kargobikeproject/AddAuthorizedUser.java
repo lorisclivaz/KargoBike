@@ -102,8 +102,7 @@ public class AddAuthorizedUser extends AppCompatActivity {
 
         switchAuth.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // do something, the isChecked will be
-                // true if the switch is in the On position
+
                 int access =0;
 
                 if (isChecked)
@@ -114,7 +113,7 @@ public class AddAuthorizedUser extends AppCompatActivity {
                 viewModel.updateUser(userSelected, new OnAsyncEventListener() {
                     @Override
                     public void onSuccess() {
-                        
+
                         Log.d("ICCCIIIIII","Modification ok");
                     }
 
