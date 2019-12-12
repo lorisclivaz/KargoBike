@@ -4,11 +4,11 @@ android {
     compileSdkVersion 28
 
     defaultConfig {
-        applicationId "com.example.kargobikeproject"
+        applicationId "com.group3.kargobikeproject"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -28,7 +28,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.firebase:firebase-analytics:17.2.1'
+    implementation 'com.google.firebase:firebase-analytics:17.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'com.android.support:appcompat-v7:28.0.0-rc01'
