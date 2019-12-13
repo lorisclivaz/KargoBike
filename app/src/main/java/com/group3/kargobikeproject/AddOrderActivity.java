@@ -17,9 +17,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.group3.kargobikeproject.Model.Entity.Order;
 import com.group3.kargobikeproject.Model.Repository.OrderRepository;
 import com.group3.kargobikeproject.Utils.OnAsyncEventListener;
@@ -64,14 +68,12 @@ public class AddOrderActivity extends AppCompatActivity {
     private SimpleDateFormat dateFormat;
     private String date;
 
-    //For Notifcation after addOrder
-    final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
-    final private String serverKey = "key=" + "AAAAdVDA-h8:APA91bHscyYtZBcHwNsYNroNz_HdevrFu2LxXJYz04kRlW3mSZPhIxF12kv-nPhoP1rPuud-XPhtT-G9T5mchVfyJtKR6IuWaXq7YW0wPSbt6cv-1pNIF1MN315m8l-4JcZ8p0sp0uSJ";
-    final private String contentType = "application/json";
 
-    String NOTIFICATION_TITLE;
-    String NOTIFICATION_MESSAGE;
-    String TOPIC;
+    //Notification
+    private RequestQueue mRequestQue;
+    private String UrlServer = "https://fcm.googleapis.com/fcm/send";
+    private String NOTIFICATION_TITLE="New Order !";
+    private String NOTIFICATION_BODY="Location : ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +81,10 @@ public class AddOrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_order);
         orderRepository = new OrderRepository();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("status");
+
+        //notification subscribe to a topic called all
+        FirebaseMessaging.getInstance().subscribeToTopic("all");
+        mRequestQue = Volley.newRequestQueue(AddOrderActivity.this);
 
 
         //Find in the layout
@@ -155,26 +161,10 @@ public class AddOrderActivity extends AppCompatActivity {
                     public void onSuccess() {
                         Log.d(TAG, "Order added : success");
 
-                        //For Notifcation after addOrder
-                        TOPIC = "/topics/all"; //topic must match with what the receiver subscribed to
-                        NOTIFICATION_TITLE = "Titre de la notif";
-                        NOTIFICATION_MESSAGE = "Message blabla";
+                        //Send notification if success
+                        sendNotification();
 
-                        JSONObject notification = new JSONObject();
-                        JSONObject notifcationBody = new JSONObject();
-
-                        try {
-                            notifcationBody.put("title", NOTIFICATION_TITLE);
-                            notifcationBody.put("message", NOTIFICATION_MESSAGE);
-
-                            notification.put("to", TOPIC);
-                            notification.put("data", notifcationBody);
-                        } catch (JSONException e) {
-                            Log.e(TAG, "onCreate: " + e.getMessage() );
-                        }
-                        sendNotification(notification);
-
-                        startActivity(new Intent(AddOrderActivity.this,MenuFragementActivity.class));
+                       // startActivity(new Intent(AddOrderActivity.this,MenuFragementActivity.class));
 
 
 
@@ -218,32 +208,49 @@ public class AddOrderActivity extends AppCompatActivity {
         });
     }
 
-    //For Notifcation after addOrder
-    private void sendNotification(JSONObject notification) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.i(TAG, "onResponse: " + response.toString());
 
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //Toast.makeText(AddOrderActivity.this, "Request error", Toast.LENGTH_LONG).show();
-                        Log.i(TAG, "onErrorResponse: Didn't work");
-                    }
-                }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("Authorization", serverKey);
-                params.put("Content-Type", contentType);
-                return params;
+    //2eme essaie
+    private void sendNotification()
+    {
+        Log.d("Notifaaa", "2eme senNotification()");
+        JSONObject mainObj = new JSONObject();
+
+        try {
+            mainObj.put("to","/topics/all");
+            JSONObject notificationObj = new JSONObject();
+            notificationObj.put("title",NOTIFICATION_TITLE);
+            notificationObj.put("body",NOTIFICATION_BODY+address.getText().toString());
+
+            mainObj.put("notification",notificationObj);
+
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, UrlServer,
+                    mainObj,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d("Notifaaa", "2eme onResponse ok -> " + response.toString());
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("Notifaaa", "2eme onErrorResponse errore");
+                }
             }
-        };
-        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+            ){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("content-type", "application/json");
+                    params.put("authorization", "key=AIzaSyBkh6x30rB6vy7FNh5sj2BK64_yYIbKgwo");
+                    return params;
+                }
+            };
+
+            mRequestQue.add(request);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 
