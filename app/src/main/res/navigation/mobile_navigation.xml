@@ -30,5 +30,10 @@
         android:name="com.group3.kargobikeproject.ui.logout.LogoutFragment"
         android:label="@string/menu_logout"
         tools:layout="@layout/logout_fragment" />
+    <fragment
+        android:id="@+id/nav_autorise"
+        android:name="com.group3.kargobikeproject.ui.authoriseUser.AuthoriseUserFragment"
+        android:label="@string/menu_logout"
+        tools:layout="@layout/authorise_user_fragment" />
 
 </navigation>

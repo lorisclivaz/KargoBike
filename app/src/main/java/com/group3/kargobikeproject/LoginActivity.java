@@ -260,8 +260,10 @@ public class LoginActivity extends AppCompatActivity {
             String email = user.getEmail();
             String uid = user.getUid();
             Toast.makeText(this, "email : "+email+" uid : "+uid, Toast.LENGTH_SHORT).show();
-            getIntent().putExtra("email_Client",email);
-            startActivity(new Intent(LoginActivity.this,MenuFragementActivity.class));
+
+            Intent intent = new Intent(LoginActivity.this,MenuFragementActivity.class);
+            intent.putExtra("email_Client",email);
+            startActivity(intent);
         }
         else
         {
