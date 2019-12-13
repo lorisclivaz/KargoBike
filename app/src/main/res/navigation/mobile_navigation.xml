@@ -3,18 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
-    <fragment
-        android:id="@+id/nav_home"
-        android:name="com.group3.kargobikeproject.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+    app:startDestination="@+id/nav_orders">
     <fragment
         android:id="@+id/nav_orders"
         android:name="com.group3.kargobikeproject.ui.orders.OrderFragment"
         android:label="@string/menu_order"
         tools:layout="@layout/order_fragment" />
-
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.group3.kargobikeproject.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/nav_products"
         android:name="com.group3.kargobikeproject.ui.products.ProductFragment"

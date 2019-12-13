@@ -15,17 +15,17 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.group3.kargobikeproject.Adapter.UserAdapter;
-import com.group3.kargobikeproject.AddOrderActivity;
-import com.group3.kargobikeproject.Model.Entity.Order;
-import com.group3.kargobikeproject.Model.Entity.User;
-import com.group3.kargobikeproject.ModifyAndDeleteOrderActivity;
-import com.group3.kargobikeproject.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.group3.kargobikeproject.Adapter.UserAdapter;
+import com.group3.kargobikeproject.AddOrderActivity;
+import com.group3.kargobikeproject.DetailsUserActivity;
+import com.group3.kargobikeproject.Model.Entity.Order;
+import com.group3.kargobikeproject.Model.Entity.User;
+import com.group3.kargobikeproject.R;
 
 import java.util.ArrayList;
 
@@ -75,9 +75,12 @@ public class UserFragment extends Fragment {
                             public void onItemClick(int position) {
 
 
-                                Intent intent = new Intent(getActivity(), ModifyAndDeleteOrderActivity.class);
-                                intent.putExtra("IdUser", users.get(position).getIdUser());
-
+                                Intent intent = new Intent(getActivity(), DetailsUserActivity.class);
+                                intent.putExtra("FirstName", users.get(position).getFirstName());
+                                intent.putExtra("LastName", users.get(position).getLastName());
+                                intent.putExtra("Email", users.get(position).getMail());
+                                intent.putExtra("PhoneNumber", users.get(position).getPhoneNumber());
+                                intent.putExtra("WorkCountry", users.get(position).getRegionWorking());
 
                                 startActivity(intent);
 

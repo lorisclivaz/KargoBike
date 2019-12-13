@@ -6,28 +6,28 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_products"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_border_all_black_24dp"
             android:title="@string/menu_product" />
         <item
             android:id="@+id/nav_orders"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_list_black_24dp"
             android:title="@string/menu_order" />
         <item
             android:id="@+id/nav_logout"
             android:title="Logout"
-            android:drawable="@android:color/holo_orange_light"
+            android:icon="@drawable/ic_person_outline_red_24dp"
             />
 é    </group>
     <item android:title="SuperUser">
         <menu>
             <item
                 android:id="@+id/nav_user"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/ic_directions_bike"
                 android:title="@string/menu_riders" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/menu_send" />
+                android:id="@+id/nav_autorise"
+                android:icon="@drawable/ic_person_add_red_24dp"
+                android:title="@string/menu_menu_autoriseUser" />
         </menu>
     </item>
 
