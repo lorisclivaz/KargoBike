@@ -91,8 +91,6 @@ public class LoginActivity extends AppCompatActivity {
         });
                 */
 
-        //Check the Bike if it is the first time this day to login
-        checkBike();
 
         //for google authentification
         btn_login = findViewById(R.id.buttonLoginWithGoogle);
@@ -123,70 +121,6 @@ public class LoginActivity extends AppCompatActivity {
     void SingInGoogle(){
         Intent singIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(singIntent,GOOGLE_SIGN);
-    }
-
-    private void checkBike(){
-        //Repository for the BikeService
-        BikeServiceViewModel.Factory factory = new BikeServiceViewModel.Factory(getApplication(),"0");
-        BikeServiceViewModel viewModelService = ViewModelProviders.of(this, factory).get(BikeServiceViewModel.class);
-        //Check bike alert every day
-        Calendar calendar = Calendar.getInstance();
-        //get current day
-        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
-        SharedPreferences settings = getSharedPreferences("prefs",0);
-        //get last day safed or default 0
-        int lastDay = settings.getInt("day",0);
-
-        // when the last day is not today, set today and show alert
-        if (lastDay != currentDay){
-            //alert to check the bike
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setCancelable(false)
-                    .setTitle("Confirmation")
-                    .setMessage("When you click \"checked\", you confirme that you check your bike " +
-                            "and the bike is ready for use and nothing is defective. \n Login first.")
-                    .setPositiveButton("Confirm",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    if (user == null){
-                                        builder.show();
-                                    } else {
-                                        // add line in db with user and date
-                                        Date date = new Date();
-                                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                                        String thisDay = formatter.format(date);
-                                        BikeService service = new BikeService(thisDay,user.getUid());
-                                        viewModelService.createBikeService(service, new OnAsyncEventListener() {
-                                            @Override
-                                            public void onSuccess() {
-                                                Log.d("MainActivityBikeCheck", "createService: success");
-                                                //the user have checked the bike for that day
-                                                SharedPreferences.Editor editor = settings.edit();
-                                                editor.putInt("day",currentDay);
-                                                editor.commit();
-                                            }
-                                            @Override
-                                            public void onFailure(Exception e) {
-                                                Log.d("MainActivityBikeCheck", "createService: failure", e);
-                                            }
-                                        });
-
-                                    }
-                                }
-                            })
-                    .setNegativeButton("Login",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    SingInGoogle();
-                                    builder.show();
-                                }
-                            });
-            builder.show();
-        }
-
     }
 
     @Override
