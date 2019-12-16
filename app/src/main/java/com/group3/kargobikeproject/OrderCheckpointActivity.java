@@ -1,5 +1,6 @@
 package com.group3.kargobikeproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.group3.kargobikeproject.Adapter.CheckPointAdapter;
@@ -39,7 +40,7 @@ public class OrderCheckpointActivity extends AppCompatActivity implements AddChe
     TextView textOrderCheckPointHistory;
     RecyclerView listCheckPoints;
     CheckPointRepository checkPointRepository;
-    Button addCheckPoint;
+    Button addCheckPoint, addSignature, openCamera;
     public String inputGot;
     public String typeGot;
     public String userEmail;
@@ -57,7 +58,7 @@ public class OrderCheckpointActivity extends AppCompatActivity implements AddChe
         idOrderThis = getIntent().getStringExtra("ORDER_ID");
         ref = FirebaseDatabase.getInstance().getReference().child("checkPoint");
         listCheckPoints = findViewById(R.id.listCheckPoints);
-        setUpAddCheckPointButton();
+        setUpButtons();
         checkPointRepository = new CheckPointRepository();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
@@ -120,8 +121,10 @@ public class OrderCheckpointActivity extends AppCompatActivity implements AddChe
         }
     }
 
-    private void setUpAddCheckPointButton() {
+    private void setUpButtons() {
         addCheckPoint = findViewById(R.id.buttonAddCheckpoint);
+        addSignature = findViewById(R.id.buttonAddSignature);
+        openCamera = findViewById(R.id.buttonOpenCamera);
         addCheckPoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,6 +136,22 @@ public class OrderCheckpointActivity extends AppCompatActivity implements AddChe
                 dialog.setArguments(bundle);
                 dialog.show(getSupportFragmentManager(), "AddCheckPointDialog");
 
+            }
+        });
+        addSignature.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), OrderCheckpointActivity.class);
+                intent.putExtra("ORDER_ID", idOrderThis);
+                startActivity(new Intent(OrderCheckpointActivity.this, SignatureActivity.class));
+            }
+        });
+        openCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), OrderCheckpointActivity.class);
+                intent.putExtra("ORDER_ID", idOrderThis);
+                startActivity(new Intent(OrderCheckpointActivity.this, CameraActivity.class));
             }
         });
     }
