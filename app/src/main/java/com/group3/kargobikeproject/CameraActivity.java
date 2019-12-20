@@ -39,7 +39,6 @@ public class CameraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         idOrderThis = getIntent().getStringExtra("ORDER_ID");
-
         cancelButtonCamera = findViewById(R.id.cancelButtonCamera);
         saveButtonCamera = findViewById(R.id.saveButtonCamera);
         saveButtonCamera.setEnabled(false);
@@ -99,7 +98,7 @@ public class CameraActivity extends AppCompatActivity {
                     Log.v("image url", url.toString());
                 }
             });
-            Intent intent = new Intent(CameraActivity.this, MainActivity.class);
+            Intent intent = new Intent(CameraActivity.this, MenuFragementActivity.class);
             startActivity(intent);
             finish();
             outputStream.flush();

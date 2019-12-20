@@ -56,6 +56,8 @@ public class OrderCheckpointActivity extends AppCompatActivity implements AddChe
         textOrderCheckPointHistory = findViewById(R.id.textOrderCheckPointHistory);
         textOrderCheckPointHistory.setText("Checkpoint History");
         idOrderThis = getIntent().getStringExtra("ORDER_ID");
+        Toast.makeText(this, "idOrderThis", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, idOrderThis, Toast.LENGTH_SHORT).show();
         ref = FirebaseDatabase.getInstance().getReference().child("checkPoint");
         listCheckPoints = findViewById(R.id.listCheckPoints);
         setUpButtons();
@@ -141,17 +143,17 @@ public class OrderCheckpointActivity extends AppCompatActivity implements AddChe
         addSignature.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), OrderCheckpointActivity.class);
+                Intent intent = new Intent(v.getContext(), SignatureActivity.class);
                 intent.putExtra("ORDER_ID", idOrderThis);
-                startActivity(new Intent(OrderCheckpointActivity.this, SignatureActivity.class));
+                startActivity(intent);
             }
         });
         openCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), OrderCheckpointActivity.class);
+                Intent intent = new Intent(v.getContext(), CameraActivity.class);
                 intent.putExtra("ORDER_ID", idOrderThis);
-                startActivity(new Intent(OrderCheckpointActivity.this, CameraActivity.class));
+                startActivity(intent);
             }
         });
     }

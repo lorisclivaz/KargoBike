@@ -18,6 +18,7 @@ import android.os.Environment;
 import android.util.AttributeSet;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,6 @@ public class SignatureActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signature);
         idOrderThis = getIntent().getStringExtra("ORDER_ID");
-
         mContent = (LinearLayout) findViewById(R.id.canvasLayout);
         mSignature = new signature(getApplicationContext(), null);
         mSignature.setBackgroundColor(Color.WHITE);
@@ -134,7 +134,7 @@ public class SignatureActivity extends AppCompatActivity {
                 byte[] data = outputStream.toByteArray();
                 FirebaseStorage storage = FirebaseStorage.getInstance();
                 StorageReference storageRef = storage.getReferenceFromUrl("gs://kargobikegroup3.appspot.com");
-                StorageReference pathReference = storageRef.child("camera/"+idOrderThis);
+                StorageReference pathReference = storageRef.child("signature/"+idOrderThis);
 
                 UploadTask uploadTask = pathReference.putBytes(data);
                 uploadTask.addOnFailureListener(SignatureActivity.this, new OnFailureListener() {
@@ -156,7 +156,7 @@ public class SignatureActivity extends AppCompatActivity {
                 });
 
 
-                Intent intent = new Intent(SignatureActivity.this, MainActivity.class);
+                Intent intent = new Intent(SignatureActivity.this, MenuFragementActivity.class);
                 startActivity(intent);
                 finish();
                 outputStream.flush();
