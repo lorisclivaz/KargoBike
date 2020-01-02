@@ -63,7 +63,7 @@ public class ModifyProfilActivity extends AppCompatActivity {
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ModifyProfilActivity.this, MainActivity.class));
+                startActivity(new Intent(ModifyProfilActivity.this, MenuFragementActivity.class));
             }
         });
     }
@@ -79,7 +79,7 @@ public class ModifyProfilActivity extends AppCompatActivity {
         viewModel.updateUser(user, new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
-                startActivity(new Intent(ModifyProfilActivity.this, MainActivity.class));
+                startActivity(new Intent(ModifyProfilActivity.this, MenuFragementActivity.class));
             }
 
             @Override

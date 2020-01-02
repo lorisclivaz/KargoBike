@@ -25,6 +25,11 @@
         android:label="@string/menu_product"
         tools:layout="@layout/user_fragment" />
     <fragment
+        android:id="@+id/nav_bikeservice"
+        android:name="com.group3.kargobikeproject.ui.BikeServiceFragment"
+        android:label="Bike Service"
+        tools:layout="@layout/bikeservice_fragment" />
+    <fragment
         android:id="@+id/nav_logout"
         android:name="com.group3.kargobikeproject.ui.logout.LogoutFragment"
         android:label="@string/menu_logout"
