@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="AddOrder"
-        app:layout_constraintBottom_toTopOf="@+id/NameClient"
+        app:layout_constraintBottom_toTopOf="@+id/ClientName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,51 +30,31 @@
         app:layout_constraintVertical_bias="0.39" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/Address"
+        android:id="@+id/AddressClient"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:hint="Address"
+        android:layout_marginBottom="16dp"
+        android:hint="AddressClient"
+        app:layout_constraintBottom_toTopOf="@+id/DeliveryName"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/ClientName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:hint="ClientName"
+        app:layout_constraintBottom_toTopOf="@+id/AddressClient"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/DeliveryName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:hint="DeliveryName"
         app:layout_constraintBottom_toTopOf="@+id/deliverStart"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/nameRoute"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
-        android:hint="Route"
-        app:layout_constraintBottom_toTopOf="@+id/Address"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/NameClient"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
-        android:hint="NameClient"
-        app:layout_constraintBottom_toTopOf="@+id/spinnerStatusModify"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/NameRider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="NameRider"
-        app:layout_constraintBottom_toTopOf="@+id/NameClient"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="0.803" />
-
-    <Spinner
-        android:id="@+id/spinnerStatusModify"
-        android:layout_width="272dp"
-        android:layout_height="30dp"
-        android:layout_marginBottom="28dp"
-        app:layout_constraintBottom_toTopOf="@+id/nameRoute"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/buttonSubmit"
@@ -89,10 +69,11 @@
         android:id="@+id/deliverStart"
         android:layout_width="396dp"
         android:layout_height="37dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="132dp"
         android:text="DeliverStart"
         app:layout_constraintBottom_toTopOf="@+id/deliverEnd"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

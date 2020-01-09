@@ -5,12 +5,30 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.group3.kargobikeproject.Adapter.OrderAdapter;
+import com.group3.kargobikeproject.AddOrderActivity;
+import com.group3.kargobikeproject.Model.Entity.Order;
+import com.group3.kargobikeproject.Model.Repository.OrderRepository;
+import com.group3.kargobikeproject.ModifyAndDeleteOrderActivity;
+import com.group3.kargobikeproject.R;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,27 +36,11 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.group3.kargobikeproject.Adapter.OrderAdapter;
-import com.group3.kargobikeproject.AddOrderActivity;
-import com.group3.kargobikeproject.Model.Entity.Order;
-import com.group3.kargobikeproject.Model.Repository.OrderRepository;
-import com.group3.kargobikeproject.ModifyAndDeleteOrderActivity;
-import com.group3.kargobikeproject.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-
-public class OrderFragment extends Fragment {
+public class OrderHistoryFragment extends Fragment {
 
 
-    public static OrderFragment newInstance() {
-        return new OrderFragment();
+    public static OrderHistoryFragment newInstance() {
+        return new OrderHistoryFragment();
     }
     static final String Extra_ClientName = "NameClient";
     DatabaseReference ref;
@@ -48,25 +50,28 @@ public class OrderFragment extends Fragment {
     SearchView searchView;
     OrderAdapter adapterClass;
     Order clickOrder;
-    Button addOrder;
     Button buttonViewCheckPoint;
+    TextView tv_date;
     OrderRepository repository;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.order_fragment, container, false);
+        setHasOptionsMenu(true);
+        return inflater.inflate(R.layout.history_order_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         Date dateToday = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         String thisDay = formatter.format(dateToday);
+
         ref = FirebaseDatabase.getInstance().getReference().child("order/"+thisDay);
         recyclerView = getView().findViewById(R.id.recyclerViewUser);
-        addOrder = getView().findViewById(R.id.buttonAddOrder);
         searchView = (SearchView) getView().findViewById(R.id.SearchBarUser);
+        tv_date = (TextView) getView().findViewById(R.id.tv_titleHistoryOrder);
         if (ref != null) {
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -115,26 +120,15 @@ public class OrderFragment extends Fragment {
             });
         }
 
-
-
-
-        addOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AddOrderActivity.class));
-            }
-        });
-
-
     }
 
 
 
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
         menu.add(0, 1, Menu.NONE, "add Order")
                 .setIcon(R.drawable.ic_plus)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

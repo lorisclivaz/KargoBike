@@ -2,6 +2,8 @@ package com.group3.kargobikeproject.Adapter;
 
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Point;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 
 import com.group3.kargobikeproject.Model.Entity.BikeService;
 import com.group3.kargobikeproject.Model.Entity.CheckPoint;
+import com.group3.kargobikeproject.Model.Entity.User;
 import com.group3.kargobikeproject.R;
 import com.group3.kargobikeproject.ViewModel.UserListViewModel;
 import com.group3.kargobikeproject.ViewModel.UserViewModel;
@@ -24,16 +27,17 @@ import androidx.recyclerview.widget.RecyclerView;
 public class BikeServiceAdapter extends RecyclerView.Adapter<BikeServiceAdapter.MyViewHolder> {
 
     List<BikeService> bikeServices;
-    List<String> usernames;
+    List<String> userNames;
     Context mContext;
     Application application;
     BikeServiceFragment fragment;
+
     public BikeServiceAdapter(List<BikeService> bikeServices, Application application,BikeServiceFragment fragment)
     {
         this.bikeServices = bikeServices;
         this.application = application;
         this.fragment=fragment;
-        this.usernames=new ArrayList<String>();
+        this.userNames=new ArrayList<String>();
     }
 
     @NonNull
@@ -41,6 +45,10 @@ public class BikeServiceAdapter extends RecyclerView.Adapter<BikeServiceAdapter.
     public BikeServiceAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_bikeservice,parent,false);
+
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        layoutParams.width = (int) (parent.getWidth() * 0.80);
+        view.setLayoutParams(layoutParams);
 
         return new BikeServiceAdapter.MyViewHolder(view);
     }
@@ -69,38 +77,22 @@ public class BikeServiceAdapter extends RecyclerView.Adapter<BikeServiceAdapter.
         }
     }
 
-    public void setBikeServices (List<BikeService> bikeServices, String timestamp) {
-        UserListViewModel.Factory factoryUser = new UserListViewModel.Factory(application);
+    public void setBikeServices (List<BikeService> bikeServices) {
+        /*UserListViewModel.Factory factoryUser = new UserListViewModel.Factory(application);
         UserListViewModel viewModelUser = ViewModelProviders.of(fragment, factoryUser).get(UserListViewModel.class);
-        //set services to null
-        this.bikeServices.clear();
+        userNames = new ArrayList<String>();
         //fill services again
         for (BikeService service: bikeServices
         ) {
-            //get services for that day
-            if (service.getCreatedAt().contains(timestamp)){
-                //the id is already converted to the name
-                if (usernames.contains(service.getIdRider())){
-                    this.bikeServices.add(service);
-                    notifyDataSetChanged();
-                } else{
-                    // get the user and change the id to the name
-                    viewModelUser.getUser(service.getIdRider()).observe(fragment, userEntity -> {
-                        if (userEntity != null) {
-                            //save name in the IdField, just to show in the view
-                            service.setIdRider(userEntity.getFirstName()+" "+userEntity.getLastName());
-                            //list to see after if it is already converted
-                            usernames.add(userEntity.getFirstName()+" "+userEntity.getLastName());
-                            this.bikeServices.add(service);
-                            notifyDataSetChanged();
-                        }
-                    });
-                }
-
-
-            }
-
-        }
+                // get the user and change the id to the name
+                viewModelUser.getUser(service.getIdRider()).observe(fragment, userEntity -> {
+                    if (userEntity != null) {
+                        //list to see after if it is already converted
+                        userNames.add(userEntity.getFirstName()+" "+userEntity.getLastName());
+                    }
+                });
+        }*/
+        this.bikeServices = bikeServices;
         notifyDataSetChanged();
     }
 }

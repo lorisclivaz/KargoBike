@@ -57,15 +57,15 @@ public class BikeServiceViewModel extends AndroidViewModel {
         return observableService;
     }
 
-    public void createBikeService(BikeService bikeService, OnAsyncEventListener callback) {
-        repository.insert(bikeService, callback);
+    public void createBikeService(BikeService bikeService, String time, OnAsyncEventListener callback) {
+        repository.insert(bikeService, time,callback);
     }
 
-    public void updateBikeService(BikeService bikeService, OnAsyncEventListener callback) {
-        repository.update(bikeService, callback);
+    public void updateBikeService(BikeService bikeService, String time, OnAsyncEventListener callback) {
+        repository.update(bikeService, time,callback);
     }
 
-    public void deleteBikeService(BikeService bikeService, OnAsyncEventListener callback) {
-        repository.delete(bikeService, callback);
+    public void deleteBikeService(BikeService bikeService, String time, OnAsyncEventListener callback) {
+        repository.delete(bikeService, time,callback);
     }
 }

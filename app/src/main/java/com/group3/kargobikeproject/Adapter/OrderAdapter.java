@@ -16,10 +16,11 @@ import com.group3.kargobikeproject.OrderCheckpointActivity;
 import com.group3.kargobikeproject.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder> {
 
-    ArrayList<Order> orders;
+    List<Order> orders;
     Context mContext;
 
     private onItemCLickListener mListener;
@@ -114,6 +115,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
 
         }
+    }
+
+    public void setBikeServices (List<Order> orders) {
+        this.orders = orders;
+        notifyDataSetChanged();
     }
 
 

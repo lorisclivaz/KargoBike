@@ -8,10 +8,10 @@ public class OrderRepository {
 
 
     // Firebase Database paths must not contain '.', '#', '$', '[', or ']'
-    public void insert(final Order order, final OnAsyncEventListener callback) {
-        String id = FirebaseDatabase.getInstance().getReference("order").push().getKey();
+    public void insert(final Order order, final String time, final OnAsyncEventListener callback) {
+        String id = FirebaseDatabase.getInstance().getReference("order/"+time).push().getKey();
         FirebaseDatabase.getInstance()
-                .getReference("order")
+                .getReference("order/"+time)
                 .child(id)
                 .setValue(order, (databaseError, databaseReference) -> {
                     if (databaseError != null) {
@@ -24,10 +24,10 @@ public class OrderRepository {
 
 
 
-    public void delete(final Order order, OnAsyncEventListener callback) {
-        String id = FirebaseDatabase.getInstance().getReference("order").getKey();
+    public void delete(final Order order, final String time, OnAsyncEventListener callback) {
+        String id = FirebaseDatabase.getInstance().getReference("order/"+time).getKey();
         FirebaseDatabase.getInstance()
-                .getReference("order")
+                .getReference("order/"+time)
                 .child(order.getIdOrder())
                 .removeValue((databaseError, databaseReference) -> {
                     if (databaseError != null) {
@@ -38,9 +38,9 @@ public class OrderRepository {
                 });
     }
 
-    public void update(final Order order, final OnAsyncEventListener callback) {
+    public void update(final Order order, final String time, final OnAsyncEventListener callback) {
         FirebaseDatabase.getInstance()
-                .getReference("order")
+                .getReference("order/"+time)
                 .child(order.getIdOrder())
                 .updateChildren(order.toMap(), (databaseError, databaseReference) -> {
                     if (databaseError != null) {

@@ -27,8 +27,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
 
@@ -47,6 +49,7 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseReference,statusReference;
     private ValueEventListener listener;
     private  Button deleteOrder, modifyOrder;
+    private Date deliverEndDate;
 
 
     @Override
@@ -60,20 +63,12 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
         statusReference = FirebaseDatabase.getInstance().getReference("status");
 
         //Get the id about the layout
-        nameClient = findViewById(R.id.NameClient);
-        nameRider =  findViewById(R.id.NameRider);
-        nameRoute = findViewById(R.id.nameRoute);
-        address = findViewById(R.id.Address);
+        nameClient = findViewById(R.id.ClientName);
+        nameRider =  findViewById(R.id.DeliveryName);
+        address = findViewById(R.id.AddressClient);
         deliverStart = findViewById(R.id.DeliverStart);
         deliverEnd = findViewById(R.id.deliverEnd);
 
-        //Spinner Status
-        statusModify = (Spinner)findViewById(R.id.spinnerStatusModify);
-        spinnerDataList = new ArrayList<>();
-        adapter = new ArrayAdapter<String>(ModifyAndDeleteOrderActivity.this,android.R.layout.simple_spinner_dropdown_item, spinnerDataList);
-
-        statusModify.setAdapter(adapter);
-        retrieveData();
 
 
         //EndDate calendar
@@ -101,6 +96,7 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 deliverEnd.setText(dayOfMonth+"."+(month+1)+"."+year);
+                deliverEndDate = new Date(year,month,dayOfMonth);
             }
         };
 
@@ -110,7 +106,6 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
         adressGet =  getIntent().getStringExtra("address");
         deliverStartGet =  getIntent().getStringExtra("deliverStart");
         deliverEndGet =  getIntent().getStringExtra("deliverEnd");
-        statusGet =  getIntent().getStringExtra("status");
 
         idorder = getIntent().getStringExtra("IdOrder");
 
@@ -139,7 +134,10 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
                         ,deliverEnd.getText().toString()
                         ,statusModify.getSelectedItem().toString());
 
-                orderRepository.update(order, new OnAsyncEventListener() {
+                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                String time = formatter.format(deliverEndDate);
+
+                orderRepository.update(order,time, new OnAsyncEventListener() {
                     @Override
                     public void onSuccess() {
                         startActivity(new Intent(ModifyAndDeleteOrderActivity.this,MenuFragementActivity.class));
@@ -172,7 +170,11 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
                         ,deliverEnd.getText().toString()
                         ,statusModify.getSelectedItem().toString());
 
-                orderRepository.delete(order, new OnAsyncEventListener() {
+
+                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                String time = formatter.format(deliverEndDate);
+
+                orderRepository.delete(order,time, new OnAsyncEventListener() {
                     @Override
                     public void onSuccess() {
 

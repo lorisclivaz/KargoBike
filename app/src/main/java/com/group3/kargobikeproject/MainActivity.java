@@ -94,7 +94,7 @@ Button getSignature, takePicture;
                 */
 
         //Check the Bike if it is the first time this day to login
-        checkBike();
+        //checkBike();
 
         //for google authentification
         btn_login = findViewById(R.id.buttonLoginWithGoogle);
@@ -177,7 +177,7 @@ Button getSignature, takePicture;
         Intent singIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(singIntent,GOOGLE_SIGN);
     }
-
+/*
     private void checkBike(){
         //Repository for the BikeService
         BikeServiceViewModel.Factory factory = new BikeServiceViewModel.Factory(getApplication(),"0");
@@ -240,7 +240,7 @@ Button getSignature, takePicture;
             builder.show();
         }
 
-    }
+    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
