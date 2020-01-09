@@ -11,7 +11,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.group3.kargobikeproject.Adapter.OrderAdapter;
+import com.group3.kargobikeproject.AddOrderActivity;
+import com.group3.kargobikeproject.Model.Entity.Order;
+import com.group3.kargobikeproject.Model.Repository.OrderRepository;
+import com.group3.kargobikeproject.ModifyAndDeleteOrderActivity;
+import com.group3.kargobikeproject.R;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,52 +36,42 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.group3.kargobikeproject.Adapter.OrderAdapter;
-import com.group3.kargobikeproject.AddOrderActivity;
-import com.group3.kargobikeproject.Model.Entity.Order;
-import com.group3.kargobikeproject.Model.Repository.OrderRepository;
-import com.group3.kargobikeproject.ModifyAndDeleteOrderActivity;
-import com.group3.kargobikeproject.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-
-public class OrderFragment extends Fragment {
+public class OrderHistoryFragment extends Fragment {
 
 
-    public static OrderFragment newInstance() {
-        return new OrderFragment();
+    public static OrderHistoryFragment newInstance() {
+        return new OrderHistoryFragment();
     }
     static final String Extra_ClientName = "NameClient";
     DatabaseReference ref;
     ArrayList<Order> orders;
     ArrayAdapter listAdapter;
     RecyclerView recyclerView;
+    SearchView searchView;
     OrderAdapter adapterClass;
     Order clickOrder;
     Button buttonViewCheckPoint;
+    TextView tv_date;
     OrderRepository repository;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.order_fragment, container, false);
+        return inflater.inflate(R.layout.history_order_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         Date dateToday = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         String thisDay = formatter.format(dateToday);
+
         ref = FirebaseDatabase.getInstance().getReference().child("order/"+thisDay);
         recyclerView = getView().findViewById(R.id.recyclerViewUser);
+        searchView = (SearchView) getView().findViewById(R.id.SearchBarUser);
+        tv_date = (TextView) getView().findViewById(R.id.tv_titleHistoryOrder);
         if (ref != null) {
             ref.addValueEventListener(new ValueEventListener() {
                 @Override

@@ -36,6 +36,7 @@ public class BikeServiceFragment extends Fragment {
 
     private List<BikeService> serviceList;
     private BikeServiceListViewModel viewModel;
+    private BikeServiceListViewModel viewModelListener;
     private TextView tv_date;
     private DatePickerDialog.OnDateSetListener dateListener;
 
@@ -64,11 +65,11 @@ public class BikeServiceFragment extends Fragment {
 
         recyclerView.setAdapter(adapter);
 
-        BikeServiceListViewModel.Factory factory = new BikeServiceListViewModel.Factory(getActivity().getApplication());
+        BikeServiceListViewModel.Factory factory = new BikeServiceListViewModel.Factory(getActivity().getApplication(),thisDay);
         viewModel = ViewModelProviders.of(this, factory).get(BikeServiceListViewModel.class);
-        viewModel.getBikeServices().observe(this, serviceEntities -> {
+        viewModel.getBikeServicesDate().observe(this, serviceEntities -> {
             if (serviceEntities != null) {
-                adapter.setBikeServices(serviceEntities, (String)tv_date.getText());
+                adapter.setBikeServices(serviceEntities);
             }
         });
         //put today in the field and setup the field
@@ -76,14 +77,14 @@ public class BikeServiceFragment extends Fragment {
         dateListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                if(month<10){
-                    tv_date.setText(dayOfMonth+"-0"+(month+1)+"-"+year);
-                }else{
-                    tv_date.setText(dayOfMonth+"-"+(month+1)+"-"+year);
-                }
-                viewModel.getBikeServices().observe(BikeServiceFragment.this, serviceEntities -> {
+                String time = formatter.format(new Date(year,month,dayOfMonth));
+                tv_date.setText(time);
+                //get data for that date
+                BikeServiceListViewModel.Factory factoryListener = new BikeServiceListViewModel.Factory(getActivity().getApplication(),time);
+                viewModelListener = ViewModelProviders.of(BikeServiceFragment.this, factoryListener).get(BikeServiceListViewModel.class);
+                viewModel.getBikeServicesDate().observe(BikeServiceFragment.this, serviceEntities -> {
                     if (serviceEntities != null) {
-                        adapter.setBikeServices(serviceEntities, (String)tv_date.getText());
+                        adapter.setBikeServices(serviceEntities);
                     }
                 });
             }

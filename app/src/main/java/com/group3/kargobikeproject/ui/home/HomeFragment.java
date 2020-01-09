@@ -162,9 +162,11 @@ public class HomeFragment extends Fragment {
                                         // add line in db with user and date
                                         Date date = new Date();
                                         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                                        SimpleDateFormat formatterTime = new SimpleDateFormat("dd-MM-yyyy");
                                         String thisDay = formatter.format(date);
+                                        String time = formatterTime.format(date);
                                         BikeService service = new BikeService(thisDay,user.getUid());
-                                        viewModelService.createBikeService(service, new OnAsyncEventListener() {
+                                        viewModelService.createBikeService(service,time, new OnAsyncEventListener() {
                                             @Override
                                             public void onSuccess() {
                                                 Log.d("MainActivityBikeCheck", "createService: success");

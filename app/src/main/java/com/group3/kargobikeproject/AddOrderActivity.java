@@ -36,11 +36,13 @@ import com.group3.kargobikeproject.Utils.OnAsyncEventListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -66,6 +68,7 @@ public class AddOrderActivity extends AppCompatActivity {
     private Calendar calendar;
     private SimpleDateFormat dateFormat;
     private String date;
+    private Date deliverEndDate;
 
 
     //Notification
@@ -150,7 +153,15 @@ public class AddOrderActivity extends AppCompatActivity {
                         ,deliverEnd.getText().toString()
                         ,status.getSelectedItem().toString());
 
-                orderRepository.insert(order, new OnAsyncEventListener() {
+                String dateString = deliverEnd.getText().toString();
+                try {
+                    deliverEndDate = new SimpleDateFormat("dd.MM.yyyy").parse(dateString);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                String time = formatter.format(deliverEndDate);
+                orderRepository.insert(order, time, new OnAsyncEventListener() {
                     @Override
                     public void onSuccess() {
                         Log.d(TAG, "Order added : success");
