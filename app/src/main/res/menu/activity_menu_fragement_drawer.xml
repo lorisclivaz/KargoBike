@@ -23,15 +23,18 @@
             <item
                 android:id="@+id/nav_user"
                 android:icon="@drawable/ic_directions_bike"
-                android:title="@string/menu_riders" />
+                android:title="@string/menu_riders"
+                android:visibility="invisible"/>
             <item
                 android:id="@+id/nav_bikeservice"
                 android:icon="@drawable/ic_menu_bikeservice"
-                android:title="Bike Services" />
+                android:title="Bike Services"
+                />
             <item
                 android:id="@+id/nav_autorise"
                 android:icon="@drawable/ic_person_add_red_24dp"
-                android:title="@string/menu_menu_autoriseUser" />
+                android:title="@string/menu_menu_autoriseUser"
+                android:visibility="invisible"/>
         </menu>
     </item>
 

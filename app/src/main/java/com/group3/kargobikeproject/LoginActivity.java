@@ -175,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
                         //Create the user if he does not exist
                         if (!userExist){
                             //create the user
-                            User userNew = new User (user.getUid(),"","",user.getEmail(),"","",0);
+                            User userNew = new User (user.getUid(),"","",user.getEmail(),"","",0,0);
                             //create connection to model view
                             UserViewModel.Factory factoryUser = new UserViewModel.Factory(getApplication(),user.getUid());
                             UserViewModel viewModel = ViewModelProviders.of(this, factoryUser).get(UserViewModel.class);

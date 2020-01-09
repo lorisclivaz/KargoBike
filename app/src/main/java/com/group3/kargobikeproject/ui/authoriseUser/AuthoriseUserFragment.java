@@ -2,6 +2,7 @@ package com.group3.kargobikeproject.ui.authoriseUser;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -153,9 +154,10 @@ public class AuthoriseUserFragment extends Fragment {
                     String lastname = item.child("lastName").getValue(String.class);
                     String regionWorking = item.child("regionWorking").getValue(String.class);
                     String phoneNumber = item.child("phoneNumber").getValue(String.class);
+                    int role = item.child("role").getValue(Integer.class);
                     int isAccess = item.child("access").getValue(Integer.class);
 
-                    User user = new User(key,firstname,lastname,mail,regionWorking,phoneNumber,isAccess);
+                    User user = new User(key,firstname,lastname,mail,regionWorking,phoneNumber,isAccess,role);
 
                     userList.add(user);
 
