@@ -122,9 +122,8 @@ public class MenuFragementActivity extends AppCompatActivity {
     {
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         Menu nav_Menu = navigationView.getMenu();
-        nav_Menu.findItem(R.id.nav_user).setVisible(false);
-        nav_Menu.findItem(R.id.nav_autorise).setVisible(false);
-        nav_Menu.findItem(R.id.nav_autorise).setVisible(false);
+        nav_Menu.findItem(R.id.superUserGroup).setVisible(false);
+        
     }
 
 
