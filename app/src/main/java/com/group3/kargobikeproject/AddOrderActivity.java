@@ -97,6 +97,8 @@ public class AddOrderActivity extends AppCompatActivity {
 
 
         //StartDate calendar
+
+        //Get the current time
         Date c = Calendar.getInstance().getTime();
         System.out.println("Current time => " + c);
 
