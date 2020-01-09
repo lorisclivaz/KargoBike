@@ -60,20 +60,12 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
         statusReference = FirebaseDatabase.getInstance().getReference("status");
 
         //Get the id about the layout
-        nameClient = findViewById(R.id.NameClient);
-        nameRider =  findViewById(R.id.NameRider);
-        nameRoute = findViewById(R.id.nameRoute);
-        address = findViewById(R.id.Address);
+        nameClient = findViewById(R.id.ClientName);
+        nameRider =  findViewById(R.id.DeliveryName);
+        address = findViewById(R.id.AddressClient);
         deliverStart = findViewById(R.id.DeliverStart);
         deliverEnd = findViewById(R.id.deliverEnd);
 
-        //Spinner Status
-        statusModify = (Spinner)findViewById(R.id.spinnerStatusModify);
-        spinnerDataList = new ArrayList<>();
-        adapter = new ArrayAdapter<String>(ModifyAndDeleteOrderActivity.this,android.R.layout.simple_spinner_dropdown_item, spinnerDataList);
-
-        statusModify.setAdapter(adapter);
-        retrieveData();
 
 
         //EndDate calendar
@@ -110,7 +102,6 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
         adressGet =  getIntent().getStringExtra("address");
         deliverStartGet =  getIntent().getStringExtra("deliverStart");
         deliverEndGet =  getIntent().getStringExtra("deliverEnd");
-        statusGet =  getIntent().getStringExtra("status");
 
         idorder = getIntent().getStringExtra("IdOrder");
 

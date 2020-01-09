@@ -87,12 +87,11 @@ public class AddOrderActivity extends AppCompatActivity {
 
 
         //Find in the layout
-        nameClient = findViewById(R.id.NameClient);
-        address = findViewById(R.id.Address);
+        nameClient = findViewById(R.id.ClientName);
+        address = findViewById(R.id.AddressClient);
         deliverStart = findViewById(R.id.deliverStart);
         deliverEnd = findViewById(R.id.deliverEnd);
-        route = findViewById(R.id.nameRoute);
-        nameRider = findViewById(R.id.NameRider);
+        nameRider = findViewById(R.id.DeliveryName);
         submit = findViewById(R.id.buttonSubmit);
 
 
@@ -137,13 +136,7 @@ public class AddOrderActivity extends AppCompatActivity {
             }
         };
 
-        //Spinner Status
-        status = (Spinner)findViewById(R.id.spinnerStatusModify);
-        spinnerDataList = new ArrayList<>();
-        adapter = new ArrayAdapter<String>(AddOrderActivity.this,android.R.layout.simple_spinner_dropdown_item, spinnerDataList);
 
-        status.setAdapter(adapter);
-        retrieveData();
 
 
 
