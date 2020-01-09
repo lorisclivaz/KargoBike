@@ -15,7 +15,7 @@ public class User {
     private String regionWorking;
     private String phoneNumber;
     private int access;
-
+    private int role;
 
     //Constructor
     public User()
@@ -23,7 +23,7 @@ public class User {
 
     }
 
-    public User(String idUser, String firstName, String lastName, String mail, String regionWorking, String phoneNumber, int access)
+    public User(String idUser, String firstName, String lastName, String mail, String regionWorking, String phoneNumber, int access,int role)
     {
         this.idUser =idUser;
         this.firstName = firstName;
@@ -32,6 +32,7 @@ public class User {
         this.regionWorking = regionWorking;
         this.phoneNumber = phoneNumber;
         this.access = access;
+        this.role=role;
     }
 
 
@@ -92,6 +93,15 @@ public class User {
 
     public void setAccess(int access) {
         this.access = access;
+    }
+
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
     }
 
     @Exclude

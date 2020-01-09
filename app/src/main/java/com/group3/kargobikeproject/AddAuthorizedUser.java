@@ -32,6 +32,7 @@ public class AddAuthorizedUser extends AppCompatActivity {
     ArrayList<User> userList;
     ValueEventListener listener;
     Spinner spinnerUser;
+    Switch switchIsDispatcher;
     Switch switchAuth;
     Boolean switchState;
     UserViewModel viewModel;
@@ -43,6 +44,7 @@ public class AddAuthorizedUser extends AppCompatActivity {
         setContentView(R.layout.activity_authorized_user);
 
         spinnerUser = (Spinner) findViewById(R.id.spinnerUserAuth);
+        switchIsDispatcher=findViewById(R.id.switchIsDispatcher);
         switchAuth = findViewById(R.id.switchAuth);
         switchState = switchAuth.isChecked();
 
@@ -117,7 +119,30 @@ public class AddAuthorizedUser extends AppCompatActivity {
                 });
             }
         });
+        switchIsDispatcher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
+                int role =0;
+
+                if (isChecked)
+                    role=1;
+
+                userSelected.setRole(role);
+
+                viewModel.updateUser(userSelected, new OnAsyncEventListener() {
+                    @Override
+                    public void onSuccess() {
+
+                        Log.d("ICCCIIIIII","Modification ok");
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        Log.d("ICCCIIIIII","Erreur modification");
+                    }
+                });
+            }
+        });
 
     }
 
@@ -138,9 +163,10 @@ public class AddAuthorizedUser extends AppCompatActivity {
                     String lastname = item.child("lastName").getValue(String.class);
                     String regionWorking = item.child("regionWorking").getValue(String.class);
                     String phoneNumber = item.child("phoneNumber").getValue(String.class);
+                    int role = item.child("role").getValue(Integer.class);
                     int isAccess = item.child("access").getValue(Integer.class);
 
-                    User user = new User(key,firstname,lastname,mail,regionWorking,phoneNumber,isAccess);
+                    User user = new User(key,firstname,lastname,mail,regionWorking,phoneNumber,isAccess,role);
 
                     userList.add(user);
 
