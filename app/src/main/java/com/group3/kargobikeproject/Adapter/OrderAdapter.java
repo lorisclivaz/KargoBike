@@ -53,12 +53,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int position) {
         myViewHolder.nameClient.setText(orders.get(position).getNameClient());
-      //  myViewHolder.nameRoute.setText(orders.get(position).getNameRoute());
-       // myViewHolder.nameRider.setText(orders.get(position).getNameRider());
-       // myViewHolder.address.setText(orders.get(position).getAddress());
         myViewHolder.startDate.setText(orders.get(position).getDeliverStart());
         myViewHolder.endDate.setText(orders.get(position).getDeliverEnd());
-        myViewHolder.status.setText(orders.get(position).getOrderStatus());
         myViewHolder.checkpointButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v ) {
@@ -84,15 +80,12 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
   public   class MyViewHolder extends RecyclerView.ViewHolder
     {
         Button checkpointButton;
-        TextView nameClient, nameRoute, nameRider, address, startDate, endDate, status;
+        TextView nameClient,startDate, endDate;
 
         public MyViewHolder(@NonNull View itemView, onItemCLickListener listener) {
             super(itemView);
 
             nameClient = itemView.findViewById(R.id.nameClient);
-         //   nameRoute = itemView.findViewById(R.id.nameRoute);
-          //  nameRider = itemView.findViewById(R.id.nameRider);
-           // address = itemView.findViewById(R.id.Address);
             startDate = itemView.findViewById(R.id.startDate);
             endDate = itemView.findViewById(R.id.endDate);
             checkpointButton = itemView.findViewById(R.id.buttonViewCheckPoint);

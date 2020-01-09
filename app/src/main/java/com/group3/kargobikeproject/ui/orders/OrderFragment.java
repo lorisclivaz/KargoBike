@@ -44,10 +44,8 @@ public class OrderFragment extends Fragment {
     ArrayList<Order> orders;
     ArrayAdapter listAdapter;
     RecyclerView recyclerView;
-    SearchView searchView;
     OrderAdapter adapterClass;
     Order clickOrder;
-    Button addOrder;
     Button buttonViewCheckPoint;
     OrderRepository repository;
     @Override
@@ -62,8 +60,6 @@ public class OrderFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         ref = FirebaseDatabase.getInstance().getReference().child("order");
         recyclerView = getView().findViewById(R.id.recyclerViewUser);
-        addOrder = getView().findViewById(R.id.buttonAddOrder);
-        searchView = (SearchView) getView().findViewById(R.id.SearchBarUser);
         if (ref != null) {
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -111,16 +107,6 @@ public class OrderFragment extends Fragment {
                 }
             });
         }
-
-
-
-
-        addOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AddOrderActivity.class));
-            }
-        });
 
     }
 
