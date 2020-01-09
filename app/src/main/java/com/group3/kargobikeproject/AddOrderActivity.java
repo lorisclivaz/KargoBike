@@ -1,6 +1,7 @@
 package com.group3.kargobikeproject;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -148,10 +149,10 @@ public class AddOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 order = new Order( nameClient.getText().toString(),nameRider.getText().toString(),
-                        route.getText().toString(),
+                      "",
                         address.getText().toString(),deliverStart.getText().toString()
                         ,deliverEnd.getText().toString()
-                        ,status.getSelectedItem().toString());
+                        ,"checked");
 
                 String dateString = deliverEnd.getText().toString();
                 try {
@@ -169,7 +170,7 @@ public class AddOrderActivity extends AppCompatActivity {
                         //Send notification if success
                         sendNotification();
 
-                       // startActivity(new Intent(AddOrderActivity.this,MenuFragementActivity.class));
+                       startActivity(new Intent(AddOrderActivity.this,MenuFragementActivity.class));
 
 
 

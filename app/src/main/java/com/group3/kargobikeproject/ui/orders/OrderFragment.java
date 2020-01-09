@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,7 @@ public class OrderFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.order_fragment, container, false);
     }
 
@@ -65,8 +67,6 @@ public class OrderFragment extends Fragment {
         String thisDay = formatter.format(dateToday);
         ref = FirebaseDatabase.getInstance().getReference().child("order/"+thisDay);
         recyclerView = getView().findViewById(R.id.recyclerViewUser);
-        addOrder = getView().findViewById(R.id.buttonAddOrder);
-        searchView = (SearchView) getView().findViewById(R.id.SearchBarUser);
         if (ref != null) {
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -115,26 +115,15 @@ public class OrderFragment extends Fragment {
             });
         }
 
-
-
-
-        addOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AddOrderActivity.class));
-            }
-        });
-
-
     }
 
 
 
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
         menu.add(0, 1, Menu.NONE, "add Order")
                 .setIcon(R.drawable.ic_plus)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -22,7 +22,6 @@ public class User {
     {
 
     }
-
     public User(String idUser, String firstName, String lastName, String mail, String regionWorking, String phoneNumber, int access,int role)
     {
         this.idUser =idUser;
@@ -34,27 +33,20 @@ public class User {
         this.access = access;
         this.role=role;
     }
-
-
     //Getters and setters
     @Exclude
-
     public String getIdUser() {
         return idUser;
     }
-
     public void setIdUser(String idUser) {
         this.idUser = idUser;
     }
-
     public String getFirstName() {
         return firstName;
     }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-
     public String getLastName() {
         return lastName;
     }

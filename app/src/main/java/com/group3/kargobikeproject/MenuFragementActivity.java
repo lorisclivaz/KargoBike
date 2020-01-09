@@ -26,7 +26,14 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.group3.kargobikeproject.Model.Entity.User;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MenuFragementActivity extends AppCompatActivity {
@@ -34,8 +41,15 @@ public class MenuFragementActivity extends AppCompatActivity {
     Button btn_login,btn_logout;
     TextView tv_userEmail ;
     String extraEmail;
+    private DatabaseReference mDatabaseReference;
+    ValueEventListener listener;
     private AppBarConfiguration mAppBarConfiguration;
     private Button buttonLogout;
+    int role;
+    ArrayList<User> users;
+    ArrayList<String> arrayUser;
+    NavigationView navigationView;
+    ArrayList<User> userList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +59,7 @@ public class MenuFragementActivity extends AppCompatActivity {
         extraEmail =getIntent().getStringExtra("email_Client");
       //  tv_userEmail.setText("test");
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+         navigationView = (NavigationView) findViewById(R.id.nav_view);
 
 
 
@@ -76,5 +90,44 @@ public class MenuFragementActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+    public void retrieveData()
+    {
+
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
+        listener = mDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                userList.clear();
+                arrayUser.clear();
+                for(DataSnapshot item:dataSnapshot.getChildren()){
+                    String mail = item.child("mail").getValue(String.class);
+
+                    if(mail.equals(extraEmail)) {
+                        role = item.child("role").getValue(Integer.class);
+                        System.out.println(mail+"  "+extraEmail+item.child("role").getValue(Integer.class));
+
+                    }
+                }
+                if(role==0)
+                    hideItem();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    private void hideItem()
+    {
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        Menu nav_Menu = navigationView.getMenu();
+        nav_Menu.findItem(R.id.nav_user).setVisible(false);
+        nav_Menu.findItem(R.id.nav_autorise).setVisible(false);
+        nav_Menu.findItem(R.id.nav_autorise).setVisible(false);
+    }
+
 
 }
