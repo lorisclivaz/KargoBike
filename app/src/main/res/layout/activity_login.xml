@@ -22,13 +22,14 @@
                 android:layout_height="378dp"
                 app:srcCompat="@mipmap/app_icon_foreground" />
 
-            <Button
+            <com.shobhitpuri.custombuttons.GoogleSignInButton
                 android:id="@+id/buttonLoginWithGoogle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="61dp"
                 android:layout_margin="10dp"
-                android:background="#F8F8F8"
-                android:text="Login With Google" />
+
+                android:text="Login With Google"
+                app:isDarkTheme="true" />
 
 
         </LinearLayout>
