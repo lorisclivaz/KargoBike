@@ -72,7 +72,7 @@ public class MenuFragementActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
+        retrieveData();
     }
 
     @Override
@@ -99,8 +99,6 @@ public class MenuFragementActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                userList.clear();
-                arrayUser.clear();
                 for(DataSnapshot item:dataSnapshot.getChildren()){
                     String mail = item.child("mail").getValue(String.class);
 
