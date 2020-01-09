@@ -32,11 +32,11 @@
         android:id="@+id/deliverEnd"
         android:layout_width="400dp"
         android:layout_height="46dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="68dp"
         android:text="EndDate"
         app:layout_constraintBottom_toTopOf="@+id/buttonModifyOrder"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -60,15 +60,6 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/nameRoute"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
-        android:hint="Route"
-        app:layout_constraintBottom_toTopOf="@+id/Address"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/NameClient"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -81,8 +72,8 @@
         android:id="@+id/spinnerStatusModify"
         android:layout_width="272dp"
         android:layout_height="30dp"
-        android:layout_marginBottom="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/nameRoute"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/Address"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent" />

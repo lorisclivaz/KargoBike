@@ -95,7 +95,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
            // address = itemView.findViewById(R.id.Address);
             startDate = itemView.findViewById(R.id.startDate);
             endDate = itemView.findViewById(R.id.endDate);
-            status = itemView.findViewById(R.id.status);
             checkpointButton = itemView.findViewById(R.id.buttonViewCheckPoint);
 
             itemView.setOnClickListener(new View.OnClickListener() {

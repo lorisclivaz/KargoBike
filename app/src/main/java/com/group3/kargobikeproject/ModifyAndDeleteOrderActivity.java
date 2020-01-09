@@ -43,7 +43,7 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
     private OrderRepository orderRepository;
     private String idorder;
     private DatePickerDialog.OnDateSetListener dateListener;
-    private String clientGetname, riderGetName, routeGetName, adressGet, deliverStartGet, deliverEndGet, statusGet;
+    private String clientGetname, riderGetName, adressGet, deliverStartGet, deliverEndGet, statusGet;
     private DatabaseReference mDatabaseReference,statusReference;
     private ValueEventListener listener;
     private  Button deleteOrder, modifyOrder;
@@ -107,7 +107,6 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
 
         clientGetname =  getIntent().getStringExtra("Name_Client");
         riderGetName =  getIntent().getStringExtra("Name_Rider");
-        routeGetName =  getIntent().getStringExtra("Name_Route");
         adressGet =  getIntent().getStringExtra("address");
         deliverStartGet =  getIntent().getStringExtra("deliverStart");
         deliverEndGet =  getIntent().getStringExtra("deliverEnd");
@@ -119,7 +118,6 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
 
         nameClient.setText(clientGetname);
         nameRider.setText(riderGetName);
-        nameRoute.setText(routeGetName);
         address.setText(adressGet);
         deliverStart.setText(deliverStartGet);
         deliverEnd.setText(deliverEndGet);

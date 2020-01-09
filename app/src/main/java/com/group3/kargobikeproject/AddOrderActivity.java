@@ -1,7 +1,6 @@
 package com.group3.kargobikeproject;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -23,16 +22,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.group3.kargobikeproject.Model.Entity.Order;
-import com.group3.kargobikeproject.Model.Repository.OrderRepository;
-import com.group3.kargobikeproject.Utils.OnAsyncEventListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.group3.kargobikeproject.Model.Entity.Order;
+import com.group3.kargobikeproject.Model.Repository.OrderRepository;
+import com.group3.kargobikeproject.Utils.OnAsyncEventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -101,7 +100,7 @@ public class AddOrderActivity extends AppCompatActivity {
         Date c = Calendar.getInstance().getTime();
         System.out.println("Current time => " + c);
 
-        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         String formattedDate = df.format(c);
         deliverStart.setText(formattedDate);
 
