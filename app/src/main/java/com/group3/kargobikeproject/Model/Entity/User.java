@@ -105,7 +105,7 @@ public class User {
         result.put("regionWorking", regionWorking);
         result.put("phoneNumber", phoneNumber);
         result.put("access", access);
-
+        result.put("role", role);
         return result;
     }
 }

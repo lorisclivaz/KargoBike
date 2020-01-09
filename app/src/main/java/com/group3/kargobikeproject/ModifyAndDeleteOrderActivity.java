@@ -116,7 +116,7 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
         address.setText(adressGet);
         deliverStart.setText(deliverStartGet);
         deliverEnd.setText(deliverEndGet);
-        setSpinText(statusModify, statusGet);
+        //setSpinText(statusModify, statusGet);
 
 
 
@@ -129,10 +129,10 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 order = new Order(idorder, nameClient.getText().toString(),nameRider.getText().toString(),
-                        nameRoute.getText().toString(),
+                       "",
                         address.getText().toString(),deliverStart.getText().toString()
                         ,deliverEnd.getText().toString()
-                        ,statusModify.getSelectedItem().toString());
+                        ,"");
 
                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
                 String time = formatter.format(deliverEndDate);
@@ -165,10 +165,10 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 order = new Order( idorder,nameClient.getText().toString(),nameRider.getText().toString(),
-                        nameRoute.getText().toString(),
+                        "",
                         address.getText().toString(),deliverStart.getText().toString()
                         ,deliverEnd.getText().toString()
-                        ,statusModify.getSelectedItem().toString());
+                        ,"");
 
 
                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");

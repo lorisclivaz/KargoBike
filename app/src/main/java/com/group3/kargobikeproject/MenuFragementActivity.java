@@ -123,7 +123,7 @@ public class MenuFragementActivity extends AppCompatActivity {
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         Menu nav_Menu = navigationView.getMenu();
         nav_Menu.findItem(R.id.superUserGroup).setVisible(false);
-        
+
     }
 
 
