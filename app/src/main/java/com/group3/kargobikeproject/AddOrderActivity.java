@@ -1,6 +1,7 @@
 package com.group3.kargobikeproject;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -57,12 +59,14 @@ public class AddOrderActivity extends AppCompatActivity {
     private ArrayList<String> spinnerDataList;
     private OrderRepository orderRepository;
     private Order order ;
-    private Spinner status;
+    private Spinner spinnerLocationClient;
+    private Spinner spinnerLocationDelivery;
+    private Spinner spinnerProductSelected;
     private TextInputEditText nameClient;
-    private TextInputEditText nameRider;
-    private TextInputEditText route;
-    private TextInputEditText address;
-    private TextView deliverStart, deliverEnd;
+    private TextInputEditText nameDelivery;
+    private TextInputEditText addressClient;
+    private TextInputEditText addressDelivery;
+    private TextView deliverStart, deliverEnd,deliverEndHour;
     private DatePickerDialog.OnDateSetListener dateListener;
     private Button submit;
     private TextView dateTimeDisplay;
@@ -92,12 +96,43 @@ public class AddOrderActivity extends AppCompatActivity {
 
         //Find in the layout
         nameClient = findViewById(R.id.ClientName);
-        address = findViewById(R.id.AddressClient);
+        addressClient = findViewById(R.id.AddressClient);
+        spinnerLocationClient = findViewById(R.id.spinnerLocationClient);
+        nameDelivery = findViewById(R.id.DeliveryName);
+        addressDelivery = findViewById(R.id.deliveryAddress);
+        spinnerLocationDelivery = findViewById(R.id.spinnerLocationDelivery);
+        spinnerProductSelected = findViewById(R.id.spinnerProductSelected);
         deliverStart = findViewById(R.id.deliverStart);
         deliverEnd = findViewById(R.id.deliverEnd);
-        nameRider = findViewById(R.id.DeliveryName);
+        deliverEndHour = findViewById(R.id.deliverEndHours);
         submit = findViewById(R.id.buttonSubmit);
 
+        //add data on spinner
+        List<String> listLocationClient = new ArrayList<String>();
+        listLocationClient.add("Sierre");
+        listLocationClient.add("Sion");
+        listLocationClient.add("Martigny");
+        listLocationClient.add("Monthey");
+        listLocationClient.add("Visp");
+        listLocationClient.add("Brig");
+        listLocationClient.add("Lausanne");
+        listLocationClient.add("Verbier");
+        listLocationClient.add("Crans Montana");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, listLocationClient);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
+        List<String> listProduct = new ArrayList<String>();
+        listProduct.add("product 1");
+        listProduct.add("product 2");
+        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, listProduct);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerLocationClient.setAdapter(dataAdapter);
+        spinnerLocationDelivery.setAdapter(dataAdapter);
+        spinnerProductSelected.setAdapter(dataAdapter2);
 
         //StartDate calendar
 
@@ -108,8 +143,6 @@ public class AddOrderActivity extends AppCompatActivity {
         SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         String formattedDate = df.format(c);
         deliverStart.setText(formattedDate);
-
-
 
         //EndDate calendar
         deliverEnd.setOnClickListener(new View.OnClickListener() {
@@ -133,6 +166,26 @@ public class AddOrderActivity extends AppCompatActivity {
             }
         });
 
+        deliverEndHour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(AddOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        deliverEndHour.setText( selectedHour + ":" + selectedMinute);
+                    }
+                }, hour, minute, true);//Yes 24 hour time
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+
+            }
+        });
+
         dateListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -148,20 +201,22 @@ public class AddOrderActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                order = new Order( nameClient.getText().toString(),nameRider.getText().toString(),
-                      "",
-                        address.getText().toString(),deliverStart.getText().toString()
-                        ,deliverEnd.getText().toString()
-                        ,"checked");
+                order = new Order( nameClient.getText().toString(),addressClient.getText().toString(),spinnerLocationClient.getSelectedItem().toString(), nameDelivery.getText().toString(),addressDelivery.getText().toString(),spinnerLocationDelivery.getSelectedItem().toString(),deliverStart.getText().toString(),deliverEnd.getText().toString()+" "+deliverEndHour.getText().toString(),spinnerProductSelected.getSelectedItem().toString());
+                Log.d(TAG, "Order added : inside "+nameClient.getText().toString()+" "+addressClient.getText().toString()+" "+spinnerLocationClient.getSelectedItem().toString()+" "+nameDelivery.getText().toString()+" "+addressDelivery.getText().toString()+" "+spinnerLocationDelivery.getSelectedItem().toString()+" "+deliverStart.getText().toString()+" "+deliverEnd.getText().toString()+" "+spinnerProductSelected.getSelectedItem().toString());
+
 
                 String dateString = deliverEnd.getText().toString();
                 try {
                     deliverEndDate = new SimpleDateFormat("dd.MM.yyyy").parse(dateString);
+                    Log.d(TAG, "Order added :deliverEndDate "+deliverEndDate);
                 } catch (ParseException e) {
                     e.printStackTrace();
+                    Log.d(TAG, "Order added :Erreur e ");
                 }
                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
                 String time = formatter.format(deliverEndDate);
+                Log.d(TAG, "Order added :time"+time);
+
                 orderRepository.insert(order, time, new OnAsyncEventListener() {
                     @Override
                     public void onSuccess() {
@@ -172,14 +227,12 @@ public class AddOrderActivity extends AppCompatActivity {
 
                        startActivity(new Intent(AddOrderActivity.this,MenuFragementActivity.class));
 
-
-
                     }
 
                     @Override
                     public void onFailure(Exception e) {
 
-                        Log.d(TAG, "product added : failure");
+                        Log.d(TAG, "Order added : failure");
                     }
                 });
 
@@ -225,7 +278,7 @@ public class AddOrderActivity extends AppCompatActivity {
             mainObj.put("to","/topics/all");
             JSONObject notificationObj = new JSONObject();
             notificationObj.put("title",NOTIFICATION_TITLE);
-            notificationObj.put("body",NOTIFICATION_BODY+address.getText().toString());
+            notificationObj.put("body",NOTIFICATION_BODY+spinnerLocationClient.getSelectedItem().toString());
 
             mainObj.put("notification",notificationObj);
 

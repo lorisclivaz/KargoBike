@@ -54,7 +54,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int position) {
         myViewHolder.nameClient.setText(orders.get(position).getNameClient());
-        myViewHolder.startDate.setText(orders.get(position).getDeliverStart());
+        myViewHolder.Destination.setText(orders.get(position).getAddress());
         myViewHolder.endDate.setText(orders.get(position).getDeliverEnd());
         myViewHolder.checkpointButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,13 +81,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
   public   class MyViewHolder extends RecyclerView.ViewHolder
     {
         Button checkpointButton;
-        TextView nameClient,startDate, endDate;
+        TextView nameClient,Destination, endDate;
 
         public MyViewHolder(@NonNull View itemView, onItemCLickListener listener) {
             super(itemView);
 
             nameClient = itemView.findViewById(R.id.nameClient);
-            startDate = itemView.findViewById(R.id.startDate);
+            Destination = itemView.findViewById(R.id.fromDestination);
             endDate = itemView.findViewById(R.id.endDate);
             checkpointButton = itemView.findViewById(R.id.buttonViewCheckPoint);
 

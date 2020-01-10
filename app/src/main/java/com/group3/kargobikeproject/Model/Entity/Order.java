@@ -10,12 +10,18 @@ public class Order {
     //Variables about order
     private String idOrder;
     private String nameClient;
+    private String addressClient;
+    private String locationClient;
+    private String deliveryName;
+    private String deliveryAddress;
+    private String locationDelivery;
     private String nameRider;
     private String nameRoute;
     private String address;
     private String deliverStart;
     private String deliverEnd;
     private String orderStatus;
+    private String productSelected;
 
 
     public Order()
@@ -45,6 +51,22 @@ public class Order {
         this.deliverEnd = deliverEnd;
         this.orderStatus = orderStatus;
     }
+
+    public Order(String nameClient, String addressClient, String locationClient, String deliveryName, String deliveryAddress, String locationDelivery, String deliverStart,String deliverEnd,String productSelected)
+    {
+        this.nameClient= nameClient;
+        this.addressClient = addressClient;
+        this.locationClient = locationClient;
+        this.deliveryName = deliveryName;
+        this.deliveryAddress = deliveryAddress;
+        this.locationDelivery = locationDelivery;
+        this.deliverStart = deliverStart;
+        this.deliverEnd = deliverEnd;
+        this.productSelected = productSelected;
+
+    }
+
+
 
 
     //Getters and setters
@@ -114,18 +136,66 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
+    public String getAddressClient() {
+        return addressClient;
+    }
+
+    public void setAddressClient(String addressClient) {
+        this.addressClient = addressClient;
+    }
+
+    public String getLocationClient() {
+        return locationClient;
+    }
+
+    public void setLocationClient(String locationClient) {
+        this.locationClient = locationClient;
+    }
+
+    public String getDeliveryName() {
+        return deliveryName;
+    }
+
+    public void setDeliveryName(String deliveryName) {
+        this.deliveryName = deliveryName;
+    }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+    }
+
+    public String getLocationDelivery() {
+        return locationDelivery;
+    }
+
+    public void setLocationDelivery(String locationDelivery) {
+        this.locationDelivery = locationDelivery;
+    }
+
+    public String getProductSelected() {
+        return productSelected;
+    }
+
+    public void setProductSelected(String productSelected) {
+        this.productSelected = productSelected;
+    }
+
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
         result.put("nameClient", nameClient);
-        result.put("nameRider", nameRider);
-        result.put("nameRoute", nameRoute);
-        result.put("address", address);
+        result.put("addressClient", addressClient);
+        result.put("locationClient", locationClient);
+        result.put("deliveryName", deliveryName);
+        result.put("deliveryAddress", deliveryAddress);
+        result.put("locationDelivery", locationDelivery);
         result.put("deliverStart", deliverStart);
         result.put("deliverEnd", deliverEnd);
-        result.put("orderStatus", orderStatus);
-
-
+        result.put("productSelected", productSelected);
         return result;
     }
 
