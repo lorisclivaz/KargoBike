@@ -52,6 +52,7 @@
 
     <Button
         android:id="@+id/button_Cancel"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="134dp"
         android:layout_height="48dp"
         android:layout_marginEnd="72dp"
@@ -63,6 +64,7 @@
 
     <Button
         android:id="@+id/button_SaveProduct"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="129dp"
         android:layout_height="49dp"
         android:layout_marginStart="56dp"

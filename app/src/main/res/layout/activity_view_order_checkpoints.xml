@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:text="Manage Checkpoint Types"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -29,29 +30,32 @@
         android:orientation="horizontal"
         android:background="@android:color/white">
 
-    <Button
-        android:id="@+id/buttonAddCheckpoint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Add CheckPoint"
-        app:layout_constraintVertical_bias="0.291" />
+        <Button
+            android:id="@+id/buttonAddCheckpoint"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Add CheckPoint"
+            app:layout_constraintVertical_bias="0.291" />
 
-    <Button
-        android:id="@+id/buttonAddSignature"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Signature"
-        app:layout_constraintVertical_bias="0.291" />
+        <Button
+            android:id="@+id/buttonAddSignature"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Signature"
+            app:layout_constraintVertical_bias="0.291" />
 
-    <Button
-        android:id="@+id/buttonOpenCamera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Form"
-        app:layout_constraintVertical_bias="0.291" />
+        <Button
+            android:id="@+id/buttonOpenCamera"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Form"
+            app:layout_constraintVertical_bias="0.291" />
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listCheckPoints"

@@ -7,11 +7,13 @@
     android:orientation="vertical"
     android:background="@android:color/white"
     >
+
     <TextView
         android:id="@+id/textViewCamera"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Take picture"
+        android:text="CAMERA FOR FORM"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="30sp" />
     <LinearLayout
         android:id="@+id/buttonLayoutCamera"
@@ -23,6 +25,7 @@
 
         <Button
             android:id="@+id/cancelButtonCamera"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -30,12 +33,15 @@
 
         <Button
             android:id="@+id/openButtonCamera"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Open Camera" />
+
         <Button
             android:id="@+id/saveButtonCamera"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

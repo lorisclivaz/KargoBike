@@ -36,6 +36,7 @@
 
         <Button
             android:id="@+id/buttonViewCheckPoint"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="79dp"
             android:layout_height="34dp"
             android:layout_marginEnd="5dp"

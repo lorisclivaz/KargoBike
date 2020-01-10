@@ -13,6 +13,7 @@
         android:layout_marginEnd="128dp"
         android:layout_marginRight="128dp"
         android:text="User Details"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/FirstName"
         app:layout_constraintEnd_toEndOf="parent"
