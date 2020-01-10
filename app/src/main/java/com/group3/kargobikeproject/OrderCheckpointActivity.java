@@ -169,6 +169,12 @@ public class OrderCheckpointActivity extends AppCompatActivity implements AddChe
     }
 
     @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(OrderCheckpointActivity.this, MenuFragementActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     public void sendInput(String input, String type) {
         Log.d("hey", "sendInput: got the input: " + input);
         inputGot = input;
