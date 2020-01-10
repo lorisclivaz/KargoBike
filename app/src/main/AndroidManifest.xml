@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.group3.kargobikeproject">
 
+    <!-- To access Google+ APIs: -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -11,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DetailsUserActivity"></activity>
+        <activity android:name=".DetailsUserActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +26,7 @@
         <activity
             android:name=".MenuFragementActivity"
             android:label="@string/title_activity_fragement"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ModifyAndDeleteOrderActivity" />
         <activity android:name=".ListTypesActivity" />
         <activity android:name=".ProductDetailActivity" />
@@ -35,7 +37,7 @@
         <activity android:name=".ModifyProfilActivity" />
         <activity android:name=".NoAccessActivity" />
         <activity android:name=".AddProductActivity" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
 
         <service
             android:name=".MyFirebaseMessagingService"

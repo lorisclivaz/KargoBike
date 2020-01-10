@@ -189,11 +189,11 @@ public class LoginActivity extends AppCompatActivity {
                                     Log.d("ModifyProfilActivity", "createUser: failure", e);
                                 }
                             });
-                        }/*
+                        }
                         // when the user has no access, he will redirected to the noaccessactivity and can't go back
                         if(userHaveAccess==0){
-                            startActivity(new Intent(MainActivity.this, NoAccessActivity.class));
-                        }*/
+                            startActivity(new Intent(LoginActivity.this, NoAccessActivity.class));
+                        }
 
                     }
                 });
@@ -216,7 +216,7 @@ public class LoginActivity extends AppCompatActivity {
             String email = user.getEmail();
             String uid = user.getUid();
             Toast.makeText(this, "email : "+email+" uid : "+uid, Toast.LENGTH_SHORT).show();
-
+            
             Intent intent = new Intent(LoginActivity.this,MenuFragementActivity.class);
             intent.putExtra("email_Client",email);
             startActivity(intent);

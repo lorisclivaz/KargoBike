@@ -13,6 +13,11 @@
             android:icon="@drawable/ic_list_black_24dp"
             android:title="@string/menu_order" />
         <item
+            android:id="@+id/nav_modifyProfil"
+            android:title="Modify Profil"
+            android:icon="@drawable/ic_person_outline_red_24dp"
+            />
+        <item
             android:id="@+id/nav_logout"
             android:title="Logout"
             android:icon="@drawable/ic_person_outline_red_24dp"
@@ -31,6 +36,10 @@
                 android:icon="@drawable/ic_menu_bikeservice"
                 android:title="Bike Services"
                 />
+            <item
+                android:id="@+id/nav_historyOrder"
+                android:icon="@drawable/ic_list_black_24dp"
+                android:title="History Orders" />
             <item
                 android:id="@+id/nav_autorise"
                 android:icon="@drawable/ic_person_add_red_24dp"
