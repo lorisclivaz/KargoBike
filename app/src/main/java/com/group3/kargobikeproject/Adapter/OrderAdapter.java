@@ -54,7 +54,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int position) {
         myViewHolder.nameClient.setText(orders.get(position).getNameClient());
-        myViewHolder.Destination.setText(orders.get(position).getAddress());
+        myViewHolder.Destination.setText(orders.get(position).getDeliveryName());
         myViewHolder.endDate.setText(orders.get(position).getDeliverEnd());
         myViewHolder.checkpointButton.setOnClickListener(new View.OnClickListener() {
             @Override
