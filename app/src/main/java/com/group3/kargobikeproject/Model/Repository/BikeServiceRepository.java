@@ -35,10 +35,6 @@ public class BikeServiceRepository {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bikeService").child(bikeServiceId);
         return new BikeServiceLiveData(reference);
     }
-    public LiveData<List<BikeService>> getBikeServiceDate(final String time) {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bikeService/"+time);
-        return new BikeServiceListLiveData(reference);
-    }
 
     public LiveData<List<BikeService>> getAllBikeService() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bikeService");
@@ -47,10 +43,10 @@ public class BikeServiceRepository {
 
     public void insert(final BikeService bikeService, final String time, final OnAsyncEventListener callback) {
 
-        String key = FirebaseDatabase.getInstance().getReference("bikeService/"+time).push().getKey();
+        String key = FirebaseDatabase.getInstance().getReference("bikeService").push().getKey();
         // add a user
         FirebaseDatabase.getInstance()
-                .getReference("bikeService/"+time)
+                .getReference("bikeService")
                 .child(key)
                 .setValue(bikeService.toMap(), (databaseError, databaseReference) -> {
                     if (databaseError != null) {
@@ -59,7 +55,7 @@ public class BikeServiceRepository {
                         callback.onSuccess();
                         FirebaseStorage storage = FirebaseStorage.getInstance();
                         StorageReference storageRef = storage.getReference();
-                        StorageReference pathReference = storageRef.child("bikeService/"+time+"/"+bikeService.getIdService());
+                        StorageReference pathReference = storageRef.child("bikeService/"+bikeService.getIdService());
 
                     }
                 });
@@ -67,7 +63,7 @@ public class BikeServiceRepository {
 
     public void update(final BikeService bikeService, final String time, OnAsyncEventListener callback) {
         FirebaseDatabase.getInstance()
-                .getReference("bikeService/"+time)
+                .getReference("bikeService")
                 .child(bikeService.getIdService())
                 .updateChildren(bikeService.toMap(), (databaseError, databaseReference) -> {
                     if (databaseError != null) {
@@ -76,14 +72,14 @@ public class BikeServiceRepository {
                         callback.onSuccess();
                         FirebaseStorage storage = FirebaseStorage.getInstance();
                         StorageReference storageRef = storage.getReference();
-                        StorageReference pathReference = storageRef.child("bikeService/"+time+"/"+bikeService.getIdService());
+                        StorageReference pathReference = storageRef.child("bikeService/"+bikeService.getIdService());
                     }
                 });
     }
 
     public void delete(final BikeService bikeService, final String time, OnAsyncEventListener callback) {
         FirebaseDatabase.getInstance()
-                .getReference("bikeService/"+time)
+                .getReference("bikeService")
                 .child(bikeService.getIdService())
                 .removeValue((databaseError, databaseReference) -> {
                     if (databaseError != null) {

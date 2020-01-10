@@ -35,11 +35,11 @@ public class BikeServiceListViewModel extends AndroidViewModel {
         observableBikeServiceDate.setValue(null);
 
         LiveData<List<BikeService>> bikeService = repository.getAllBikeService();
-        LiveData<List<BikeService>> bikeServiceDate = repository.getBikeServiceDate(time);
+        //LiveData<List<BikeService>> bikeServiceDate = repository.getBikeServiceDate(time);
 
         // observe the changes of the entities from the database and forward them
         observableBikeService.addSource(bikeService, observableBikeService::setValue);
-        observableBikeServiceDate.addSource(bikeServiceDate, observableBikeServiceDate::setValue);
+        //observableBikeServiceDate.addSource(bikeServiceDate, observableBikeServiceDate::setValue);
     }
 
     /**
