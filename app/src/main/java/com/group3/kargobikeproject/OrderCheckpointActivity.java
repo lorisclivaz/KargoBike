@@ -65,8 +65,6 @@ public class OrderCheckpointActivity extends AppCompatActivity implements AddChe
         textOrderCheckPointHistory = findViewById(R.id.textOrderCheckPointHistory);
         textOrderCheckPointHistory.setText("Checkpoint History");
         idOrderThis = getIntent().getStringExtra("ORDER_ID");
-        Toast.makeText(this, "idOrderThis", Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, idOrderThis, Toast.LENGTH_SHORT).show();
         ref = FirebaseDatabase.getInstance().getReference().child("checkPoint");
         listCheckPoints = findViewById(R.id.listCheckPoints);
         ActivityCompat.requestPermissions(OrderCheckpointActivity.this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 123);
@@ -190,8 +188,6 @@ public class OrderCheckpointActivity extends AppCompatActivity implements AddChe
                 @Override
                 public void onSuccess() {
                     Log.d("checkpoint", "checkpoint added");
-                    Toast.makeText(OrderCheckpointActivity.this, "new checkpoint added",
-                            Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
@@ -202,7 +198,7 @@ public class OrderCheckpointActivity extends AppCompatActivity implements AddChe
                 }
             });
         } else {
-            Toast.makeText(OrderCheckpointActivity.this, "please log in first",
+            Toast.makeText(OrderCheckpointActivity.this, "Please log in first",
                     Toast.LENGTH_SHORT).show();
         }
     }

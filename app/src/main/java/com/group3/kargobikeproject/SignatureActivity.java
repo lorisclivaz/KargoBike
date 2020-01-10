@@ -11,7 +11,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -41,6 +43,11 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -55,6 +62,7 @@ public class SignatureActivity extends AppCompatActivity {
     String idOrderThis;
     StorageReference storageRef;
     FirebaseStorage storage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,8 +82,29 @@ public class SignatureActivity extends AppCompatActivity {
         mGetSign.setOnClickListener(onButtonClick);
         mClear.setOnClickListener(onButtonClick);
         mCancel.setOnClickListener(onButtonClick);
+        retrieveImage();
     }
 
+
+    public void retrieveImage() {
+        storageRef = storage.getReferenceFromUrl("gs://kargobikegroup3.appspot.com");
+        StorageReference pathReference = storageRef.child("signature/"+idOrderThis);
+        final long ONE_MEGABYTE = 1024 * 1024;
+        Task<Uri> downloadUrl = pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                mGetSign.setEnabled(false);
+                mClear.setEnabled(false);
+                new DownloadImageTask((LinearLayout) findViewById(R.id.canvasLayout))
+                        .execute(uri.toString());
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(getApplicationContext(),"No signature taken", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 
     Button.OnClickListener onButtonClick = new Button.OnClickListener() {
@@ -96,7 +125,8 @@ public class SignatureActivity extends AppCompatActivity {
                     recreate();
                 }
             } else if(v == mCancel){
-                Intent intent = new Intent(SignatureActivity.this, MenuFragementActivity.class);
+                Intent intent = new Intent(SignatureActivity.this, OrderCheckpointActivity.class);
+                intent.putExtra("ORDER_ID",idOrderThis);
                 startActivity(intent);
             }
         }
@@ -155,7 +185,6 @@ public class SignatureActivity extends AppCompatActivity {
                         while(!uri.isComplete());
                         Uri url = uri.getResult();
                         Log.v("image url", url.toString());
-                        Toast.makeText(SignatureActivity.this, "Upload Success", Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -255,24 +284,35 @@ public class SignatureActivity extends AppCompatActivity {
         }
     }
 
-    private static Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
-        if (maxHeight > 0 && maxWidth > 0) {
-            int width = image.getWidth();
-            int height = image.getHeight();
-            float ratioBitmap = (float) width / (float) height;
-            float ratioMax = (float) maxWidth / (float) maxHeight;
 
-            int finalWidth = maxWidth;
-            int finalHeight = maxHeight;
-            if (ratioMax > ratioBitmap) {
-                finalWidth = (int) ((float)maxHeight * ratioBitmap);
-            } else {
-                finalHeight = (int) ((float)maxWidth / ratioBitmap);
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        LinearLayout bmImage;
+
+        public DownloadImageTask(LinearLayout bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Log.d("hey", urldisplay);
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
             }
-            image = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
-            return image;
-        } else {
-            return image;
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            BitmapDrawable bdrawable = new BitmapDrawable(getApplicationContext().getResources(),result);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                bmImage.setForeground(bdrawable);
+            }
+            bmImage.setBackground(bdrawable);
         }
     }
 }
