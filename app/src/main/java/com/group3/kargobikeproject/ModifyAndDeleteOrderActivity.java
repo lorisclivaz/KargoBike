@@ -111,34 +111,30 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, listLocationClient);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-
         List<String> listProduct = new ArrayList<String>();
-        listProduct.add("product 1");
-        listProduct.add("product 2");
+        listProduct.add("Livraison directe Urbain <30 kg 1 journée 15CHF");
+        listProduct.add("Livraison directe Urbain <30kg 1/2 journée 20CHF");
+        listProduct.add("Livraison directe Urbain >30 kg 1 journée 30CHF");
+        listProduct.add("Livraison directe Urbain >30 kg 1/2 journée 35CHF");
+        listProduct.add("Livraison directe Urbain <10kg dans l'heure 15CHF");
         ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, listProduct);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spinnerLocationClient.setAdapter(dataAdapter);
         spinnerLocationDelivery.setAdapter(dataAdapter);
         spinnerProductSelected.setAdapter(dataAdapter2);
         int spinnerPositionClient = dataAdapter .getPosition(getIntent().getStringExtra("LocationClient"));
         int spinnerPositionDelivery = dataAdapter .getPosition(getIntent().getStringExtra("LocationDelivery"));
         int spinnerPositionProductSelected = dataAdapter2.getPosition(getIntent().getStringExtra("ProductSelected"));
-
         spinnerLocationClient.setSelection(spinnerPositionClient);
         spinnerLocationDelivery.setSelection(spinnerPositionDelivery);
         spinnerProductSelected.setSelection(spinnerPositionProductSelected);
-
-
         modifyOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 order = new Order( nameClient.getText().toString(),addressClient.getText().toString(),spinnerLocationClient.getSelectedItem().toString(), nameDelivery.getText().toString(),addressDelivery.getText().toString(),spinnerLocationDelivery.getSelectedItem().toString(),deliverStart.getText().toString(),deliverEnd.getText().toString()+" "+deliverEndHour.getText().toString(),spinnerProductSelected.getSelectedItem().toString());
                 Log.d(TAG, "Order added : inside "+nameClient.getText().toString()+" "+addressClient.getText().toString()+" "+spinnerLocationClient.getSelectedItem().toString()+" "+nameDelivery.getText().toString()+" "+addressDelivery.getText().toString()+" "+spinnerLocationDelivery.getSelectedItem().toString()+" "+deliverStart.getText().toString()+" "+deliverEnd.getText().toString()+" "+spinnerProductSelected.getSelectedItem().toString());
                 order.setIdOrder(getIntent().getStringExtra("IdOrder"));
-
                 String dateString = deliverEnd.getText().toString();
                 try {
                     deliverEndDate = new SimpleDateFormat("dd.MM.yyyy").parse(dateString);
@@ -150,25 +146,18 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
                 String time = formatter.format(deliverEndDate);
                 Log.d(TAG, "Order added :time"+time);
-
                 orderRepository.update(order, time, new OnAsyncEventListener() {
                     @Override
                     public void onSuccess() {
                         Log.d(TAG, "Order added : success");
-
-
                         startActivity(new Intent(ModifyAndDeleteOrderActivity.this,MenuFragementActivity.class));
-
                     }
-
                     @Override
                     public void onFailure(Exception e) {
 
                         Log.d(TAG, "Order added : failure");
                     }
                 });
-
-
             }
         });
 
@@ -178,7 +167,6 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
                 order = new Order( nameClient.getText().toString(),addressClient.getText().toString(),spinnerLocationClient.getSelectedItem().toString(), nameDelivery.getText().toString(),addressDelivery.getText().toString(),spinnerLocationDelivery.getSelectedItem().toString(),deliverStart.getText().toString(),deliverEnd.getText().toString()+" "+deliverEndHour.getText().toString(),spinnerProductSelected.getSelectedItem().toString());
                 Log.d(TAG, "Order added : inside "+nameClient.getText().toString()+" "+addressClient.getText().toString()+" "+spinnerLocationClient.getSelectedItem().toString()+" "+nameDelivery.getText().toString()+" "+addressDelivery.getText().toString()+" "+spinnerLocationDelivery.getSelectedItem().toString()+" "+deliverStart.getText().toString()+" "+deliverEnd.getText().toString()+" "+spinnerProductSelected.getSelectedItem().toString());
                 order.setIdOrder(getIntent().getStringExtra("IdOrder"));
-
                 String dateString = deliverEnd.getText().toString();
                 try {
                     deliverEndDate = new SimpleDateFormat("dd.MM.yyyy").parse(dateString);
@@ -190,20 +178,14 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
                 String time = formatter.format(deliverEndDate);
                 Log.d(TAG, "Order added :time"+time);
-
                 orderRepository.delete(order, time, new OnAsyncEventListener() {
                     @Override
                     public void onSuccess() {
                         Log.d(TAG, "Order added : success");
-
-
                         startActivity(new Intent(ModifyAndDeleteOrderActivity.this,MenuFragementActivity.class));
-
                     }
-
                     @Override
                     public void onFailure(Exception e) {
-
                         Log.d(TAG, "Order added : failure");
                     }
                 });

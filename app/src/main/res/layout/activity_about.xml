@@ -6,4 +6,62 @@
     android:layout_height="match_parent"
     tools:context=".AboutActivity">
 
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="331dp"
+        android:layout_height="188dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:lines="5"
+        android:maxLines="5"
+        android:text="In order to be able to manage orders from customers, we have developed an application for the company kargoBike. A dynamic data management as well as interesting functionalities, this application allows to cover the whole Valais. "
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.184" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="332dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="176dp"
+        android:lines="5"
+        android:maxLines="5"
+        android:text="Contact "
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="218dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginRight="52dp"
+        android:text="000 000 00 00"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/buttonCall"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+    <ImageButton
+        android:id="@+id/buttonCall"
+        android:layout_width="65dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginBottom="74dp"
+        android:background="#127E17"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@android:drawable/ic_menu_call" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

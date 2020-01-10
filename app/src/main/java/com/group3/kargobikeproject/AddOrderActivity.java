@@ -124,8 +124,11 @@ public class AddOrderActivity extends AppCompatActivity {
 
 
         List<String> listProduct = new ArrayList<String>();
-        listProduct.add("product 1");
-        listProduct.add("product 2");
+        listProduct.add("Livraison directe Urbain <30 kg 1 journée 15CHF");
+        listProduct.add("Livraison directe Urbain <30kg 1/2 journée 20CHF");
+        listProduct.add("Livraison directe Urbain >30 kg 1 journée 30CHF");
+        listProduct.add("Livraison directe Urbain >30 kg 1/2 journée 35CHF");
+        listProduct.add("Livraison directe Urbain <10kg dans l'heure 15CHF");
         ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, listProduct);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
