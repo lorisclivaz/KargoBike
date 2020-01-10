@@ -45,6 +45,11 @@
                 android:icon="@drawable/ic_person_add_red_24dp"
                 android:title="@string/menu_menu_autoriseUser"
                 android:visibility="invisible"/>
+            <item
+                android:id="@+id/nav_checkpointtype"
+                android:icon="@drawable/ic_plus"
+                android:title="add checkpoint type"
+                android:visibility="invisible"/>
         </menu>
     </item>
 
