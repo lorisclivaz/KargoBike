@@ -23,7 +23,12 @@
         android:id="@+id/nav_user"
         android:name="com.group3.kargobikeproject.ui.orders.UserFragment"
         android:label="@string/menu_users"
-        tools:layout="@layout/user_fragment" />nav_modifyProfil
+        tools:layout="@layout/user_fragment" />
+    <fragment
+        android:id="@+id/nav_checkpointtype"
+        android:name="com.group3.kargobikeproject.ui.checkpoint.ListTypesFragment"
+        android:label="checkpointType"
+        tools:layout="@layout/activity_list_types" />
     <fragment
         android:id="@+id/nav_modifyProfil"
         android:name="com.group3.kargobikeproject.ui.user.ModifyProfilFragment"

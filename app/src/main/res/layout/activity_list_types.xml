@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".ListTypesActivity">
+    tools:context=".ui.checkpoint.ListTypesFragment">
 
     <TextView
         android:id="@+id/textView4"
