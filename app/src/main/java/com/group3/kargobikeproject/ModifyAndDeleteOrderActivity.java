@@ -103,10 +103,7 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
         addressDelivery.setText(getIntent().getStringExtra("DeliveryAdress"));
         deliverStart.setText(getIntent().getStringExtra("DeliverStart"));
         deliverEnd.setText(getIntent().getStringExtra("DeliveryEnd"));
-
-
-
-
+        deliverEndHour.setText("");
         //add data on spinner
         //spinner
         this.adpaterLocationListClient = new ListAdapter<>(this, R.layout.row_location, new ArrayList<>());
