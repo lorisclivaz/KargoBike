@@ -3,22 +3,35 @@ package com.group3.kargobikeproject.ui.user;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.group3.kargobikeproject.Adapter.ListAdapter;
 import com.group3.kargobikeproject.MenuFragementActivity;
+import com.group3.kargobikeproject.Model.Entity.Location;
 import com.group3.kargobikeproject.Model.Entity.User;
 import com.group3.kargobikeproject.R;
 import com.group3.kargobikeproject.Utils.OnAsyncEventListener;
 import com.group3.kargobikeproject.ViewModel.UserViewModel;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,10 +44,13 @@ public class ModifyProfilFragment extends Fragment {
     private User user;
     private UserViewModel viewModel;
     private TextView tv_mail;
-    private EditText et_firstName, et_lastName, et_PhoneNumber, et_WorkingRegio;
+    private EditText et_firstName, et_lastName, et_PhoneNumber;
+    private Spinner spinner;
+    private ListAdapter<String> adpaterLocationList;
     private String userId;
     private Context context;
     private FirebaseUser firebaseUser;
+    ArrayList<String> locationName;
 
     Button returnButton;
     Button safeButton;
@@ -48,6 +64,11 @@ public class ModifyProfilFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View rootView =  inflater.inflate(R.layout.activity_modify_profil, container, false);
 
+        //spinner
+        this.spinner=(Spinner) rootView.findViewById(R.id.spinner_locationName);
+        this.adpaterLocationList = new ListAdapter<>(ModifyProfilFragment.this.getContext(), R.layout.row_location, new ArrayList<>());
+        this.spinner.setAdapter(adpaterLocationList);
+        setupViewModels();
         //get current user
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
@@ -86,7 +107,7 @@ public class ModifyProfilFragment extends Fragment {
                 user.setFirstName(String.valueOf(et_firstName.getText()));
                 user.setLastName(String.valueOf(et_lastName.getText()));
                 user.setPhoneNumber(String.valueOf(et_PhoneNumber.getText()));
-                user.setRegionWorking(String.valueOf(et_WorkingRegio.getText()));
+                user.setRegionWorking((String) spinner.getSelectedItem());
 
                 //update the data
                 viewModel.updateUser(user, new OnAsyncEventListener() {
@@ -107,7 +128,6 @@ public class ModifyProfilFragment extends Fragment {
         et_firstName = rootView.findViewById(R.id.et_firstName);
         et_lastName = rootView.findViewById(R.id.et_lastName);
         et_PhoneNumber = rootView.findViewById(R.id.et_PhoneNumber);
-        et_WorkingRegio = rootView.findViewById(R.id.et_WorkingRegio);
 
         return rootView;
     }
@@ -120,8 +140,6 @@ public class ModifyProfilFragment extends Fragment {
             et_lastName.setText(user.getLastName());
             String phone = String.valueOf(user.getPhoneNumber()) == null ? "" : String.valueOf(user.getPhoneNumber());
             et_PhoneNumber.setText(phone);
-            String workRegion = String.valueOf(user.getRegionWorking()) == null ? "" : String.valueOf(user.getRegionWorking());
-            et_WorkingRegio.setText(workRegion);
 
 
             FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -130,6 +148,47 @@ public class ModifyProfilFragment extends Fragment {
             // Create a reference with an initial file path and name
             StorageReference pathReference = storageRef.child("users/"+user.getIdUser());
         }
+    }
+
+    private void updateAdapterLocationList(List<String> locationName) {
+        adpaterLocationList.updateData(new ArrayList<>(locationName));
+    }
+
+    private void setupViewModels() {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("location");
+        if (ref != null) {
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.exists()) {
+                        String workRegion = String.valueOf(user.getRegionWorking()) == null ? "" : String.valueOf(user.getRegionWorking());
+                        int workRegioPosition = 0;
+                        int countPosition = 0;
+                        locationName = new ArrayList<String>();
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            Location loc = ds.getValue(Location.class);
+                            locationName.add(loc.getName());
+                            if (loc.getName().equals(workRegion)){
+                                workRegioPosition=countPosition;
+                            }
+                            countPosition++;
+                        }
+                        Collections.swap(locationName,0,workRegioPosition);
+                        updateAdapterLocationList(locationName);
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+
     }
 
 }

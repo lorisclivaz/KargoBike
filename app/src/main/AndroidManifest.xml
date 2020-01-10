@@ -43,7 +43,6 @@
         <activity android:name=".AddOrderActivity" />
         <activity android:name=".AddAuthorizedUser" />
         <activity android:name=".OrderCheckpointActivity" />
-        <activity android:name=".ModifyProfilActivity" />
         <activity android:name=".NoAccessActivity" />
         <activity android:name=".AddProductActivity" />
         <activity android:name=".MainActivity" />

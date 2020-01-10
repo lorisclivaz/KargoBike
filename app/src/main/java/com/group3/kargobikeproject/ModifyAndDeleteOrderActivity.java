@@ -16,8 +16,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.group3.kargobikeproject.Adapter.ListAdapter;
 import com.group3.kargobikeproject.Adapter.OrderAdapter;
+import com.group3.kargobikeproject.Model.Entity.Location;
 import com.group3.kargobikeproject.Model.Entity.Order;
+import com.group3.kargobikeproject.Model.Entity.Product;
 import com.group3.kargobikeproject.Model.Repository.OrderRepository;
 import com.group3.kargobikeproject.Utils.OnAsyncEventListener;
 import com.google.android.material.textfield.TextInputEditText;
@@ -31,6 +34,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -61,6 +65,12 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
     private SimpleDateFormat dateFormat;
     private String date;
     private Date deliverEndDate;
+    private ListAdapter<String> adpaterLocationListClient;
+    private ListAdapter<String> adpaterLocationListDestination;
+    private ArrayList<String> locationNameClient;
+    private ArrayList<String> locationNameDesination;
+    private ListAdapter<String> adpaterProductList;
+    private ArrayList<String> productName;
 
 
     @Override
@@ -98,43 +108,22 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
 
 
         //add data on spinner
-        List<String> listLocationClient = new ArrayList<String>();
-        listLocationClient.add("Sierre");
-        listLocationClient.add("Sion");
-        listLocationClient.add("Martigny");
-        listLocationClient.add("Monthey");
-        listLocationClient.add("Visp");
-        listLocationClient.add("Brig");
-        listLocationClient.add("Lausanne");
-        listLocationClient.add("Verbier");
-        listLocationClient.add("Crans Montana");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, listLocationClient);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        List<String> listProduct = new ArrayList<String>();
-        listProduct.add("Livraison directe Urbain <30 kg 1 journée 15CHF");
-        listProduct.add("Livraison directe Urbain <30kg 1/2 journée 20CHF");
-        listProduct.add("Livraison directe Urbain >30 kg 1 journée 30CHF");
-        listProduct.add("Livraison directe Urbain >30 kg 1/2 journée 35CHF");
-        listProduct.add("Livraison directe Urbain <10kg dans l'heure 15CHF");
-        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, listProduct);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerLocationClient.setAdapter(dataAdapter);
-        spinnerLocationDelivery.setAdapter(dataAdapter);
-        spinnerProductSelected.setAdapter(dataAdapter2);
-        int spinnerPositionClient = dataAdapter .getPosition(getIntent().getStringExtra("LocationClient"));
-        int spinnerPositionDelivery = dataAdapter .getPosition(getIntent().getStringExtra("LocationDelivery"));
-        int spinnerPositionProductSelected = dataAdapter2.getPosition(getIntent().getStringExtra("ProductSelected"));
-        spinnerLocationClient.setSelection(spinnerPositionClient);
-        spinnerLocationDelivery.setSelection(spinnerPositionDelivery);
-        spinnerProductSelected.setSelection(spinnerPositionProductSelected);
+        //spinner
+        this.adpaterLocationListClient = new ListAdapter<>(this, R.layout.row_location, new ArrayList<>());
+        this.adpaterLocationListDestination = new ListAdapter<>(this, R.layout.row_location, new ArrayList<>());
+        this.spinnerLocationDelivery.setAdapter(adpaterLocationListDestination);
+        this.spinnerLocationClient.setAdapter(adpaterLocationListClient);
+
+        this.adpaterProductList = new ListAdapter<>(this, R.layout.row_location, new ArrayList<>());
+        this.spinnerProductSelected.setAdapter(adpaterProductList);
+
         modifyOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 order = new Order( nameClient.getText().toString(),addressClient.getText().toString(),spinnerLocationClient.getSelectedItem().toString(), nameDelivery.getText().toString(),addressDelivery.getText().toString(),spinnerLocationDelivery.getSelectedItem().toString(),deliverStart.getText().toString(),deliverEnd.getText().toString()+" "+deliverEndHour.getText().toString(),spinnerProductSelected.getSelectedItem().toString());
                 Log.d(TAG, "Order added : inside "+nameClient.getText().toString()+" "+addressClient.getText().toString()+" "+spinnerLocationClient.getSelectedItem().toString()+" "+nameDelivery.getText().toString()+" "+addressDelivery.getText().toString()+" "+spinnerLocationDelivery.getSelectedItem().toString()+" "+deliverStart.getText().toString()+" "+deliverEnd.getText().toString()+" "+spinnerProductSelected.getSelectedItem().toString());
                 order.setIdOrder(getIntent().getStringExtra("IdOrder"));
+
                 String dateString = deliverEnd.getText().toString();
                 try {
                     deliverEndDate = new SimpleDateFormat("dd.MM.yyyy").parse(dateString);
@@ -146,18 +135,25 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
                 String time = formatter.format(deliverEndDate);
                 Log.d(TAG, "Order added :time"+time);
+
                 orderRepository.update(order, time, new OnAsyncEventListener() {
                     @Override
                     public void onSuccess() {
                         Log.d(TAG, "Order added : success");
+
+
                         startActivity(new Intent(ModifyAndDeleteOrderActivity.this,MenuFragementActivity.class));
+
                     }
+
                     @Override
                     public void onFailure(Exception e) {
 
                         Log.d(TAG, "Order added : failure");
                     }
                 });
+
+
             }
         });
 
@@ -167,6 +163,7 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
                 order = new Order( nameClient.getText().toString(),addressClient.getText().toString(),spinnerLocationClient.getSelectedItem().toString(), nameDelivery.getText().toString(),addressDelivery.getText().toString(),spinnerLocationDelivery.getSelectedItem().toString(),deliverStart.getText().toString(),deliverEnd.getText().toString()+" "+deliverEndHour.getText().toString(),spinnerProductSelected.getSelectedItem().toString());
                 Log.d(TAG, "Order added : inside "+nameClient.getText().toString()+" "+addressClient.getText().toString()+" "+spinnerLocationClient.getSelectedItem().toString()+" "+nameDelivery.getText().toString()+" "+addressDelivery.getText().toString()+" "+spinnerLocationDelivery.getSelectedItem().toString()+" "+deliverStart.getText().toString()+" "+deliverEnd.getText().toString()+" "+spinnerProductSelected.getSelectedItem().toString());
                 order.setIdOrder(getIntent().getStringExtra("IdOrder"));
+
                 String dateString = deliverEnd.getText().toString();
                 try {
                     deliverEndDate = new SimpleDateFormat("dd.MM.yyyy").parse(dateString);
@@ -178,14 +175,20 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
                 String time = formatter.format(deliverEndDate);
                 Log.d(TAG, "Order added :time"+time);
+
                 orderRepository.delete(order, time, new OnAsyncEventListener() {
                     @Override
                     public void onSuccess() {
                         Log.d(TAG, "Order added : success");
+
+
                         startActivity(new Intent(ModifyAndDeleteOrderActivity.this,MenuFragementActivity.class));
+
                     }
+
                     @Override
                     public void onFailure(Exception e) {
+
                         Log.d(TAG, "Order added : failure");
                     }
                 });
@@ -195,7 +198,7 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
         });
 
 
-
+        setupViewModels();
 
     }
     //Methode for the spinner to take information
@@ -221,5 +224,95 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
     }
 
 
+    private void updateAdapterLocationListClient(List<String> locationName) {
+        adpaterLocationListClient.updateData(new ArrayList<>(locationName));
+    }
+
+    private void updateAdapterLocationListDestination(List<String> locationName) {
+        adpaterLocationListDestination.updateData(new ArrayList<>(locationName));
+    }
+
+    private void updateAdapterProductList(List<String> productName) {
+        adpaterProductList.updateData(new ArrayList<>(productName));
+    }
+
+    private void setupViewModels() {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("location");
+        if (ref != null) {
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.exists()) {
+                        String locationSource = getIntent().getStringExtra("LocationClient");
+                        String locationDestination = getIntent().getStringExtra("LocationDelivery");
+                        int locationSourcePosition = 0;
+                        int locationDestinationPosition = 0;
+                        int count=0;
+                        locationNameClient = new ArrayList<String>();
+                        locationNameDesination = new ArrayList<String>();
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            Location loc = ds.getValue(Location.class);
+                            locationNameClient.add(loc.getName());
+                            locationNameDesination.add(loc.getName());
+                            if (loc.getName().equals(locationSource)){
+                                locationSourcePosition=count;
+                            }
+                            if (loc.getName().equals(locationDestination)){
+                                locationDestinationPosition=count;
+                            }
+                            count++;
+                        }
+                        Collections.swap(locationNameClient,0,locationSourcePosition);
+                        Collections.swap(locationNameDesination,0,locationDestinationPosition);
+                        updateAdapterLocationListClient(locationNameClient);
+                        updateAdapterLocationListDestination(locationNameDesination);
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+        //product
+        DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference().child("products");
+        if (ref2 != null) {
+            ref2.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.exists()) {
+                        productName = new ArrayList<String>();
+                        String  productN = getIntent().getStringExtra("ProductSelected");
+                        int productPosition = 0;
+                        int count=0;
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            Product loc = ds.getValue(Product.class);
+                            productName.add(loc.getName()+" "+loc.getDescription()+" "+loc.getPrice());
+                            if (productN.equals(loc.getName()+" "+loc.getDescription()+" "+loc.getPrice())){
+                                productPosition=count;
+                            }
+                            count++;
+                        }
+                        Collections.swap(locationNameClient,0,productPosition);
+                        updateAdapterProductList(productName);
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+
+    }
 
 }

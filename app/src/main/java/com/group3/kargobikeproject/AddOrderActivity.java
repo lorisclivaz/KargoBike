@@ -32,7 +32,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.group3.kargobikeproject.Adapter.ListAdapter;
+import com.group3.kargobikeproject.Model.Entity.Location;
 import com.group3.kargobikeproject.Model.Entity.Order;
+import com.group3.kargobikeproject.Model.Entity.Product;
 import com.group3.kargobikeproject.Model.Repository.OrderRepository;
 import com.group3.kargobikeproject.Utils.OnAsyncEventListener;
 
@@ -43,6 +46,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -74,6 +78,10 @@ public class AddOrderActivity extends AppCompatActivity {
     private SimpleDateFormat dateFormat;
     private String date;
     private Date deliverEndDate;
+    private ListAdapter<String> adpaterLocationList;
+    private ArrayList<String> locationName;
+    private ListAdapter<String> adpaterProductList;
+    private ArrayList<String> productName;
 
 
     //Notification
@@ -122,6 +130,8 @@ public class AddOrderActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, listLocationClient);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        this.adpaterProductList = new ListAdapter<>(this, R.layout.row_location, new ArrayList<>());
+        this.spinnerProductSelected.setAdapter(adpaterProductList);
 
         List<String> listProduct = new ArrayList<String>();
         listProduct.add("Livraison directe Urbain <30 kg 1 journée 15CHF");
@@ -243,9 +253,7 @@ public class AddOrderActivity extends AppCompatActivity {
             }
         });
 
-
-
-
+        setupViewModels();
     }
 
     //Methode for the spinner to take information
@@ -315,6 +323,66 @@ public class AddOrderActivity extends AppCompatActivity {
         }
     }
 
+    private void updateAdapterLocationList(List<String> locationName) {
+        adpaterLocationList.updateData(new ArrayList<>(locationName));
+    }
+
+    private void updateAdapterProductList(List<String> productName) {
+        adpaterProductList.updateData(new ArrayList<>(productName));
+    }
+
+    private void setupViewModels() {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("location");
+        if (ref != null) {
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.exists()) {
+                        locationName = new ArrayList<String>();
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            Location loc = ds.getValue(Location.class);
+                            locationName.add(loc.getName());
+                        }
+                        updateAdapterLocationList(locationName);
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+        //product
+        DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference().child("products");
+        if (ref2 != null) {
+            ref2.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.exists()) {
+                        productName = new ArrayList<String>();
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            Product loc = ds.getValue(Product.class);
+                            productName.add(loc.getName()+" "+loc.getDescription()+" "+loc.getPrice());
+                        }
+                        updateAdapterProductList(productName);
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+    }
 
 
 }
