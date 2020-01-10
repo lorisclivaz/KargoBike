@@ -27,28 +27,39 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
 
     //Variables about ModifyAndDeleteOrderActivity
-    private TextInputEditText nameClient, nameRider, nameRoute, address;
-    private  TextView deliverStart, deliverEnd;
-    private  Spinner statusModify;
-    private ArrayList<String> spinnerDataList;
-    private  ArrayAdapter<String> adapter;
-    private Order order;
-    private  OrderAdapter orderAdapter;
-    private OrderRepository orderRepository;
-    private String idorder;
-    private DatePickerDialog.OnDateSetListener dateListener;
-    private String clientGetname, riderGetName, adressGet, deliverStartGet, deliverEndGet, statusGet;
-    private DatabaseReference mDatabaseReference,statusReference;
+    private static final String TAG = "Order";
+    private DatabaseReference mDatabaseReference;
     private ValueEventListener listener;
-    private  Button deleteOrder, modifyOrder;
+    private ArrayAdapter<String> adapter;
+    private ArrayList<String> spinnerDataList;
+    private OrderRepository orderRepository;
+    private Order order ;
+    private Spinner spinnerLocationClient;
+    private Spinner spinnerLocationDelivery;
+    private Spinner spinnerProductSelected;
+    private TextInputEditText nameClient;
+    private TextInputEditText nameDelivery;
+    private TextInputEditText addressClient;
+    private TextInputEditText addressDelivery;
+    private TextView deliverStart, deliverEnd,deliverEndHour;
+    private DatePickerDialog.OnDateSetListener dateListener;
+    private Button deleteOrder;
+    private Button modifyOrder;
+
+    private TextView dateTimeDisplay;
+    private Calendar calendar;
+    private SimpleDateFormat dateFormat;
+    private String date;
     private Date deliverEndDate;
 
 
@@ -60,136 +71,140 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
         //Database function
         orderRepository = new OrderRepository();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("order");
-        statusReference = FirebaseDatabase.getInstance().getReference("status");
 
-        //Get the id about the layout
+
+        //Find in the layout
         nameClient = findViewById(R.id.ClientName);
-        nameRider =  findViewById(R.id.DeliveryName);
-        address = findViewById(R.id.AddressClient);
-        deliverStart = findViewById(R.id.DeliverStart);
+        addressClient = findViewById(R.id.AddressClient);
+        spinnerLocationClient = findViewById(R.id.spinnerLocationClient);
+        nameDelivery = findViewById(R.id.DeliveryName);
+        addressDelivery = findViewById(R.id.deliveryAddress);
+        spinnerLocationDelivery = findViewById(R.id.spinnerLocationDelivery);
+        spinnerProductSelected = findViewById(R.id.spinnerProductSelected);
+        deliverStart = findViewById(R.id.deliverStart);
         deliverEnd = findViewById(R.id.deliverEnd);
+        deliverEndHour = findViewById(R.id.deliverEndHours);
+        deleteOrder = findViewById(R.id.buttonDelete);
+        modifyOrder = findViewById(R.id.buttonUpdate);
+
+        nameClient.setText(getIntent().getStringExtra("Name_Client"));
+        addressClient.setText(getIntent().getStringExtra("AddressClient"));
+        nameDelivery.setText(getIntent().getStringExtra("DeliveryName"));
+        addressDelivery.setText(getIntent().getStringExtra("DeliveryAdress"));
+        deliverStart.setText(getIntent().getStringExtra("DeliverStart"));
+        deliverEnd.setText(getIntent().getStringExtra("DeliveryEnd"));
 
 
 
-        //EndDate calendar
-        deliverEnd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Calendar cal = Calendar.getInstance();
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
-
-                DatePickerDialog dialog = new DatePickerDialog(
-                        ModifyAndDeleteOrderActivity.this,
-                        android.R.style.Theme_Holo_Light_Dialog_MinWidth, dateListener,
-                        year, month,day
-                );
-
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-            }
-        });
-
-        dateListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                deliverEnd.setText(dayOfMonth+"."+(month+1)+"."+year);
-                deliverEndDate = new Date(year,month,dayOfMonth);
-            }
-        };
+        //add data on spinner
+        List<String> listLocationClient = new ArrayList<String>();
+        listLocationClient.add("Sierre");
+        listLocationClient.add("Sion");
+        listLocationClient.add("Martigny");
+        listLocationClient.add("Monthey");
+        listLocationClient.add("Visp");
+        listLocationClient.add("Brig");
+        listLocationClient.add("Lausanne");
+        listLocationClient.add("Verbier");
+        listLocationClient.add("Crans Montana");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, listLocationClient);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
-        clientGetname =  getIntent().getStringExtra("Name_Client");
-        riderGetName =  getIntent().getStringExtra("Name_Rider");
-        adressGet =  getIntent().getStringExtra("address");
-        deliverStartGet =  getIntent().getStringExtra("deliverStart");
-        deliverEndGet =  getIntent().getStringExtra("deliverEnd");
+        List<String> listProduct = new ArrayList<String>();
+        listProduct.add("product 1");
+        listProduct.add("product 2");
+        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, listProduct);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        idorder = getIntent().getStringExtra("IdOrder");
+        spinnerLocationClient.setAdapter(dataAdapter);
+        spinnerLocationDelivery.setAdapter(dataAdapter);
+        spinnerProductSelected.setAdapter(dataAdapter2);
+        int spinnerPositionClient = dataAdapter .getPosition(getIntent().getStringExtra("LocationClient"));
+        int spinnerPositionDelivery = dataAdapter .getPosition(getIntent().getStringExtra("LocationDelivery"));
+        int spinnerPositionProductSelected = dataAdapter2.getPosition(getIntent().getStringExtra("ProductSelected"));
 
-
-
-        nameClient.setText(clientGetname);
-        nameRider.setText(riderGetName);
-        address.setText(adressGet);
-        deliverStart.setText(deliverStartGet);
-        deliverEnd.setText(deliverEndGet);
-        //setSpinText(statusModify, statusGet);
-
-
-
-        //Button
-        deleteOrder = findViewById(R.id.buttonDeleteOrder);
-        modifyOrder = findViewById(R.id.buttonModifyOrder);
+        spinnerLocationClient.setSelection(spinnerPositionClient);
+        spinnerLocationDelivery.setSelection(spinnerPositionDelivery);
+        spinnerProductSelected.setSelection(spinnerPositionProductSelected);
 
 
         modifyOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                order = new Order(idorder, nameClient.getText().toString(),nameRider.getText().toString(),
-                       "",
-                        address.getText().toString(),deliverStart.getText().toString()
-                        ,deliverEnd.getText().toString()
-                        ,"");
+                order = new Order( nameClient.getText().toString(),addressClient.getText().toString(),spinnerLocationClient.getSelectedItem().toString(), nameDelivery.getText().toString(),addressDelivery.getText().toString(),spinnerLocationDelivery.getSelectedItem().toString(),deliverStart.getText().toString(),deliverEnd.getText().toString()+" "+deliverEndHour.getText().toString(),spinnerProductSelected.getSelectedItem().toString());
+                Log.d(TAG, "Order added : inside "+nameClient.getText().toString()+" "+addressClient.getText().toString()+" "+spinnerLocationClient.getSelectedItem().toString()+" "+nameDelivery.getText().toString()+" "+addressDelivery.getText().toString()+" "+spinnerLocationDelivery.getSelectedItem().toString()+" "+deliverStart.getText().toString()+" "+deliverEnd.getText().toString()+" "+spinnerProductSelected.getSelectedItem().toString());
+                order.setIdOrder(getIntent().getStringExtra("IdOrder"));
 
+                String dateString = deliverEnd.getText().toString();
+                try {
+                    deliverEndDate = new SimpleDateFormat("dd.MM.yyyy").parse(dateString);
+                    Log.d(TAG, "Order added :deliverEndDate "+deliverEndDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    Log.d(TAG, "Order added :Erreur e ");
+                }
                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
                 String time = formatter.format(deliverEndDate);
+                Log.d(TAG, "Order added :time"+time);
 
-                orderRepository.update(order,time, new OnAsyncEventListener() {
+                orderRepository.update(order, time, new OnAsyncEventListener() {
                     @Override
                     public void onSuccess() {
+                        Log.d(TAG, "Order added : success");
+
+
                         startActivity(new Intent(ModifyAndDeleteOrderActivity.this,MenuFragementActivity.class));
 
-
-                        onBackPressed();
-
-                        Log.d("DB", "Order added : success");
                     }
 
                     @Override
                     public void onFailure(Exception e) {
 
-                        Log.d("DB", "product added : failure");
+                        Log.d(TAG, "Order added : failure");
                     }
                 });
 
 
             }
         });
-
-
 
         deleteOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                order = new Order( idorder,nameClient.getText().toString(),nameRider.getText().toString(),
-                        "",
-                        address.getText().toString(),deliverStart.getText().toString()
-                        ,deliverEnd.getText().toString()
-                        ,"");
+                order = new Order( nameClient.getText().toString(),addressClient.getText().toString(),spinnerLocationClient.getSelectedItem().toString(), nameDelivery.getText().toString(),addressDelivery.getText().toString(),spinnerLocationDelivery.getSelectedItem().toString(),deliverStart.getText().toString(),deliverEnd.getText().toString()+" "+deliverEndHour.getText().toString(),spinnerProductSelected.getSelectedItem().toString());
+                Log.d(TAG, "Order added : inside "+nameClient.getText().toString()+" "+addressClient.getText().toString()+" "+spinnerLocationClient.getSelectedItem().toString()+" "+nameDelivery.getText().toString()+" "+addressDelivery.getText().toString()+" "+spinnerLocationDelivery.getSelectedItem().toString()+" "+deliverStart.getText().toString()+" "+deliverEnd.getText().toString()+" "+spinnerProductSelected.getSelectedItem().toString());
+                order.setIdOrder(getIntent().getStringExtra("IdOrder"));
 
-
+                String dateString = deliverEnd.getText().toString();
+                try {
+                    deliverEndDate = new SimpleDateFormat("dd.MM.yyyy").parse(dateString);
+                    Log.d(TAG, "Order added :deliverEndDate "+deliverEndDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    Log.d(TAG, "Order added :Erreur e ");
+                }
                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
                 String time = formatter.format(deliverEndDate);
+                Log.d(TAG, "Order added :time"+time);
 
-                orderRepository.delete(order,time, new OnAsyncEventListener() {
+                orderRepository.delete(order, time, new OnAsyncEventListener() {
                     @Override
                     public void onSuccess() {
+                        Log.d(TAG, "Order added : success");
+
 
                         startActivity(new Intent(ModifyAndDeleteOrderActivity.this,MenuFragementActivity.class));
 
-
-                        onBackPressed();
-
-                        Log.d("DB", "Order added : success");
                     }
 
                     @Override
                     public void onFailure(Exception e) {
 
-                        Log.d("DB", "product added : failure");
+                        Log.d(TAG, "Order added : failure");
                     }
                 });
 
@@ -199,11 +214,12 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
 
 
 
-    }
 
+    }
+    //Methode for the spinner to take information
     public void retrieveData()
     {
-        listener = statusReference.addValueEventListener(new ValueEventListener() {
+        listener = mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -222,15 +238,6 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
         });
     }
 
-    public void setSpinText(Spinner spin, String text)
-    {
-        for(int i= 0; i < spin.getAdapter().getCount(); i++)
-        {
-            if(spin.getAdapter().getItem(i).toString().contains(text))
-            {
-                spin.setSelection(i);
-            }
-        }
 
-    }
+
 }
