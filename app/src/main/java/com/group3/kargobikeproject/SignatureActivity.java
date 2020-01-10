@@ -92,7 +92,7 @@ public class SignatureActivity extends AppCompatActivity {
                     recreate();
                 }
             } else if(v == mCancel){
-                Intent intent = new Intent(SignatureActivity.this, MainActivity.class);
+                Intent intent = new Intent(SignatureActivity.this, MenuFragementActivity.class);
                 startActivity(intent);
             }
         }
