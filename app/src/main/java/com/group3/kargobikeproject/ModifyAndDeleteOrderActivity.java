@@ -296,7 +296,7 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
                             }
                             count++;
                         }
-                        Collections.swap(locationNameClient,0,productPosition);
+                        Collections.swap(productName,0,productPosition);
                         updateAdapterProductList(productName);
 
                     }
