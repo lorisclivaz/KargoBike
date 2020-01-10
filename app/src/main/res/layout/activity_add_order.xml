@@ -2,78 +2,128 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addOrder"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddOrderActivity"
-    android:id="@+id/addOrder">
-
-    <TextView
-        android:id="@+id/deliverEnd"
-        android:layout_width="396dp"
-        android:layout_height="37dp"
-        android:layout_marginBottom="36dp"
-        android:text="DeliverEnd"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSubmit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    tools:context=".AddOrderActivity">
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="AddOrder"
-        app:layout_constraintBottom_toTopOf="@+id/ClientName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.39" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/AddressClient"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:hint="AddressClient"
-        app:layout_constraintBottom_toTopOf="@+id/DeliveryName"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/ClientName"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="15dp"
         android:hint="ClientName"
-        app:layout_constraintBottom_toTopOf="@+id/AddressClient"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <Spinner
+        android:id="@+id/spinnerLocationClient"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/DeliveryName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/DeliveryName"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="13dp"
         android:hint="DeliveryName"
-        app:layout_constraintBottom_toTopOf="@+id/deliverStart"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/buttonSubmit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/deliveryAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/deliveryAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="11dp"
+        android:hint="DeliveryAddress"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerLocationDelivery"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinnerLocationDelivery"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="340dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinnerProductSelected"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerLocationDelivery" />
 
     <TextView
         android:id="@+id/deliverStart"
-        android:layout_width="396dp"
-        android:layout_height="37dp"
-        android:layout_marginBottom="132dp"
-        android:text="DeliverStart"
-        app:layout_constraintBottom_toTopOf="@+id/deliverEnd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="DateCreation"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerProductSelected" />
+
+    <TextView
+        android:id="@+id/deliverEnd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Select a delivery date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deliverStart" />
+
+    <TextView
+        android:id="@+id/deliverEndHours"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:text="Select an hour"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deliverEnd" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/AddressClient"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:hint="AddressClient"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ClientName" />
+
+    <Button
+        android:id="@+id/buttonSubmit"
+        android:layout_width="126dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="Submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deliverEndHours" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
