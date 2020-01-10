@@ -9,10 +9,12 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -25,15 +27,20 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 public class CameraActivity extends AppCompatActivity {
     Button cancelButtonCamera, saveButtonCamera,openCameraButton;
-    LinearLayout mContent;
+    ImageView mContent;
     Bitmap tempBitmap;
     String idOrderThis;
+    String newPicFile = idOrderThis + ".jpg";
+    String outPath = "/sdcard/" + newPicFile;
+    File outFile;
+    Uri image;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +64,7 @@ public class CameraActivity extends AppCompatActivity {
         });
         cancelButtonCamera.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(CameraActivity.this, MainActivity.class);
+                Intent intent = new Intent(CameraActivity.this, MenuFragementActivity.class);
                 startActivity(intent);
             }
         });
@@ -68,7 +75,7 @@ public class CameraActivity extends AppCompatActivity {
             Bitmap image = (Bitmap) data.getExtras().get("data");
             tempBitmap = image;
             BitmapDrawable bdrawable = new BitmapDrawable(this.getResources(),image);
-            mContent.setBackground(bdrawable);
+            mContent.setImageBitmap(image);
         }
     }
     public void saveAndUpload(Bitmap imageToUpload) {
@@ -93,7 +100,7 @@ public class CameraActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
-                   // while(!uri.isComplete());
+                    // while(!uri.isComplete());
                     Uri url = uri.getResult();
                     Log.v("image url", url.toString());
                 }
@@ -107,6 +114,9 @@ public class CameraActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.v("log_tag", e.toString());
         }
+
+    }
+    public void saveAndUploadHighRes() {
 
     }
 }

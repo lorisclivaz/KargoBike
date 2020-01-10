@@ -1,6 +1,8 @@
 package com.group3.kargobikeproject;
 
+import android.Manifest;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 
 import com.group3.kargobikeproject.Adapter.CheckPointAdapter;
@@ -8,6 +10,7 @@ import com.group3.kargobikeproject.Fragment.AddCheckPointDialog;
 import com.group3.kargobikeproject.Model.Entity.CheckPoint;
 import com.group3.kargobikeproject.Model.Entity.Type;
 import com.group3.kargobikeproject.Model.Repository.CheckPointRepository;
+import com.group3.kargobikeproject.Utils.GpsTracker;
 import com.group3.kargobikeproject.Utils.OnAsyncEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -20,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -46,6 +50,11 @@ public class OrderCheckpointActivity extends AppCompatActivity implements AddChe
     public String userEmail;
     String idOrderThis;
     private FirebaseUser firebaseUser = null;
+
+    double lat ;
+    double lon ;
+    GpsTracker gt;
+    Location l;
     // private ArrayList<String> checkPointList = new ArrayList<String>();
 
 
@@ -60,6 +69,8 @@ public class OrderCheckpointActivity extends AppCompatActivity implements AddChe
         Toast.makeText(this, idOrderThis, Toast.LENGTH_SHORT).show();
         ref = FirebaseDatabase.getInstance().getReference().child("checkPoint");
         listCheckPoints = findViewById(R.id.listCheckPoints);
+        ActivityCompat.requestPermissions(OrderCheckpointActivity.this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 123);
+        gt = new GpsTracker(getApplicationContext());
         setUpButtons();
         checkPointRepository = new CheckPointRepository();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -133,7 +144,7 @@ public class OrderCheckpointActivity extends AppCompatActivity implements AddChe
                 Log.d("hey", "onClick: opening dialog");
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList("types", types);
-
+                l = gt.getLocation();
                 AddCheckPointDialog dialog = new AddCheckPointDialog();
                 dialog.setArguments(bundle);
                 dialog.show(getSupportFragmentManager(), "AddCheckPointDialog");
@@ -151,6 +162,7 @@ public class OrderCheckpointActivity extends AppCompatActivity implements AddChe
         openCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(v.getContext(), CameraActivity.class);
                 intent.putExtra("ORDER_ID", idOrderThis);
                 startActivity(intent);
@@ -166,7 +178,14 @@ public class OrderCheckpointActivity extends AppCompatActivity implements AddChe
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         if (userEmail != null) {
-            CheckPoint newCP = new CheckPoint(getIntent().getStringExtra("ORDER_ID"), inputGot, userEmail, formatter.format(date), typeGot);
+            CheckPoint newCP;
+            if( l == null){
+                newCP = new CheckPoint(getIntent().getStringExtra("ORDER_ID"), inputGot, userEmail, formatter.format(date), typeGot);
+            }else {
+                lat = l.getLatitude();
+                lon = l.getLongitude();
+                newCP = new CheckPoint(getIntent().getStringExtra("ORDER_ID"), inputGot, userEmail, formatter.format(date), typeGot, lat, lon);
+            }
             checkPointRepository.insert(newCP, new OnAsyncEventListener() {
                 @Override
                 public void onSuccess() {

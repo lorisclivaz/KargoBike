@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.group3.kargobikeproject.Model.Entity.CheckPoint;
 import com.group3.kargobikeproject.R;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class CheckPointAdapter extends RecyclerView.Adapter<CheckPointAdapter.MyViewHolder> {
@@ -37,6 +38,11 @@ public class CheckPointAdapter extends RecyclerView.Adapter<CheckPointAdapter.My
         myViewHolder.nameRider.setText(checkPoints.get(position).getNameRider());
         myViewHolder.timeStamp.setText(checkPoints.get(position).getTimeStamp());
         myViewHolder.type.setText(checkPoints.get(position).getTypeName());
+        double latNum = checkPoints.get(position).getLatitude();
+        double lonNum = checkPoints.get(position).getLongtitude();
+        DecimalFormat df = new DecimalFormat("#.#######");
+        myViewHolder.lat.setText("Lat: " + df.format(latNum));
+        myViewHolder.lon.setText("Long: " + df.format(lonNum));
 
     }
 
@@ -47,7 +53,7 @@ public class CheckPointAdapter extends RecyclerView.Adapter<CheckPointAdapter.My
 
     class MyViewHolder extends RecyclerView.ViewHolder
     {
-        TextView checkPointName, nameRider, timeStamp, type;
+        TextView checkPointName, nameRider, timeStamp, type,lat,lon;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -55,6 +61,8 @@ public class CheckPointAdapter extends RecyclerView.Adapter<CheckPointAdapter.My
             nameRider = itemView.findViewById(R.id.checkpoint_rider);
             timeStamp = itemView.findViewById(R.id.checkpoint_timeStamp);
             type = itemView.findViewById(R.id.checkpoint_type);
+            lat = itemView.findViewById(R.id.checkpoint_lat);
+            lon = itemView.findViewById(R.id.checkpoint_lon);
 
         }
     }
