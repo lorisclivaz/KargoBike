@@ -63,6 +63,7 @@ public class OrderFragment extends Fragment {
     Button buttonViewCheckPoint;
     OrderRepository repository;
     FirebaseAuth mAuth;
+    Menu menu;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -142,6 +143,7 @@ public class OrderFragment extends Fragment {
 
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        this.menu = menu;
         menu.add(0, 1, Menu.NONE, "add Order")
                 .setIcon(R.drawable.ic_plus)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
@@ -152,6 +154,9 @@ public class OrderFragment extends Fragment {
 
         //noinspection SimplifiableIfStatement
         if (item.getItemId() == 1) {
+            //delete the add button
+            this.menu.removeItem(1);
+            //go tho the next page
             Toast.makeText(getActivity(), "Add Order", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getActivity(), AddOrderActivity.class);
             startActivity(intent);
