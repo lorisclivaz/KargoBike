@@ -163,7 +163,6 @@ public class ModifyProfilFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                     if (dataSnapshot.exists()) {
-                        //Array shopnames
                         String workRegion = String.valueOf(user.getRegionWorking()) == null ? "" : String.valueOf(user.getRegionWorking());
                         int workRegioPosition = 0;
                         int countPosition = 0;

@@ -16,7 +16,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.group3.kargobikeproject.Adapter.ListAdapter;
 import com.group3.kargobikeproject.Adapter.OrderAdapter;
+import com.group3.kargobikeproject.Model.Entity.Location;
 import com.group3.kargobikeproject.Model.Entity.Order;
 import com.group3.kargobikeproject.Model.Repository.OrderRepository;
 import com.group3.kargobikeproject.Utils.OnAsyncEventListener;
@@ -31,6 +33,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -61,6 +64,10 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
     private SimpleDateFormat dateFormat;
     private String date;
     private Date deliverEndDate;
+    private ListAdapter<String> adpaterLocationListClient;
+    private ListAdapter<String> adpaterLocationListDestination;
+    private ArrayList<String> locationNameClient;
+    private ArrayList<String> locationNameDesination;
 
 
     @Override
@@ -94,41 +101,23 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
         deliverStart.setText(getIntent().getStringExtra("DeliverStart"));
         deliverEnd.setText(getIntent().getStringExtra("DeliveryEnd"));
 
-
-
-
         //add data on spinner
-        List<String> listLocationClient = new ArrayList<String>();
-        listLocationClient.add("Sierre");
-        listLocationClient.add("Sion");
-        listLocationClient.add("Martigny");
-        listLocationClient.add("Monthey");
-        listLocationClient.add("Visp");
-        listLocationClient.add("Brig");
-        listLocationClient.add("Lausanne");
-        listLocationClient.add("Verbier");
-        listLocationClient.add("Crans Montana");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, listLocationClient);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
+        //spinner
+        this.adpaterLocationListClient = new ListAdapter<>(this, R.layout.row_location, new ArrayList<>());
+        this.adpaterLocationListDestination = new ListAdapter<>(this, R.layout.row_location, new ArrayList<>());
+        this.spinnerLocationDelivery.setAdapter(adpaterLocationListDestination);
+        this.spinnerLocationClient.setAdapter(adpaterLocationListClient);
 
         List<String> listProduct = new ArrayList<String>();
         listProduct.add("product 1");
         listProduct.add("product 2");
         ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, listProduct);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        spinnerLocationClient.setAdapter(dataAdapter);
-        spinnerLocationDelivery.setAdapter(dataAdapter);
         spinnerProductSelected.setAdapter(dataAdapter2);
-        int spinnerPositionClient = dataAdapter .getPosition(getIntent().getStringExtra("LocationClient"));
-        int spinnerPositionDelivery = dataAdapter .getPosition(getIntent().getStringExtra("LocationDelivery"));
         int spinnerPositionProductSelected = dataAdapter2.getPosition(getIntent().getStringExtra("ProductSelected"));
 
-        spinnerLocationClient.setSelection(spinnerPositionClient);
-        spinnerLocationDelivery.setSelection(spinnerPositionDelivery);
         spinnerProductSelected.setSelection(spinnerPositionProductSelected);
 
 
@@ -213,7 +202,7 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
         });
 
 
-
+        setupViewModels();
 
     }
     //Methode for the spinner to take information
@@ -239,5 +228,57 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
     }
 
 
+    private void updateAdapterLocationListClient(List<String> locationName) {
+        adpaterLocationListClient.updateData(new ArrayList<>(locationName));
+    }
+    private void updateAdapterLocationListDestination(List<String> locationName) {
+        adpaterLocationListDestination.updateData(new ArrayList<>(locationName));
+    }
+
+    private void setupViewModels() {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("location");
+        if (ref != null) {
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.exists()) {
+                        String locationSource = getIntent().getStringExtra("LocationClient");
+                        String locationDestination = getIntent().getStringExtra("LocationDelivery");
+                        int locationSourcePosition = 0;
+                        int locationDestinationPosition = 0;
+                        int count=0;
+                        locationNameClient = new ArrayList<String>();
+                        locationNameDesination = new ArrayList<String>();
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            Location loc = ds.getValue(Location.class);
+                            locationNameClient.add(loc.getName());
+                            locationNameDesination.add(loc.getName());
+                            if (loc.getName().equals(locationSource)){
+                                locationSourcePosition=count;
+                            }
+                            if (loc.getName().equals(locationDestination)){
+                                locationDestinationPosition=count;
+                            }
+                            count++;
+                        }
+                        Collections.swap(locationNameClient,0,locationSourcePosition);
+                        Collections.swap(locationNameDesination,0,locationDestinationPosition);
+                        updateAdapterLocationListClient(locationNameClient);
+                        updateAdapterLocationListDestination(locationNameDesination);
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+
+    }
 
 }

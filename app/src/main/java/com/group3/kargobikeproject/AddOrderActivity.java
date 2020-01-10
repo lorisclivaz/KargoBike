@@ -32,6 +32,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.group3.kargobikeproject.Adapter.ListAdapter;
+import com.group3.kargobikeproject.Model.Entity.Location;
 import com.group3.kargobikeproject.Model.Entity.Order;
 import com.group3.kargobikeproject.Model.Repository.OrderRepository;
 import com.group3.kargobikeproject.Utils.OnAsyncEventListener;
@@ -43,6 +45,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -74,6 +77,8 @@ public class AddOrderActivity extends AppCompatActivity {
     private SimpleDateFormat dateFormat;
     private String date;
     private Date deliverEndDate;
+    private ListAdapter<String> adpaterLocationList;
+    private ArrayList<String> locationName;
 
 
     //Notification
@@ -108,19 +113,10 @@ public class AddOrderActivity extends AppCompatActivity {
         submit = findViewById(R.id.buttonSubmit);
 
         //add data on spinner
-        List<String> listLocationClient = new ArrayList<String>();
-        listLocationClient.add("Sierre");
-        listLocationClient.add("Sion");
-        listLocationClient.add("Martigny");
-        listLocationClient.add("Monthey");
-        listLocationClient.add("Visp");
-        listLocationClient.add("Brig");
-        listLocationClient.add("Lausanne");
-        listLocationClient.add("Verbier");
-        listLocationClient.add("Crans Montana");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, listLocationClient);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //spinner
+        this.adpaterLocationList = new ListAdapter<>(this, R.layout.row_location, new ArrayList<>());
+        this.spinnerLocationDelivery.setAdapter(adpaterLocationList);
+        this.spinnerLocationClient.setAdapter(adpaterLocationList);
 
 
         List<String> listProduct = new ArrayList<String>();
@@ -128,10 +124,8 @@ public class AddOrderActivity extends AppCompatActivity {
         listProduct.add("product 2");
         ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, listProduct);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        spinnerLocationClient.setAdapter(dataAdapter);
-        spinnerLocationDelivery.setAdapter(dataAdapter);
         spinnerProductSelected.setAdapter(dataAdapter2);
 
         //StartDate calendar
@@ -240,9 +234,7 @@ public class AddOrderActivity extends AppCompatActivity {
             }
         });
 
-
-
-
+        setupViewModels();
     }
 
     //Methode for the spinner to take information
@@ -312,6 +304,38 @@ public class AddOrderActivity extends AppCompatActivity {
         }
     }
 
+    private void updateAdapterLocationList(List<String> locationName) {
+        adpaterLocationList.updateData(new ArrayList<>(locationName));
+    }
+
+    private void setupViewModels() {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("location");
+        if (ref != null) {
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.exists()) {
+                        locationName = new ArrayList<String>();
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            Location loc = ds.getValue(Location.class);
+                            locationName.add(loc.getName());
+                        }
+                        updateAdapterLocationList(locationName);
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+
+    }
 
 
 }
