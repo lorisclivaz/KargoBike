@@ -35,6 +35,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.group3.kargobikeproject.Adapter.ListAdapter;
 import com.group3.kargobikeproject.Model.Entity.Location;
 import com.group3.kargobikeproject.Model.Entity.Order;
+import com.group3.kargobikeproject.Model.Entity.Product;
 import com.group3.kargobikeproject.Model.Repository.OrderRepository;
 import com.group3.kargobikeproject.Utils.OnAsyncEventListener;
 
@@ -79,6 +80,8 @@ public class AddOrderActivity extends AppCompatActivity {
     private Date deliverEndDate;
     private ListAdapter<String> adpaterLocationList;
     private ArrayList<String> locationName;
+    private ListAdapter<String> adpaterProductList;
+    private ArrayList<String> productName;
 
 
     //Notification
@@ -118,15 +121,9 @@ public class AddOrderActivity extends AppCompatActivity {
         this.spinnerLocationDelivery.setAdapter(adpaterLocationList);
         this.spinnerLocationClient.setAdapter(adpaterLocationList);
 
+        this.adpaterProductList = new ListAdapter<>(this, R.layout.row_location, new ArrayList<>());
+        this.spinnerProductSelected.setAdapter(adpaterProductList);
 
-        List<String> listProduct = new ArrayList<String>();
-        listProduct.add("product 1");
-        listProduct.add("product 2");
-        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, listProduct);
-        dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinnerProductSelected.setAdapter(dataAdapter2);
 
         //StartDate calendar
 
@@ -308,6 +305,10 @@ public class AddOrderActivity extends AppCompatActivity {
         adpaterLocationList.updateData(new ArrayList<>(locationName));
     }
 
+    private void updateAdapterProductList(List<String> productName) {
+        adpaterProductList.updateData(new ArrayList<>(productName));
+    }
+
     private void setupViewModels() {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("location");
@@ -334,6 +335,30 @@ public class AddOrderActivity extends AppCompatActivity {
             });
         }
 
+        //product
+        DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference().child("products");
+        if (ref2 != null) {
+            ref2.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.exists()) {
+                        productName = new ArrayList<String>();
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            Product loc = ds.getValue(Product.class);
+                            productName.add(loc.getName()+" "+loc.getDescription()+" "+loc.getPrice());
+                        }
+                        updateAdapterProductList(productName);
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
 
     }
 

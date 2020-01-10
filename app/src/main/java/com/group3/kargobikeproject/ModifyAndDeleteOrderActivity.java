@@ -20,6 +20,7 @@ import com.group3.kargobikeproject.Adapter.ListAdapter;
 import com.group3.kargobikeproject.Adapter.OrderAdapter;
 import com.group3.kargobikeproject.Model.Entity.Location;
 import com.group3.kargobikeproject.Model.Entity.Order;
+import com.group3.kargobikeproject.Model.Entity.Product;
 import com.group3.kargobikeproject.Model.Repository.OrderRepository;
 import com.group3.kargobikeproject.Utils.OnAsyncEventListener;
 import com.google.android.material.textfield.TextInputEditText;
@@ -68,6 +69,8 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
     private ListAdapter<String> adpaterLocationListDestination;
     private ArrayList<String> locationNameClient;
     private ArrayList<String> locationNameDesination;
+    private ListAdapter<String> adpaterProductList;
+    private ArrayList<String> productName;
 
 
     @Override
@@ -108,18 +111,8 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
         this.spinnerLocationDelivery.setAdapter(adpaterLocationListDestination);
         this.spinnerLocationClient.setAdapter(adpaterLocationListClient);
 
-        List<String> listProduct = new ArrayList<String>();
-        listProduct.add("product 1");
-        listProduct.add("product 2");
-        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, listProduct);
-        dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinnerProductSelected.setAdapter(dataAdapter2);
-        int spinnerPositionProductSelected = dataAdapter2.getPosition(getIntent().getStringExtra("ProductSelected"));
-
-        spinnerProductSelected.setSelection(spinnerPositionProductSelected);
-
+        this.adpaterProductList = new ListAdapter<>(this, R.layout.row_location, new ArrayList<>());
+        this.spinnerProductSelected.setAdapter(adpaterProductList);
 
         modifyOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,8 +224,13 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
     private void updateAdapterLocationListClient(List<String> locationName) {
         adpaterLocationListClient.updateData(new ArrayList<>(locationName));
     }
+
     private void updateAdapterLocationListDestination(List<String> locationName) {
         adpaterLocationListDestination.updateData(new ArrayList<>(locationName));
+    }
+
+    private void updateAdapterProductList(List<String> productName) {
+        adpaterProductList.updateData(new ArrayList<>(productName));
     }
 
     private void setupViewModels() {
@@ -267,6 +265,39 @@ public class ModifyAndDeleteOrderActivity extends AppCompatActivity {
                         Collections.swap(locationNameDesination,0,locationDestinationPosition);
                         updateAdapterLocationListClient(locationNameClient);
                         updateAdapterLocationListDestination(locationNameDesination);
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+        //product
+        DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference().child("products");
+        if (ref2 != null) {
+            ref2.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.exists()) {
+                        productName = new ArrayList<String>();
+                        String  productN = getIntent().getStringExtra("ProductSelected");
+                        int productPosition = 0;
+                        int count=0;
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            Product loc = ds.getValue(Product.class);
+                            productName.add(loc.getName()+" "+loc.getDescription()+" "+loc.getPrice());
+                            if (productN.equals(loc.getName()+" "+loc.getDescription()+" "+loc.getPrice())){
+                                productPosition=count;
+                            }
+                            count++;
+                        }
+                        Collections.swap(locationNameClient,0,productPosition);
+                        updateAdapterProductList(productName);
 
                     }
                 }
