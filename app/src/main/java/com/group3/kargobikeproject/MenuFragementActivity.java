@@ -66,7 +66,8 @@ public class MenuFragementActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_orders ,R.id.nav_user, R.id.nav_autorise,R.id.nav_bikeservice ,R.id.nav_logout)
+                R.id.nav_orders , R.id.nav_home,R.id.nav_user, R.id.nav_autorise,R.id.nav_bikeservice ,
+                R.id.nav_logout, R.id.nav_checkpointtype, R.id.nav_modifyProfil, R.id.nav_products, R.id.nav_user,R.id.nav_historyOrder)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -123,7 +124,7 @@ public class MenuFragementActivity extends AppCompatActivity {
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         Menu nav_Menu = navigationView.getMenu();
         nav_Menu.findItem(R.id.superUserGroup).setVisible(false);
-        
+
     }
 
 

@@ -22,15 +22,7 @@ public class CheckPoint {
     public CheckPoint(){
 
     }
-    public CheckPoint(String checkPointName, double latitude, double longtitude, String typeName, String nameRider, String timeStamp)
-    {
-        this.checkPointName = checkPointName;
-        this.latitude = latitude;
-        this.longtitude = longtitude;
-        this.typeName = typeName;
-        this.nameRider = nameRider;
-        this.timeStamp =timeStamp;
-    }
+
     public CheckPoint(String idOrder,String checkPointName, String nameRider, String timeStamp, String typeName)
     {
         this.idOrder = idOrder;
@@ -39,7 +31,16 @@ public class CheckPoint {
         this.timeStamp = timeStamp;
         this.typeName = typeName;
     }
-
+    public CheckPoint(String idOrder,String checkPointName, String nameRider, String timeStamp, String typeName,double latitude, double longtitude )
+    {
+        this.idOrder = idOrder;
+        this.checkPointName = checkPointName;
+        this.nameRider = nameRider;
+        this.timeStamp = timeStamp;
+        this.typeName = typeName;
+        this.latitude = latitude;
+        this.longtitude = longtitude;
+    }
     @Exclude
 
     public String getIdCheckPoint() {

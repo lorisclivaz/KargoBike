@@ -42,6 +42,7 @@ public class AuthoriseUserFragment extends Fragment {
     ValueEventListener listener;
     Spinner spinnerUser;
     Switch switchAuth;
+    Switch switchIsDispatcher;
     Boolean switchState;
     UserViewModel viewModel;
     User userSelected;
@@ -62,7 +63,7 @@ public class AuthoriseUserFragment extends Fragment {
         spinnerUser = (Spinner) getView().findViewById(R.id.spinnerUserAuth);
         switchAuth = getView().findViewById(R.id.switchAuth);
         switchState = switchAuth.isChecked();
-
+        switchIsDispatcher=getView().findViewById(R.id.switchIsDispatcher);
 
         spinnerUser.setPrompt("Select the user");
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
@@ -134,6 +135,30 @@ public class AuthoriseUserFragment extends Fragment {
             }
         });
 
+        switchIsDispatcher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                int role =0;
+
+                if (isChecked)
+                    role=1;
+
+                userSelected.setRole(role);
+                System.out.println(role);
+                viewModel.updateUser(userSelected, new OnAsyncEventListener() {
+                    @Override
+                    public void onSuccess() {
+
+                        Log.d("ICCCIIIIII","Modification ok");
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        Log.d("ICCCIIIIII","Erreur modification");
+                    }
+                });
+            }
+        });
 
     }
 

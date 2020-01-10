@@ -21,10 +21,10 @@
             android:id="@+id/checkpoint_name"
             android:layout_width="200dp"
             android:layout_height="22dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="4dp"
             android:text="CheckPointName"
             app:layout_constraintEnd_toStartOf="@+id/checkpoint_timeStamp"
-            app:layout_constraintHorizontal_bias="0.073"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -66,6 +66,34 @@
             app:layout_constraintTop_toBottomOf="@+id/checkpoint_timeStamp"
             app:layout_constraintVertical_bias="0.222" />
 
+        <TextView
+            android:id="@+id/checkpoint_lat"
+            android:layout_width="120dp"
+            android:layout_height="22dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="3dp"
+            android:text="Lat:"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/checkpoint_rider"
+            app:layout_constraintEnd_toStartOf="@+id/checkpoint_lon"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkpoint_name" />
+
+        <TextView
+            android:id="@+id/checkpoint_lon"
+            android:layout_width="120dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:text="Lon:"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/checkpoint_rider"
+            app:layout_constraintEnd_toStartOf="@+id/checkpoint_type"
+            app:layout_constraintTop_toBottomOf="@+id/checkpoint_name"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

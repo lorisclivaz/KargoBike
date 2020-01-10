@@ -22,13 +22,34 @@
     <fragment
         android:id="@+id/nav_user"
         android:name="com.group3.kargobikeproject.ui.orders.UserFragment"
-        android:label="@string/menu_product"
+        android:label="@string/menu_users"
         tools:layout="@layout/user_fragment" />
+    <fragment
+        android:id="@+id/nav_checkpointtype"
+        android:name="com.group3.kargobikeproject.ui.checkpoint.ListTypesFragment"
+        android:label="checkpointType"
+        tools:layout="@layout/activity_list_types" />
+    <fragment
+        android:id="@+id/nav_modifyProfil"
+        android:name="com.group3.kargobikeproject.ui.user.ModifyProfilFragment"
+        android:label="modifyProfil"
+        tools:layout="@layout/activity_modify_profil" />
+    <fragment
+        android:id="@+id/nav_historyOrder"
+        android:name="com.group3.kargobikeproject.ui.orders.HistoryOrderFragment"
+        android:label="Order history"
+        tools:layout="@layout/history_order_fragment" />
     <fragment
         android:id="@+id/nav_bikeservice"
         android:name="com.group3.kargobikeproject.ui.BikeServiceFragment"
         android:label="Bike Service"
         tools:layout="@layout/bikeservice_fragment" />
+    <fragment
+        android:id="@+id/nav_autorise"
+        android:name="com.group3.kargobikeproject.ui.authoriseUser.AuthoriseUserFragment"
+        android:label="@string/menu_menu_autoriseUser"
+        tools:layout="@layout/authorise_user_fragment" />
+
     <fragment
         android:id="@+id/nav_logout"
         android:name="com.group3.kargobikeproject.ui.logout.LogoutFragment"

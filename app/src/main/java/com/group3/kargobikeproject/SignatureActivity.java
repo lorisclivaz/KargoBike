@@ -53,7 +53,8 @@ public class SignatureActivity extends AppCompatActivity {
     signature mSignature;
     Bitmap bitmap;
     String idOrderThis;
-
+    StorageReference storageRef;
+    FirebaseStorage storage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +63,7 @@ public class SignatureActivity extends AppCompatActivity {
         mContent = (LinearLayout) findViewById(R.id.canvasLayout);
         mSignature = new signature(getApplicationContext(), null);
         mSignature.setBackgroundColor(Color.WHITE);
+        storage = FirebaseStorage.getInstance();
         // Dynamically generating Layout through java code
         mContent.addView(mSignature, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mClear = (Button) findViewById(R.id.clearButton);
@@ -73,6 +75,8 @@ public class SignatureActivity extends AppCompatActivity {
         mClear.setOnClickListener(onButtonClick);
         mCancel.setOnClickListener(onButtonClick);
     }
+
+
 
     Button.OnClickListener onButtonClick = new Button.OnClickListener() {
         @Override
@@ -92,7 +96,7 @@ public class SignatureActivity extends AppCompatActivity {
                     recreate();
                 }
             } else if(v == mCancel){
-                Intent intent = new Intent(SignatureActivity.this, MainActivity.class);
+                Intent intent = new Intent(SignatureActivity.this, MenuFragementActivity.class);
                 startActivity(intent);
             }
         }
@@ -132,8 +136,8 @@ public class SignatureActivity extends AppCompatActivity {
                 String pic_date = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
                 byte[] data = outputStream.toByteArray();
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-                StorageReference storageRef = storage.getReferenceFromUrl("gs://kargobikegroup3.appspot.com");
+
+                storageRef = storage.getReferenceFromUrl("gs://kargobikegroup3.appspot.com");
                 StorageReference pathReference = storageRef.child("signature/"+idOrderThis);
 
                 UploadTask uploadTask = pathReference.putBytes(data);
