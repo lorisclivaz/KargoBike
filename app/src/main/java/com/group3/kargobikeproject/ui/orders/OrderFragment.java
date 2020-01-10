@@ -105,21 +105,22 @@ public class OrderFragment extends Fragment {
                         }
 
                         adapterClass = new OrderAdapter(orders);
+                        adapterClass = new OrderAdapter(orders);
                         adapterClass.setOnItemClickListener(new OrderAdapter.onItemCLickListener() {
                             @Override
                             public void onItemClick(int position) {
 
                                 Intent intent = new Intent(getActivity(), ModifyAndDeleteOrderActivity.class);
                                 intent.putExtra("IdOrder", orders.get(position).getIdOrder());
-
                                 intent.putExtra("Name_Client", orders.get(position).getNameClient());
-                                intent.putExtra("Name_Rider", orders.get(position).getNameRider());
-                                intent.putExtra("Name_Route", orders.get(position).getNameRoute());
-                                intent.putExtra("address", orders.get(position).getAddress());
-                                intent.putExtra("deliverStart", orders.get(position).getDeliverStart());
-                                intent.putExtra("deliverEnd", orders.get(position).getDeliverEnd());
-                                intent.putExtra("status", orders.get(position).getOrderStatus());
-
+                                intent.putExtra("AddressClient", orders.get(position).getAddressClient());
+                                intent.putExtra("DeliveryEnd", orders.get(position).getDeliverEnd());
+                                intent.putExtra("DeliverStart", orders.get(position).getDeliverStart());
+                                intent.putExtra("DeliveryAdress", orders.get(position).getDeliveryAddress());
+                                intent.putExtra("DeliveryName", orders.get(position).getDeliveryName());
+                                intent.putExtra("LocationClient", orders.get(position).getLocationClient());
+                                intent.putExtra("LocationDelivery", orders.get(position).getLocationDelivery());
+                                intent.putExtra("ProductSelected", orders.get(position).getProductSelected());
                                 startActivity(intent);
 
                                 Log.d("TAG", orders.get(position).getNameClient());

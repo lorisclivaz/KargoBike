@@ -50,10 +50,15 @@
         android:label="@string/menu_menu_autoriseUser"
         tools:layout="@layout/authorise_user_fragment" />
 
-    <fragment
+       <fragment
         android:id="@+id/nav_logout"
         android:name="com.group3.kargobikeproject.ui.logout.LogoutFragment"
         android:label="@string/menu_logout"
         tools:layout="@layout/logout_fragment" />
+    <fragment
+        android:id="@+id/nav_about"
+        android:name="com.group3.kargobikeproject.ui.logout.LogoutFragment"
+        android:label="@string/menu_logout"
+        tools:layout="@layout/about_fragment" />
 
 </navigation>

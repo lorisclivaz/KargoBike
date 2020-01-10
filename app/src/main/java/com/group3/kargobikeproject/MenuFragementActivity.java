@@ -82,9 +82,22 @@ public class MenuFragementActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_fragement, menu);
         tv_userEmail=findViewById(R.id.textView_email);
         tv_userEmail.setText(extraEmail);
+        MenuItem aboutItem = menu.findItem(R.id.action_settings);
         return true;
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent intent = new Intent(MenuFragementActivity.this,AboutActivity.class);
 
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
