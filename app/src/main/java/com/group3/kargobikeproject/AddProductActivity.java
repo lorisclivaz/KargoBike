@@ -40,7 +40,7 @@ public class AddProductActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess() {
                         Log.d(TAG, "product added : success");
-                        startActivity(new Intent(AddProductActivity.this,MainActivity.class));
+                        startActivity(new Intent(AddProductActivity.this,MenuFragementActivity.class));
 
                         onBackPressed();
                     }

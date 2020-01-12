@@ -8,13 +8,6 @@
     android:background="@android:color/white"
     >
 
-    <TextView
-        android:id="@+id/textViewCamera"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="CAMERA FOR FORM"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="30sp" />
     <LinearLayout
         android:id="@+id/buttonLayoutCamera"
         android:layout_width="fill_parent"
