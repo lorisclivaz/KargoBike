@@ -105,7 +105,7 @@ public class OrderFragment extends Fragment {
                         }
 
                         adapterClass = new OrderAdapter(orders);
-                        adapterClass = new OrderAdapter(orders);
+
                         adapterClass.setOnItemClickListener(new OrderAdapter.onItemCLickListener() {
                             @Override
                             public void onItemClick(int position) {

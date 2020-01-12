@@ -130,6 +130,8 @@ public class AddOrderActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, listLocationClient);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+
+        this.adpaterLocationList = new ListAdapter<>(this, R.layout.row_location, new ArrayList<>());
         this.adpaterProductList = new ListAdapter<>(this, R.layout.row_location, new ArrayList<>());
         this.spinnerProductSelected.setAdapter(adpaterProductList);
 
