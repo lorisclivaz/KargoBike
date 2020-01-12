@@ -61,7 +61,7 @@ public class MenuFragementActivity extends AppCompatActivity {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
          navigationView = (NavigationView) findViewById(R.id.nav_view);
 
-
+        retrieveData();
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -73,7 +73,7 @@ public class MenuFragementActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-        retrieveData();
+
     }
 
     @Override
@@ -83,6 +83,7 @@ public class MenuFragementActivity extends AppCompatActivity {
         tv_userEmail=findViewById(R.id.textView_email);
         tv_userEmail.setText(extraEmail);
         MenuItem aboutItem = menu.findItem(R.id.action_settings);
+
         return true;
     }
     @Override

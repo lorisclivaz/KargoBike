@@ -92,6 +92,7 @@ public class ProductFragment extends Fragment {
                             Intent.FLAG_ACTIVITY_NO_ANIMATION |
                                     Intent.FLAG_ACTIVITY_NO_HISTORY
                     );
+            getActivity().finish();
                     startActivity(intent);
                 }
         );
