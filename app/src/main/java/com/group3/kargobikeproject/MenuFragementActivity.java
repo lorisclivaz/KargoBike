@@ -45,7 +45,7 @@ public class MenuFragementActivity extends AppCompatActivity {
     ValueEventListener listener;
     private AppBarConfiguration mAppBarConfiguration;
     private Button buttonLogout;
-    int role;
+  static  int role;
     ArrayList<User> users;
     ArrayList<String> arrayUser;
     NavigationView navigationView;
@@ -132,6 +132,7 @@ public class MenuFragementActivity extends AppCompatActivity {
 
             }
         });
+
     }
     private void hideItem()
     {
